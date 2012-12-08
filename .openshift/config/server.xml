@@ -21,9 +21,9 @@
  -->
 <Server port="-1" shutdown="SHUTDOWN">
 
-  <!--APR library loader. Documentation at /docs/apr.html -->
+  <!-- APR library loader. Documentation at /docs/apr.html -->
   <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
-  <!--Initialize Jasper prior to webapps are loaded. Documentation at /docs/jasper-howto.html -->
+  <!-- Initialize Jasper prior to webapps are loaded. Documentation at /docs/jasper-howto.html -->
   <Listener className="org.apache.catalina.core.JasperListener" />
   <!-- Prevent memory leaks due to use of particular java/javax APIs-->
   <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
@@ -31,9 +31,7 @@
   <Listener className="org.apache.catalina.mbeans.ServerLifecycleListener" />
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
 
-  <!-- Global JNDI resources
-       Documentation at /docs/jndi-resources-howto.html
-  -->
+  <!-- Global JNDI resources. Documentation at /docs/jndi-resources-howto.html -->
   <GlobalNamingResources>
     <!-- Editable user database that can also be used by
          UserDatabaseRealm to authenticate users
@@ -43,6 +41,15 @@
               description="User database that can be updated and saved"
               factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
               pathname="conf/tomcat-users.xml" />
+    <!-- MySQL data source -->
+    <Resource name="jdbc/gpm-store" auth="Container"
+              type="javax.sql.DataSource"
+              username="${env.OPENSHIFT_MYSQL_DB_USERNAME}"
+              password="${env.OPENSHIFT_MYSQL_DB_PASSWORD}"
+              url="jdbc:mysql://${env.OPENSHIFT_MYSQL_DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT}/${env.OPENSHIFT_APP_NAME}"
+              driverClassName="com.mysql.jdbc.Driver"
+              initialSize="5" maxWait="5000" maxActive="120" maxIdle="5" validationQuery="select 1"
+              poolPreparedStatements="true" />
   </GlobalNamingResources>
 
   <!-- A "Service" is a collection of one or more "Connectors" that share
