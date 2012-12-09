@@ -21,6 +21,8 @@ public class GpmStoreContextListener implements ServletContextListener {
     try {
       Product p = new Product();
       p.setName("Product A");
+      p.setVariant("");
+      p.setSku("123ABC");
       ProductDAO.getInstance().create(p);
     } catch (DAOException e) {
       e.printStackTrace();

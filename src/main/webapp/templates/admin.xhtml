@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<f:view>
+  <h:head>
+    <title>#{msg.adminPageTitle}</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <link href="#{request.contextPath}/favicon.ico" rel="icon" type="image/vnd.microsoft.icon" />
+    <link href='#{request.contextPath}/favicon.ico' rel="shortcut icon" type="image/x-icon" />
+  </h:head>
+  <h:body>
+    <h:outputStylesheet target="head" library="css" name="style.css" />
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+      <h1 class="ui-titlebar ui-widget ui-widget-header ui-corner-all">#{msg.adminPageTitle}</h1>
+      <ui:insert name="mainContent">This is a template, nothing to see here.</ui:insert>
+    </h:form>
+  </h:body>
+</f:view>
+</html>
