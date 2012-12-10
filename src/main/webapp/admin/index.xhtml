@@ -5,9 +5,25 @@
 <ui:composition template="/templates/admin.xhtml">
   <ui:define name="mainContent">
     <p:dataTable var="prod" value="#{productAdminBean.all}" emptyMessage="#{msg.adminNoProductsFound}">
+      <p:column style="width:36px">
+        <p:rowToggler/>
+      </p:column>
       <p:column headerText="#{msg.adminProductTableNameColumn}">
         #{prod.name}
       </p:column>
+      <p:column headerText="#{msg.adminProductTableVariantColumn}">
+        #{prod.variant}
+      </p:column>
+      <p:column headerText="#{msg.adminProductTableSkuColumn}">
+        #{prod.sku}
+      </p:column>
+      <p:column headerText="#{msg.adminProductTableActionsColumn}">
+      </p:column>
+      <p:rowExpansion>
+        <div class="ui-dt-c">
+          #{prod.description}
+        </div>
+      </p:rowExpansion>
     </p:dataTable>
   </ui:define>
 </ui:composition>
