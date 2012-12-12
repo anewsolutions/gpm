@@ -1,7 +1,7 @@
 /**
  * Copyright 2012 Mat Booth <mbooth@apache.org>
  */
-package com.gpm.dao;
+package com.gpm.controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -23,16 +23,16 @@ import org.hibernate.HibernateException;
 import com.gpm.model.Base;
 
 /**
- * A generic data access object that handles creation of entity managers and implements
- * basic persistence CRUD operations on JPA entities of type T. All other data access
- * objects should extend this class.
+ * A generic entity controller that handles creation of entity managers and implements
+ * basic persistence CRUD operations on JPA entities of type T. All other entity
+ * controllers should extend this class.
  * 
  * @author mbooth
  * 
  * @param T
  *          a type that is an annotated JPA entity
  */
-public abstract class GenericDAO<T extends Base> {
+public abstract class GenericController<T extends Base> {
 
   /**
    * The class of type T.
@@ -53,7 +53,7 @@ public abstract class GenericDAO<T extends Base> {
    * @throws IllegalArgumentException
    *           if the specified class is null or not a valid annotated JPA entity
    */
-  public GenericDAO(Class<T> cls) throws IllegalArgumentException {
+  public GenericController(Class<T> cls) throws IllegalArgumentException {
     this.cls = cls;
     if (cls == null) {
       throw new IllegalArgumentException("Specified class must not be null");
@@ -81,10 +81,10 @@ public abstract class GenericDAO<T extends Base> {
    * 
    * @param ent
    *          the entity to add
-   * @throws DAOException
+   * @throws ControllerException
    *           if there was a problem adding the entity
    */
-  public void create(T ent) throws DAOException {
+  public void create(T ent) throws ControllerException {
     EntityManager em = getEntityManager();
     try {
       em.getTransaction().begin();
@@ -92,7 +92,7 @@ public abstract class GenericDAO<T extends Base> {
       em.getTransaction().commit();
     } catch (PersistenceException e) {
       em.getTransaction().rollback();
-      throw new DAOException("Error creating " + cls.getSimpleName() + ": " + e.getMessage(), e);
+      throw new ControllerException("Error creating " + cls.getSimpleName() + ": " + e.getMessage(), e);
     } finally {
       em.close();
     }
@@ -103,10 +103,10 @@ public abstract class GenericDAO<T extends Base> {
    * 
    * @param ent
    *          the entity to update
-   * @throws DAOException
+   * @throws ControllerException
    *           if there was a problem updating the entity
    */
-  public void update(T ent) throws DAOException {
+  public void update(T ent) throws ControllerException {
     EntityManager em = getEntityManager();
     try {
       em.getTransaction().begin();
@@ -114,7 +114,7 @@ public abstract class GenericDAO<T extends Base> {
       em.getTransaction().commit();
     } catch (PersistenceException e) {
       em.getTransaction().rollback();
-      throw new DAOException("Error updating " + cls.getSimpleName() + ": " + e.getMessage(), e);
+      throw new ControllerException("Error updating " + cls.getSimpleName() + ": " + e.getMessage(), e);
     } finally {
       em.close();
     }
@@ -125,10 +125,10 @@ public abstract class GenericDAO<T extends Base> {
    * 
    * @param id
    *          the id of the entity to delete
-   * @throws DAOException
+   * @throws ControllerException
    *           if there was a problem deleting the entity
    */
-  public void delete(int id) throws DAOException {
+  public void delete(int id) throws ControllerException {
     EntityManager em = getEntityManager();
     try {
       em.getTransaction().begin();
@@ -139,7 +139,7 @@ public abstract class GenericDAO<T extends Base> {
       em.getTransaction().commit();
     } catch (PersistenceException e) {
       em.getTransaction().rollback();
-      throw new DAOException("Error deleting " + cls.getSimpleName() + " with id " + id + ": " + e.getMessage(), e);
+      throw new ControllerException("Error deleting " + cls.getSimpleName() + " with id " + id + ": " + e.getMessage(), e);
     } finally {
       em.close();
     }
@@ -152,18 +152,18 @@ public abstract class GenericDAO<T extends Base> {
    * @param ent
    *          the entity whose collections should be initialised
    */
-  protected void initialiseCollections(T ent) throws DAOException {
+  protected void initialiseCollections(T ent) throws ControllerException {
     Method[] meths = cls.getMethods();
     for (Method meth : meths) {
       if (meth.getAnnotation(ElementCollection.class) != null) {
         try {
           Hibernate.initialize(meth.invoke(ent));
         } catch (HibernateException e) {
-          throw new DAOException("Error initialising collection in " + cls.getSimpleName() + ": " + e.getMessage(), e);
+          throw new ControllerException("Error initialising collection in " + cls.getSimpleName() + ": " + e.getMessage(), e);
         } catch (IllegalAccessException e) {
-          throw new DAOException("Error initialising collection in " + cls.getSimpleName() + ": " + e.getMessage(), e);
+          throw new ControllerException("Error initialising collection in " + cls.getSimpleName() + ": " + e.getMessage(), e);
         } catch (InvocationTargetException e) {
-          throw new DAOException("Error initialising collection in " + cls.getSimpleName() + ": " + e.getMessage(), e);
+          throw new ControllerException("Error initialising collection in " + cls.getSimpleName() + ": " + e.getMessage(), e);
         }
       }
     }
@@ -175,17 +175,17 @@ public abstract class GenericDAO<T extends Base> {
    * @param id
    *          the id of the entity to find
    * @return the found entity or null if the entity does not exist
-   * @throws DAOException
+   * @throws ControllerException
    *           if there was a problem getting the entity
    */
-  public T get(int id) throws DAOException {
+  public T get(int id) throws ControllerException {
     EntityManager em = getEntityManager();
     T ent = null;
     try {
       ent = em.find(cls, id);
       initialiseCollections(ent);
     } catch (PersistenceException e) {
-      throw new DAOException("Error getting " + cls.getSimpleName() + " with id " + id + ": " + e.getMessage(), e);
+      throw new ControllerException("Error getting " + cls.getSimpleName() + " with id " + id + ": " + e.getMessage(), e);
     } finally {
       em.close();
     }
@@ -201,13 +201,13 @@ public abstract class GenericDAO<T extends Base> {
    *          empty map is equivalent to calling {@link #getAll()}
    * @return a list of entities or an empty list if none exist whose attributes match the
    *         specified values
-   * @throws DAOException
+   * @throws ControllerException
    *           if there was a problem getting the entities or any of the given attributes
    *           are invalid for entity type T
    * @throws IllegalArgumentException
    *           if null is passed in for the attributes map
    */
-  public List<T> getAllWhere(Map<String, Object> attributes) throws DAOException {
+  public List<T> getAllWhere(Map<String, Object> attributes) throws ControllerException {
     if (attributes == null) {
       throw new IllegalArgumentException("Attributes map must not be null");
     }
@@ -234,7 +234,7 @@ public abstract class GenericDAO<T extends Base> {
         initialiseCollections(ent);
       }
     } catch (PersistenceException e) {
-      throw new DAOException("Error getting " + cls.getSimpleName() + "s: " + e.getMessage(), e);
+      throw new ControllerException("Error getting " + cls.getSimpleName() + "s: " + e.getMessage(), e);
     } finally {
       em.close();
     }
@@ -249,10 +249,10 @@ public abstract class GenericDAO<T extends Base> {
    * @param ascending
    *          true specifies ascending order, false specifies descending order
    * @return a list of entities or an empty list if none exist
-   * @throws DAOException
+   * @throws ControllerException
    *           if there was a problem getting the entities
    */
-  public List<T> getAll(String orderBy, boolean ascending) throws DAOException {
+  public List<T> getAll(String orderBy, boolean ascending) throws ControllerException {
     if (orderBy == null || orderBy.isEmpty()) {
       orderBy = "id";
     }
@@ -273,7 +273,7 @@ public abstract class GenericDAO<T extends Base> {
         initialiseCollections(ent);
       }
     } catch (PersistenceException e) {
-      throw new DAOException("Error getting " + cls.getSimpleName() + "s: " + e.getMessage(), e);
+      throw new ControllerException("Error getting " + cls.getSimpleName() + "s: " + e.getMessage(), e);
     } finally {
       em.close();
     }

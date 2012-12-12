@@ -1,39 +1,39 @@
 /**
  * Copyright 2012 Mat Booth <mbooth@apache.org>
  */
-package com.gpm.dao;
+package com.gpm.controller;
 
 import com.gpm.model.Product;
 
 /**
- * A data access object for products.
+ * An entity controller for products.
  * 
  * @author mbooth
  * 
  * @see Product
  */
-public class ProductDAO extends GenericDAO<Product> {
+public class ProductController extends GenericController<Product> {
 
   /**
    * The singleton instance.
    */
-  private static ProductDAO _instance;
+  private static ProductController _instance;
 
   /**
    * Protected constructor for singleton pattern.
    */
-  protected ProductDAO() {
+  protected ProductController() {
     super(Product.class);
   }
 
   /**
    * Get the singleton instance.
    * 
-   * @return the instance of the data access object
+   * @return the instance of the controller
    */
-  public static ProductDAO getInstance() {
+  public static ProductController getInstance() {
     if (_instance == null) {
-      _instance = new ProductDAO();
+      _instance = new ProductController();
     }
     return _instance;
   }
