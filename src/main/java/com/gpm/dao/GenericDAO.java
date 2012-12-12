@@ -42,7 +42,7 @@ public abstract class GenericDAO<T extends Base> {
   /**
    * The entity manager factory.
    */
-  private EntityManagerFactory emf;
+  private static EntityManagerFactory emf;
 
   /**
    * Constructor that receives the class of type T. Due to Java's type erasure we can't
