@@ -5,3 +5,27 @@
 .ui-titlebar {
   padding: 0.5em 1em 0.3em;
 }
+
+.left-right-table {
+  width: 100%;
+  border-spacing: 0;
+}
+
+.left-aligned-stuff {
+  text-align: left;
+  padding: 0px;
+}
+
+.right-aligned-stuff {
+  text-align: right;
+  padding: 0px;
+}
+
+.toggleColumn {
+  width: 36px;
+}
+
+.actionColumn {
+  text-align: center;
+  width: 250px;
+}

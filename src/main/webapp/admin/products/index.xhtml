@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/admin.xhtml">
+  <ui:define name="mainContent">
+    <p:dataTable id="prodTable" var="prod" value="#{productAdminBean.all}" emptyMessage="#{msg.adminNoProductsFound}">
+      <p:column styleClass="toggleColumn">
+        <p:rowToggler />
+      </p:column>
+      <p:column headerText="#{msg.adminProductTableNameColumn}">
+        #{prod.name}
+      </p:column>
+      <p:column headerText="#{msg.adminProductTableVariantColumn}">
+        #{prod.variant}
+      </p:column>
+      <p:column headerText="#{msg.adminProductTableSkuColumn}">
+        #{prod.sku}
+      </p:column>
+      <p:column styleClass="actionColumn" headerText="#{msg.adminProductTableActionsColumn}">
+        <p:commandButton value="#{msg.adminButtonsEdit}">
+        </p:commandButton>
+        <p:commandButton value="#{msg.adminButtonsDelete}" onclick="confirmDelete.show()">
+          <f:setPropertyActionListener target="#{productAdminBean.selected}" value="#{prod}" />
+        </p:commandButton>
+      </p:column>
+      <p:rowExpansion>
+        <div class="ui-dt-c">#{prod.description}</div>
+      </p:rowExpansion>
+    </p:dataTable>
+    <p:dialog widgetVar="confirmDelete" header="#{msg.adminDialogConfirmDelete}" modal="true">
+      <p:commandButton value="#{msg.adminButtonsConfirm}" action="#{productAdminBean.delete}"
+        oncomplete="confirmDelete.hide()" update="prodTable">
+      </p:commandButton>
+      <p:commandButton value="#{msg.adminButtonsCancel}" type="button" onclick="confirmDelete.hide()">
+      </p:commandButton>
+    </p:dialog>
+  </ui:define>
+</ui:composition>
+</html>

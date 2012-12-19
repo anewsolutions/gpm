@@ -3,6 +3,7 @@
  */
 package com.gpm.model;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -20,7 +21,8 @@ import org.hibernate.annotations.Type;
  * @author mbooth
  */
 @MappedSuperclass
-public abstract class Base {
+public abstract class Base implements Serializable {
+  private static final long serialVersionUID = 1L;
 
   private int id;
   private UUID uuid;
