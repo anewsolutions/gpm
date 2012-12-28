@@ -5,8 +5,9 @@
 <ui:composition template="/templates/admin.xhtml">
   <ui:define name="mainContent">
     <h:panelGrid styleClass="left-right-table" columns="2" columnClasses="left-aligned-stuff, right-aligned-stuff">
-      <p:commandButton value="#{msg.adminButtonsAdd}" oncomplete="addDialogWidget.show()" update=":mainForm:addDialog">
-      </p:commandButton>
+      <h:panelGrid columns="1">
+        <p:button outcome="add" value="#{msg.adminButtonsAdd}" />
+      </h:panelGrid>
     </h:panelGrid>
     <p:dataTable id="catTable" var="cat" value="#{categoryAdminBean.all}" emptyMessage="#{msg.adminNoCategoriesFound}">
       <p:column styleClass="toggleColumn">
@@ -16,14 +17,12 @@
         #{cat.name}
       </p:column>
       <p:column styleClass="actionColumn" headerText="#{msg.adminCategoryTableActionsColumn}">
-        <p:commandButton value="#{msg.adminButtonsEdit}" oncomplete="editDialogWidget.show()" process="@this"
-          update=":mainForm:editDialog">
-          <f:setPropertyActionListener target="#{categoryAdminBean.selected}" value="#{cat}" />
-        </p:commandButton>
-        <p:commandButton value="#{msg.adminButtonsDelete}" oncomplete="deleteDialogWidget.show()" process="@this"
-          update=":mainForm:deleteDialog">
-          <f:setPropertyActionListener target="#{categoryAdminBean.selected}" value="#{cat}" />
-        </p:commandButton>
+        <p:button outcome="edit" value="#{msg.adminButtonsEdit}">
+          <f:param name="id" value="#{cat.id}"/>
+        </p:button>
+        <p:button outcome="delete" value="#{msg.adminButtonsDelete}">
+          <f:param name="id" value="#{cat.id}"/>
+        </p:button>
       </p:column>
       <p:rowExpansion>
         <div class="ui-dt-c">
@@ -34,38 +33,9 @@
         </div>
       </p:rowExpansion>
     </p:dataTable>
-    <p:dialog id="addDialog" widgetVar="addDialogWidget" header="#{msg.adminDialogAddCategory}" modal="true">
-      <h:panelGrid columns="1">
-        <p:outputLabel for="addNameField" value="#{msg.adminCategoryNameField}" />
-        <p:inputText id="addNameField" value="#{categoryAdminBean.selected.name}" />
-      </h:panelGrid>
-      <h:panelGrid columns="2">
-        <p:commandButton value="#{msg.adminButtonsSave}" action="#{categoryAdminBean.saveAdd}"
-          oncomplete="addDialogWidget.hide()" update="catTable">
-        </p:commandButton>
-        <p:commandButton value="#{msg.adminButtonsCancel}" type="button" onclick="addDialogWidget.hide()">
-        </p:commandButton>
-      </h:panelGrid>
-    </p:dialog>
-    <p:dialog id="editDialog" widgetVar="editDialogWidget" header="#{msg.adminDialogEditCategory}" modal="true">
-      <h:panelGrid columns="1">
-        <p:outputLabel for="editNameField" value="#{msg.adminCategoryNameField}" />
-        <p:inputText id="editNameField" value="#{categoryAdminBean.selected.name}" />
-        <p:outputLabel for="editProductsField" value="#{msg.adminCategoryProductsField}" />
-        <p:pickList id="editProductsField" value="#{categoryAdminBean.products}" var="product"
-          itemLabel="#{product.name}" itemValue="#{product}" />
-      </h:panelGrid>
-      <h:panelGrid columns="2">
-        <p:commandButton value="#{msg.adminButtonsSave}" action="#{categoryAdminBean.saveEdit}"
-          oncomplete="editDialogWidget.hide()" update="catTable">
-        </p:commandButton>
-        <p:commandButton value="#{msg.adminButtonsCancel}" type="button" onclick="editDialogWidget.hide()">
-        </p:commandButton>
-      </h:panelGrid>
-    </p:dialog>
     <p:dialog id="deleteDialog" widgetVar="deleteDialogWidget" header="#{msg.adminDialogDeleteCategory}" modal="true">
       <h:panelGrid columns="1">
-        <h:outputText value="#{categoryAdminBean.deleteText}" />
+        <h:outputText value="#{msg.adminDialogDeleteCategoryText}" />
       </h:panelGrid>
       <h:panelGrid columns="2">
         <p:commandButton value="#{msg.adminButtonsDelete}" action="#{categoryAdminBean.delete}"

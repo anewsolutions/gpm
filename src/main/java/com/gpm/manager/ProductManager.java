@@ -3,23 +3,37 @@
  */
 package com.gpm.manager;
 
+import java.util.List;
+
 import com.gpm.controller.ControllerException;
 import com.gpm.controller.ProductController;
 import com.gpm.manager.exception.ProductException;
 import com.gpm.model.Product;
 
 public class ProductManager {
-  public static void create(Product product) throws ProductException {
+  public static Product find(int id) throws ProductException {
     try {
-      ProductController.getInstance().create(product);
+      return ProductController.getInstance().get(id);
     } catch (ControllerException e) {
       throw new ProductException(e);
     }
   }
 
-  public static void update(Product product) throws ProductException {
+  public static List<Product> findAll() throws ProductException {
     try {
-      ProductController.getInstance().update(product);
+      return ProductController.getInstance().getAll(null, true);
+    } catch (ControllerException e) {
+      throw new ProductException(e);
+    }
+  }
+
+  public static void save(Product product) throws ProductException {
+    try {
+      if (product.getUuid() == null) {
+        ProductController.getInstance().create(product);
+      } else {
+        ProductController.getInstance().update(product);
+      }
     } catch (ControllerException e) {
       throw new ProductException(e);
     }

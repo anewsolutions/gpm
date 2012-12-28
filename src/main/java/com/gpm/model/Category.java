@@ -36,7 +36,6 @@ public class Category extends Base {
   }
 
   public void setName(String name) {
-    System.out.println("Set Name " + name);
     this.name = name;
   }
 

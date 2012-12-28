@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/admin.xhtml">
+  <ui:define name="mainContent">
+    <h:panelGrid styleClass="left-right-table" columns="2" columnClasses="left-aligned-stuff, right-aligned-stuff">
+      <h:panelGrid columns="2">
+        <p:commandButton value="#{msg.adminButtonsSave}" action="#{categoryAdminBean.save}" ajax="false">
+        </p:commandButton>
+        <p:button outcome="index" value="#{msg.adminButtonsCancel}" />
+      </h:panelGrid>
+    </h:panelGrid>
+    <p:panel>
+      <h:panelGrid columns="2">
+        <p:outputLabel for="nameField" value="#{msg.adminCategoryNameField}" />
+        <p:inputText id="nameField" value="#{categoryAdminBean.selected.name}" required="true"/>
+      </h:panelGrid>
+    </p:panel>
+  </ui:define>
+</ui:composition>
+</html>

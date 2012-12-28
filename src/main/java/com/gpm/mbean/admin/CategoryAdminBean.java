@@ -10,15 +10,16 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.model.DualListModel;
 
 import com.gpm.controller.CategoryController;
 import com.gpm.controller.ControllerException;
-import com.gpm.controller.ProductController;
-import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.CategoryManager;
+import com.gpm.manager.ProductManager;
 import com.gpm.manager.exception.CategoryException;
+import com.gpm.manager.exception.ProductException;
 import com.gpm.model.Category;
 import com.gpm.model.Product;
 
@@ -35,13 +36,27 @@ public class CategoryAdminBean implements Serializable {
   /**
    * The currently selected category.
    */
-  private Category selected = new Category();
+  private Category selected;
 
   @PostConstruct
   public void init() {
     try {
-      products = ProductController.getInstance().getAll(null, true);
-    } catch (ControllerException e) {
+      // Load the selected category, if an ID is passed as a query parameter
+      FacesContext fc = FacesContext.getCurrentInstance();
+      String id = fc.getExternalContext().getRequestParameterMap().get("id");
+      try {
+        int idValue = Integer.parseInt(id);
+        selected = CategoryManager.find(idValue);
+      } catch (NumberFormatException e) {
+        selected = new Category();
+      }
+    } catch (CategoryException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    try {
+      products = ProductManager.findAll();
+    } catch (ProductException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
@@ -77,39 +92,23 @@ public class CategoryAdminBean implements Serializable {
     this.selected = selected;
   }
 
-  public void saveAdd() {
+  public String save() {
     try {
-      System.out.println("saveAdd");
-      CategoryManager.create(selected);
-      selected = new Category();
+      CategoryManager.save(selected);
     } catch (CategoryException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+    return "/admin/categories/index?faces-redirect=true";
   }
 
-  public void saveEdit() {
-    try {
-      System.out.println("saveEdit");
-      CategoryManager.update(selected);
-      selected = new Category();
-    } catch (CategoryException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
-
-  public void delete() {
+  public String delete() {
     try {
       CategoryManager.delete(selected);
-      selected = new Category();
     } catch (CategoryException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-  }
-
-  public String getDeleteText() {
-    return MessageProvider.getMessage("adminDialogDeleteCategoryText", selected.getName());
+    return "/admin/categories/index?faces-redirect=true";
   }
 }
