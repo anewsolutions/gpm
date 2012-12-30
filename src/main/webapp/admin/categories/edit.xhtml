@@ -14,10 +14,12 @@
     <p:panel>
       <h:panelGrid columns="2">
         <p:outputLabel for="nameField" value="#{msg.adminCategoryNameField}" />
-        <p:inputText id="nameField" value="#{categoryAdminBean.selected.name}" required="true" />
-<!--       <p:outputLabel for="productsField" value="#{msg.adminCategoryProductsField}" />
-        <p:pickList id="productsField" value="#{categoryAdminBean.products}" var="product"
-          itemLabel="#{product.name}" itemValue="#{product}" /> -->
+        <p:inputText id="nameField" value="#{categoryAdminBean.selected.name}" required="true"
+          requiredMessage="#{msg.adminCategoryNameFieldRequired}" />
+        <p:outputLabel for="productsField" value="#{msg.adminCategoryProductsField}" />
+        <p:pickList id="productsField" value="#{categoryAdminBean.products}" var="product" itemLabel="#{product.name}"
+          itemValue="#{product}" converter="ProductConverter">
+        </p:pickList>
       </h:panelGrid>
     </p:panel>
   </ui:define>

@@ -6,11 +6,16 @@ package com.gpm.mbean.admin;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
-import com.gpm.controller.ControllerException;
-import com.gpm.controller.ProductController;
+import org.primefaces.model.DualListModel;
+
+import com.gpm.manager.ProductManager;
+import com.gpm.manager.exception.ProductException;
+import com.gpm.model.Category;
 import com.gpm.model.Product;
 
 @ManagedBean
@@ -23,11 +28,31 @@ public class ProductAdminBean implements Serializable {
    */
   private Product selected;
 
+  private DualListModel<Category> categoriesPickList;
+
+  @PostConstruct
+  public void init() {
+    try {
+      // Load the selected product, if an ID is passed as a query parameter
+      FacesContext fc = FacesContext.getCurrentInstance();
+      String id = fc.getExternalContext().getRequestParameterMap().get("id");
+      try {
+        int idValue = Integer.parseInt(id);
+        selected = ProductManager.find(idValue);
+      } catch (NumberFormatException e) {
+        selected = new Product();
+      }
+    } catch (ProductException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
   public List<Product> getAll() {
     List<Product> all = null;
     try {
-      all = ProductController.getInstance().getAll(null, true);
-    } catch (ControllerException e) {
+      all = ProductManager.findAll();
+    } catch (ProductException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
@@ -42,14 +67,34 @@ public class ProductAdminBean implements Serializable {
     this.selected = selected;
   }
 
-  public void delete() {
-    if (selected != null) {
-      try {
-        ProductController.getInstance().delete(selected.getId());
-      } catch (ControllerException e) {
-        e.printStackTrace();
-      }
+  public DualListModel<Category> getCategoriesPickList() {
+    if (categoriesPickList == null) {
+      categoriesPickList = new DualListModel<Category>();
     }
-    selected = null;
+    return categoriesPickList;
+  }
+
+  public void setCategoriesPickList(DualListModel<Category> categoriesPickList) {
+    this.categoriesPickList = categoriesPickList;
+  }
+
+  public String save() {
+    try {
+      ProductManager.save(selected);
+    } catch (ProductException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return "/admin/products/index?faces-redirect=true";
+  }
+
+  public String delete() {
+    try {
+      ProductManager.delete(selected);
+    } catch (ProductException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return "/admin/products/index?faces-redirect=true";
   }
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/admin.xhtml">
+  <ui:define name="mainContent">
+    <h:panelGrid styleClass="left-right-table" columns="2" columnClasses="left-aligned-stuff, right-aligned-stuff">
+      <h:panelGrid columns="2">
+        <p:commandButton value="#{msg.adminButtonsSave}" action="#{productAdminBean.save}" ajax="false">
+        </p:commandButton>
+        <p:button outcome="index" value="#{msg.adminButtonsCancel}" />
+      </h:panelGrid>
+    </h:panelGrid>
+    <p:panel>
+      <h:panelGrid columns="2">
+        <p:outputLabel for="nameField" value="#{msg.adminProductNameField}" />
+        <p:inputText id="nameField" value="#{productAdminBean.selected.name}" required="true"
+          requiredMessage="#{msg.adminProductNameFieldRequired}" />
+        <p:outputLabel for="descriptionField" value="#{msg.adminProductDescriptionField}" />
+        <h:panelGroup>
+          <p:inputTextarea id="descriptionField" rows="5" cols="45" counter="counterText" maxlength="1000"
+            counterTemplate="#{msg.adminTextAreaCounter}" value="#{productAdminBean.selected.description}" autoResize="false" />
+          <br />
+          <h:outputText id="counterText" />
+        </h:panelGroup>
+        <p:outputLabel for="categoriesField" value="#{msg.adminProductCategoriesField}" />
+        <p:pickList id="categoriesField" value="#{productAdminBean.categoriesPickList}" var="category"
+          itemLabel="#{category.name}" itemValue="#{category}" converter="CategoryConverter">
+        </p:pickList>
+      </h:panelGrid>
+    </p:panel>
+  </ui:define>
+</ui:composition>
+</html>

@@ -22,11 +22,11 @@ public class Product extends Base {
 
   private String name;
   private String code;
-//  private String description;
-//  private String image;
-//  private Float price;
-//  private boolean customisable;
-//  private boolean subscribable;
+  private String description;
+  // private String image;
+  // private Float price;
+  // private boolean customisable;
+  // private boolean subscribable;
   private Set<Category> categories = new HashSet<Category>(0);
 
   public Product() {
@@ -51,6 +51,15 @@ public class Product extends Base {
     this.code = code;
   }
 
+  @Column(length = 1000)
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
   @ManyToMany(fetch = FetchType.EAGER)
   public Set<Category> getCategories() {
     return categories;
@@ -60,44 +69,35 @@ public class Product extends Base {
     this.categories = categories;
   }
 
-//  @Column(length = 1000)
-//  public String getDescription() {
-//    return description;
-//  }
-//
-//  public void setDescription(String description) {
-//    this.description = description;
-//  }
-//
-//  public String getImage() {
-//    return image;
-//  }
-//
-//  public void setImage(String image) {
-//    this.image = image;
-//  }
-//
-//  public Float getPrice() {
-//    return price;
-//  }
-//
-//  public void setPrice(Float price) {
-//    this.price = price;
-//  }
-//
-//  public boolean isCustomisable() {
-//    return customisable;
-//  }
-//
-//  public void setCustomisable(boolean customisable) {
-//    this.customisable = customisable;
-//  }
-//
-//  public boolean isSubscribable() {
-//    return subscribable;
-//  }
-//
-//  public void setSubscribable(boolean subscribable) {
-//    this.subscribable = subscribable;
-//  }
+  // public String getImage() {
+  // return image;
+  // }
+  //
+  // public void setImage(String image) {
+  // this.image = image;
+  // }
+  //
+  // public Float getPrice() {
+  // return price;
+  // }
+  //
+  // public void setPrice(Float price) {
+  // this.price = price;
+  // }
+  //
+  // public boolean isCustomisable() {
+  // return customisable;
+  // }
+  //
+  // public void setCustomisable(boolean customisable) {
+  // this.customisable = customisable;
+  // }
+  //
+  // public boolean isSubscribable() {
+  // return subscribable;
+  // }
+  //
+  // public void setSubscribable(boolean subscribable) {
+  // this.subscribable = subscribable;
+  // }
 }

@@ -6,14 +6,14 @@
   <ui:define name="mainContent">
     <h:panelGrid styleClass="left-right-table" columns="2" columnClasses="left-aligned-stuff, right-aligned-stuff">
       <h:panelGrid columns="2">
-        <p:commandButton value="#{msg.adminButtonsDelete}" action="#{categoryAdminBean.delete}" ajax="false" />
+        <p:commandButton value="#{msg.adminButtonsDelete}" action="#{productAdminBean.delete}" ajax="false" />
         <p:button outcome="index" value="#{msg.adminButtonsCancel}" />
       </h:panelGrid>
     </h:panelGrid>
     <p:panel>
       <h:panelGrid columns="1">
-        <h:outputFormat value="#{msg.adminCategoryDeleteText}">
-          <f:param value="#{categoryAdminBean.selected.name}"/>
+        <h:outputFormat value="#{msg.adminProductDeleteText}">
+          <f:param value="#{productAdminBean.selected.name}"/>
         </h:outputFormat>
       </h:panelGrid>
     </p:panel>

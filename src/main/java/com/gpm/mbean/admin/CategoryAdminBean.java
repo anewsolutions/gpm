@@ -4,7 +4,6 @@
 package com.gpm.mbean.admin;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,12 +13,8 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.model.DualListModel;
 
-import com.gpm.controller.CategoryController;
-import com.gpm.controller.ControllerException;
 import com.gpm.manager.CategoryManager;
-import com.gpm.manager.ProductManager;
 import com.gpm.manager.exception.CategoryException;
-import com.gpm.manager.exception.ProductException;
 import com.gpm.model.Category;
 import com.gpm.model.Product;
 
@@ -29,14 +24,11 @@ public class CategoryAdminBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Pre-loaded product list.
-   */
-  private List<Product> products;
-
-  /**
    * The currently selected category.
    */
   private Category selected;
+
+  private DualListModel<Product> productsPickList;
 
   @PostConstruct
   public void init() {
@@ -54,34 +46,17 @@ public class CategoryAdminBean implements Serializable {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    try {
-      products = ProductManager.findAll();
-    } catch (ProductException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
-
-  public DualListModel<Product> getProducts() {
-    DualListModel<Product> model = new DualListModel<Product>();
-    model.setSource(products);
-    return model;
   }
 
   public List<Category> getAll() {
     List<Category> all = null;
     try {
-      all = CategoryController.getInstance().getAll(null, true);
-    } catch (ControllerException e) {
+      all = CategoryManager.findAll();
+    } catch (CategoryException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return all;
-  }
-
-  public List<Product> getAllProductsInCategory(Category category) {
-    List<Product> products = new ArrayList<Product>(category.getProducts());
-    return products;
   }
 
   public Category getSelected() {
@@ -90,6 +65,17 @@ public class CategoryAdminBean implements Serializable {
 
   public void setSelected(Category selected) {
     this.selected = selected;
+  }
+
+  public DualListModel<Product> getProductsPickList() {
+    if (productsPickList == null) {
+      productsPickList = new DualListModel<Product>();
+    }
+    return productsPickList;
+  }
+
+  public void setProductsPickList(DualListModel<Product> productsPickList) {
+    this.productsPickList = productsPickList;
   }
 
   public String save() {

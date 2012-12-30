@@ -2,8 +2,16 @@
  * Copyright 2012 Mat Booth <mbooth@apache.org>
  */
 
-.ui-titlebar {
-  padding: 0.5em 1em 0.3em;
+.ui-picklist .ui-button {
+  margin-left: 0.3em;
+  margin-right: 0.3em;
+  margin-bottom: 0.3em;
+}
+
+.ui-picklist-list {
+  -moz-box-shadow: inset 0 2px 2px #8F8F8F;
+  -webkit-box-shadow: inset 0 2px 2px #8F8F8F;
+  box-shadow: inset 0 2px 2px #8F8F8F;
 }
 
 .left-right-table {
@@ -13,12 +21,12 @@
 
 .left-aligned-stuff {
   text-align: left;
-  padding: 0px;
+  padding: 0;
 }
 
 .right-aligned-stuff {
   text-align: right;
-  padding: 0px;
+  padding: 0;
 }
 
 .toggleColumn {
