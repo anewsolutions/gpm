@@ -17,7 +17,7 @@
         <p:inputText id="nameField" value="#{categoryAdminBean.selected.name}" required="true"
           requiredMessage="#{msg.adminCategoryNameFieldRequired}" />
         <p:outputLabel for="productsField" value="#{msg.adminCategoryProductsField}" />
-        <p:pickList id="productsField" value="#{categoryAdminBean.products}" var="product" itemLabel="#{product.name}"
+        <p:pickList id="productsField" value="#{categoryAdminBean.productsPickList}" var="product" itemLabel="#{product.name}"
           itemValue="#{product}" converter="ProductConverter">
         </p:pickList>
       </h:panelGrid>
