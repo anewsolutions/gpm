@@ -9,6 +9,7 @@ import com.gpm.controller.CategoryController;
 import com.gpm.controller.ControllerException;
 import com.gpm.manager.exception.CategoryException;
 import com.gpm.model.Category;
+import com.gpm.model.Product;
 
 public class CategoryManager {
   public static Category find(int id) throws CategoryException {
@@ -25,6 +26,14 @@ public class CategoryManager {
     } catch (ControllerException e) {
       throw new CategoryException(e);
     }
+  }
+
+  public static List<Category> findAvailable(Product product) throws CategoryException {
+    List<Category> categories = findAll();
+    for (Category c : product.getCategories()) {
+      categories.remove(c);
+    }
+    return categories;
   }
 
   public static void save(Category category) throws CategoryException {

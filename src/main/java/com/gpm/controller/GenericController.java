@@ -6,6 +6,7 @@ package com.gpm.controller;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -139,7 +140,8 @@ public abstract class GenericController<T extends Base> {
       em.getTransaction().commit();
     } catch (PersistenceException e) {
       em.getTransaction().rollback();
-      throw new ControllerException("Error deleting " + cls.getSimpleName() + " with id " + id + ": " + e.getMessage(), e);
+      throw new ControllerException("Error deleting " + cls.getSimpleName() + " with id " + id + ": " + e.getMessage(),
+          e);
     } finally {
       em.close();
     }
@@ -159,11 +161,14 @@ public abstract class GenericController<T extends Base> {
         try {
           Hibernate.initialize(meth.invoke(ent));
         } catch (HibernateException e) {
-          throw new ControllerException("Error initialising collection in " + cls.getSimpleName() + ": " + e.getMessage(), e);
+          throw new ControllerException("Error initialising collection in " + cls.getSimpleName() + ": "
+              + e.getMessage(), e);
         } catch (IllegalAccessException e) {
-          throw new ControllerException("Error initialising collection in " + cls.getSimpleName() + ": " + e.getMessage(), e);
+          throw new ControllerException("Error initialising collection in " + cls.getSimpleName() + ": "
+              + e.getMessage(), e);
         } catch (InvocationTargetException e) {
-          throw new ControllerException("Error initialising collection in " + cls.getSimpleName() + ": " + e.getMessage(), e);
+          throw new ControllerException("Error initialising collection in " + cls.getSimpleName() + ": "
+              + e.getMessage(), e);
         }
       }
     }
@@ -185,7 +190,8 @@ public abstract class GenericController<T extends Base> {
       ent = em.find(cls, id);
       initialiseCollections(ent);
     } catch (PersistenceException e) {
-      throw new ControllerException("Error getting " + cls.getSimpleName() + " with id " + id + ": " + e.getMessage(), e);
+      throw new ControllerException("Error getting " + cls.getSimpleName() + " with id " + id + ": " + e.getMessage(),
+          e);
     } finally {
       em.close();
     }
@@ -193,9 +199,39 @@ public abstract class GenericController<T extends Base> {
   }
 
   /**
-   * Get all entities of type T where the specified entity attributes match the specified
-   * values.
+   * Gets all entities of type T.
    * 
+   * @return a list of entities or an empty list if none exist
+   * @throws ControllerException
+   *           if there was a problem getting the entities
+   */
+  public List<T> getAll() throws ControllerException {
+    return getAll("id", true);
+  }
+
+  /**
+   * Gets all entities of type T, ordered by the specified field.
+   * 
+   * @param orderBy
+   *          the field name to order the results by
+   * @param ascending
+   *          true specifies ascending order, false specifies descending order
+   * @return an ordered list of entities or an empty list if none exist
+   * @throws ControllerException
+   *           if there was a problem getting the entities
+   */
+  public List<T> getAll(String orderBy, boolean ascending) throws ControllerException {
+    return getAll(orderBy, ascending, new HashMap<String, Object>());
+  }
+
+  /**
+   * Get all entities of type T where the specified entity attributes match the specified
+   * values, ordered by the specified field.
+   * 
+   * @param orderBy
+   *          the field name to order the results by
+   * @param ascending
+   *          true specifies ascending order, false specifies descending order
    * @param attributes
    *          a map of attribute/value pairs with which to filter the entities, passing an
    *          empty map is equivalent to calling {@link #getAll()}
@@ -207,7 +243,11 @@ public abstract class GenericController<T extends Base> {
    * @throws IllegalArgumentException
    *           if null is passed in for the attributes map
    */
-  public List<T> getAllWhere(Map<String, Object> attributes) throws ControllerException {
+  public List<T> getAll(String orderBy, boolean ascending, Map<String, Object> attributes)
+      throws ControllerException {
+    if (orderBy == null || orderBy.isEmpty()) {
+      orderBy = "id";
+    }
     if (attributes == null) {
       throw new IllegalArgumentException("Attributes map must not be null");
     }
@@ -223,49 +263,16 @@ public abstract class GenericController<T extends Base> {
           where += " and a." + att + " = :" + att;
         }
       }
-      Query q = em.createQuery(query + where);
+      String order = " order by a." + orderBy;
+      if (ascending) {
+        order += " asc";
+      } else {
+        order += " desc";
+      }
+      Query q = em.createQuery(query + where + order);
       for (String att : attributes.keySet()) {
         q.setParameter(att, attributes.get(att));
       }
-      @SuppressWarnings("unchecked")
-      List<T> l = q.getResultList();
-      ents = new ArrayList<T>(l);
-      for (T ent : ents) {
-        initialiseCollections(ent);
-      }
-    } catch (PersistenceException e) {
-      throw new ControllerException("Error getting " + cls.getSimpleName() + "s: " + e.getMessage(), e);
-    } finally {
-      em.close();
-    }
-    return ents;
-  }
-
-  /**
-   * Gets all entities of type T, ordered by the specified field.
-   * 
-   * @param orderBy
-   *          the field name to order the results by
-   * @param ascending
-   *          true specifies ascending order, false specifies descending order
-   * @return a list of entities or an empty list if none exist
-   * @throws ControllerException
-   *           if there was a problem getting the entities
-   */
-  public List<T> getAll(String orderBy, boolean ascending) throws ControllerException {
-    if (orderBy == null || orderBy.isEmpty()) {
-      orderBy = "id";
-    }
-    EntityManager em = getEntityManager();
-    List<T> ents = new ArrayList<T>();
-    try {
-      String query = "select a from " + cls.getSimpleName() + " a order by a." + orderBy;
-      if (ascending) {
-        query += " asc";
-      } else {
-        query += " desc";
-      }
-      Query q = em.createQuery(query);
       @SuppressWarnings("unchecked")
       List<T> l = q.getResultList();
       ents = new ArrayList<T>(l);

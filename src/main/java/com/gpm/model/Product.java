@@ -3,13 +3,16 @@
  */
 package com.gpm.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 /**
  * A JPA entity for a product.
@@ -63,6 +66,11 @@ public class Product extends Base {
   @ManyToMany(fetch = FetchType.EAGER)
   public Set<Category> getCategories() {
     return categories;
+  }
+
+  @Transient
+  public List<Category> getCategoriesAsList() {
+    return new ArrayList<Category>(getCategories());
   }
 
   public void setCategories(Set<Category> categories) {

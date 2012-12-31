@@ -8,6 +8,7 @@ import java.util.List;
 import com.gpm.controller.ControllerException;
 import com.gpm.controller.ProductController;
 import com.gpm.manager.exception.ProductException;
+import com.gpm.model.Category;
 import com.gpm.model.Product;
 
 public class ProductManager {
@@ -25,6 +26,14 @@ public class ProductManager {
     } catch (ControllerException e) {
       throw new ProductException(e);
     }
+  }
+
+  public static List<Product> findAvailable(Category category) throws ProductException {
+    List<Product> products = findAll();
+    for (Product p : category.getProducts()) {
+      products.remove(p);
+    }
+    return products;
   }
 
   public static void save(Product product) throws ProductException {

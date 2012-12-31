@@ -14,7 +14,9 @@ import javax.faces.context.FacesContext;
 import org.primefaces.model.DualListModel;
 
 import com.gpm.manager.CategoryManager;
+import com.gpm.manager.ProductManager;
 import com.gpm.manager.exception.CategoryException;
+import com.gpm.manager.exception.ProductException;
 import com.gpm.model.Category;
 import com.gpm.model.Product;
 
@@ -70,6 +72,13 @@ public class CategoryAdminBean implements Serializable {
   public DualListModel<Product> getProductsPickList() {
     if (productsPickList == null) {
       productsPickList = new DualListModel<Product>();
+      try {
+        productsPickList.setSource(ProductManager.findAvailable(selected));
+        productsPickList.setTarget(selected.getProductsAsList());
+      } catch (ProductException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     }
     return productsPickList;
   }
