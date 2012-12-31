@@ -22,13 +22,15 @@
         <p:outputLabel for="descriptionField" value="#{msg.adminProductDescriptionField}" />
         <h:panelGroup>
           <p:inputTextarea id="descriptionField" rows="5" cols="45" counter="counterText" maxlength="1000"
-            counterTemplate="#{msg.adminTextAreaCounter}" value="#{productAdminBean.selected.description}" autoResize="false" />
+            counterTemplate="#{msg.adminTextAreaCounter}" value="#{productAdminBean.selected.description}"
+            autoResize="false" />
           <br />
           <h:outputText id="counterText" />
         </h:panelGroup>
         <p:outputLabel for="categoriesField" value="#{msg.adminProductCategoriesField}" />
         <p:pickList id="categoriesField" value="#{productAdminBean.categoriesPickList}" var="category"
           itemLabel="#{category.name}" itemValue="#{category}" converter="CategoryConverter">
+          <p:ajax event="transfer" listener="#{productAdminBean.onTransferPickList}" />
         </p:pickList>
       </h:panelGrid>
     </p:panel>

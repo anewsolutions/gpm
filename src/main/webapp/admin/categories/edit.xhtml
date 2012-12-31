@@ -17,8 +17,9 @@
         <p:inputText id="nameField" value="#{categoryAdminBean.selected.name}" required="true"
           requiredMessage="#{msg.adminCategoryNameFieldRequired}" />
         <p:outputLabel for="productsField" value="#{msg.adminCategoryProductsField}" />
-        <p:pickList id="productsField" value="#{categoryAdminBean.productsPickList}" var="product" itemLabel="#{product.name}"
-          itemValue="#{product}" converter="ProductConverter">
+        <p:pickList id="productsField" value="#{categoryAdminBean.productsPickList}" var="product"
+          itemLabel="#{product.name}" itemValue="#{product}" converter="ProductConverter">
+          <p:ajax event="transfer" listener="#{categoryAdminBean.onTransferPickList}" />
         </p:pickList>
       </h:panelGrid>
     </p:panel>

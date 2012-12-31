@@ -4,6 +4,8 @@
 package com.gpm.mbean.admin;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
 import com.gpm.manager.CategoryManager;
@@ -31,6 +34,8 @@ public class CategoryAdminBean implements Serializable {
   private Category selected;
 
   private DualListModel<Product> productsPickList;
+  private List<Product> productsAdded;
+  private List<Product> productsRemoved;
 
   @PostConstruct
   public void init() {
@@ -87,8 +92,27 @@ public class CategoryAdminBean implements Serializable {
     this.productsPickList = productsPickList;
   }
 
+  public void onTransferPickList(TransferEvent event) {
+    List<Product> target;
+    if (event.isAdd()) {
+      if (productsAdded == null) {
+        productsAdded = new ArrayList<Product>(event.getItems().size());
+      }
+      target = productsAdded;
+    } else {
+      if (productsRemoved == null) {
+        productsRemoved = new ArrayList<Product>(event.getItems().size());
+      }
+      target = productsRemoved;
+    }
+    for(Object item : event.getItems()) {
+      target.add((Product) item);
+    }
+  }
+
   public String save() {
     try {
+      selected.setProducts(new HashSet<Product>(productsAdded));
       CategoryManager.save(selected);
     } catch (CategoryException e) {
       // TODO Auto-generated catch block

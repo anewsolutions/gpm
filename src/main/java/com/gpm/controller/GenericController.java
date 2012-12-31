@@ -6,7 +6,6 @@ package com.gpm.controller;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -221,7 +220,7 @@ public abstract class GenericController<T extends Base> {
    *           if there was a problem getting the entities
    */
   public List<T> getAll(String orderBy, boolean ascending) throws ControllerException {
-    return getAll(orderBy, ascending, new HashMap<String, Object>());
+    return getAll(orderBy, ascending, null);
   }
 
   /**
@@ -248,19 +247,18 @@ public abstract class GenericController<T extends Base> {
     if (orderBy == null || orderBy.isEmpty()) {
       orderBy = "id";
     }
-    if (attributes == null) {
-      throw new IllegalArgumentException("Attributes map must not be null");
-    }
     EntityManager em = getEntityManager();
     List<T> ents = new ArrayList<T>();
     try {
       String query = "select a from " + cls.getSimpleName() + " a";
       String where = "";
-      for (String att : attributes.keySet()) {
-        if (where.isEmpty()) {
-          where += " where a." + att + " = :" + att;
-        } else {
-          where += " and a." + att + " = :" + att;
+      if (attributes != null) {
+        for (String att : attributes.keySet()) {
+          if (where.isEmpty()) {
+            where += " where a." + att + " = :" + att;
+          } else {
+            where += " and a." + att + " = :" + att;
+          }
         }
       }
       String order = " order by a." + orderBy;
@@ -270,8 +268,10 @@ public abstract class GenericController<T extends Base> {
         order += " desc";
       }
       Query q = em.createQuery(query + where + order);
-      for (String att : attributes.keySet()) {
-        q.setParameter(att, attributes.get(att));
+      if (attributes != null) {
+        for (String att : attributes.keySet()) {
+          q.setParameter(att, attributes.get(att));
+        }
       }
       @SuppressWarnings("unchecked")
       List<T> l = q.getResultList();
