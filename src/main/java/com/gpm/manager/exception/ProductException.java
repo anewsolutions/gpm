@@ -3,7 +3,7 @@
  */
 package com.gpm.manager.exception;
 
-public class ProductException extends Exception {
+public class ProductException extends ManagerException {
   private static final long serialVersionUID = 1L;
 
   public ProductException() {

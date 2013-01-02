@@ -3,7 +3,7 @@
  */
 package com.gpm.manager.exception;
 
-public class CategoryException extends Exception {
+public class CategoryException extends ManagerException {
   private static final long serialVersionUID = 1L;
 
   public CategoryException() {

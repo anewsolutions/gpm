@@ -5,7 +5,6 @@ package com.gpm.mbean.admin;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -112,8 +111,8 @@ public class ProductAdminBean implements Serializable {
 
   public String save() {
     try {
-      selected.setCategories(new HashSet<Category>(categoriesAdded));
       ProductManager.save(selected);
+      ProductManager.addCategoriesToProduct(selected, categoriesAdded, categoriesRemoved);
     } catch (ProductException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

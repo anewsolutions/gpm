@@ -55,4 +55,37 @@ public class ProductManager {
       throw new ProductException(e);
     }
   }
+
+  public static void addProductsToCategory(Category category, List<Product> productsAdded, List<Product> productsRemoved) throws ProductException {
+    try {
+      if (productsAdded != null) {
+        for (Product product : productsAdded) {
+          product.getCategories().add(category);
+          ProductController.getInstance().update(product);
+        }
+      }
+      if (productsRemoved != null) {
+        for (Product product : productsRemoved) {
+          product.getCategories().remove(category);
+          ProductController.getInstance().update(product);
+        }
+      }
+    } catch (ControllerException e) {
+      throw new ProductException(e);
+    }
+  }
+
+  public static void addCategoriesToProduct(Product product, List<Category> categoriesAdded, List<Category> categoriesRemoved) throws ProductException {
+    try {
+      if (categoriesAdded != null) {
+        product.getCategories().addAll(categoriesAdded);
+      }
+      if (categoriesRemoved != null) {
+        product.getCategories().removeAll(categoriesRemoved);
+      }
+      ProductController.getInstance().update(product);
+    } catch (ControllerException e) {
+      throw new ProductException(e);
+    }
+  }
 }

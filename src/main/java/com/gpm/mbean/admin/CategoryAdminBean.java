@@ -5,7 +5,6 @@ package com.gpm.mbean.admin;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +18,7 @@ import org.primefaces.model.DualListModel;
 import com.gpm.manager.CategoryManager;
 import com.gpm.manager.ProductManager;
 import com.gpm.manager.exception.CategoryException;
+import com.gpm.manager.exception.ManagerException;
 import com.gpm.manager.exception.ProductException;
 import com.gpm.model.Category;
 import com.gpm.model.Product;
@@ -112,9 +112,9 @@ public class CategoryAdminBean implements Serializable {
 
   public String save() {
     try {
-      selected.setProducts(new HashSet<Product>(productsAdded));
       CategoryManager.save(selected);
-    } catch (CategoryException e) {
+      ProductManager.addProductsToCategory(selected, productsAdded, productsRemoved);
+    } catch (ManagerException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
