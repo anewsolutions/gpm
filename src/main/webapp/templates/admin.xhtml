@@ -12,14 +12,14 @@
   </h:head>
   <h:body>
     <h:outputStylesheet target="head" library="css" name="style.css" />
-    <h:panelGrid columns="2" styleClass="adminPageTable">
+    <h:panelGrid columns="2" styleClass="adminPageTable" columnClasses="adminPageMenuColumn,">
       <h:panelGroup>
-        <p:menu>
-          <p:submenu label="#{msg.adminMenuHeading}">
+        <p:panel header="#{msg.adminMenuHeading}">
+          <p:menu>
             <p:menuitem value="#{msg.adminMenuCategories}" outcome="/admin/categories/index" />
             <p:menuitem value="#{msg.adminMenuProducts}" outcome="/admin/products/index" />
-          </p:submenu>
-        </p:menu>
+          </p:menu>
+        </p:panel>
       </h:panelGroup>
       <h:panelGroup>
         <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
