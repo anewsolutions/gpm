@@ -12,9 +12,21 @@
   </h:head>
   <h:body>
     <h:outputStylesheet target="head" library="css" name="style.css" />
-    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
-      <ui:insert name="mainContent">This is a template, nothing to see here.</ui:insert>
-    </h:form>
+    <h:panelGrid columns="2" styleClass="adminPageTable">
+      <h:panelGroup>
+        <p:menu>
+          <p:submenu label="#{msg.adminMenuHeading}">
+            <p:menuitem value="#{msg.adminMenuCategories}" outcome="/admin/categories/index" />
+            <p:menuitem value="#{msg.adminMenuProducts}" outcome="/admin/products/index" />
+          </p:submenu>
+        </p:menu>
+      </h:panelGroup>
+      <h:panelGroup>
+        <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+          <ui:insert name="mainContent">This is a template, nothing to see here.</ui:insert>
+        </h:form>
+      </h:panelGroup>
+    </h:panelGrid>
   </h:body>
 </f:view>
 </html>

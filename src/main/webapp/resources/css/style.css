@@ -14,17 +14,22 @@
   box-shadow: inset 0 2px 2px #8F8F8F;
 }
 
-.left-right-table {
-  width: 100%;
-  border-spacing: 0;
+.adminPageTable td {
+  vertical-align: top;
 }
 
-.left-aligned-stuff {
+.sectionControlsTable {
+  width: 100%;
+  border-spacing: 0;
+  padding-bottom: 0.3em;
+}
+
+.sectionControlsLeftColumn {
   text-align: left;
   padding: 0;
 }
 
-.right-aligned-stuff {
+.sectionControlsRightColumn {
   text-align: right;
   padding: 0;
 }

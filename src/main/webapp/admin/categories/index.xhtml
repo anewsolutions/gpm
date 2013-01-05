@@ -4,12 +4,12 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/admin.xhtml">
   <ui:define name="mainContent">
-    <h:panelGrid styleClass="left-right-table" columns="2" columnClasses="left-aligned-stuff, right-aligned-stuff">
-      <h:panelGrid columns="1">
-        <p:button outcome="add" value="#{msg.adminButtonsAdd}" />
+    <p:panel header="#{msg.adminCategoryManageHeading}">
+      <h:panelGrid styleClass="sectionControlsTable" columns="2" columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
+        <h:panelGroup>
+          <p:button outcome="add" value="#{msg.adminButtonsAdd}" />
+        </h:panelGroup>
       </h:panelGrid>
-    </h:panelGrid>
-    <p:panel>
       <p:dataTable id="catTable" var="cat" value="#{categoryAdminBean.all}" emptyMessage="#{msg.adminNoCategoriesFound}">
         <p:column styleClass="toggleColumn">
           <p:rowToggler />
@@ -19,10 +19,10 @@
         </p:column>
         <p:column styleClass="actionColumn" headerText="#{msg.adminCategoryTableActionsColumn}">
           <p:button outcome="edit" value="#{msg.adminButtonsEdit}">
-            <f:param name="id" value="#{cat.id}"/>
+            <f:param name="id" value="#{cat.id}" />
           </p:button>
           <p:button outcome="delete" value="#{msg.adminButtonsDelete}">
-            <f:param name="id" value="#{cat.id}"/>
+            <f:param name="id" value="#{cat.id}" />
           </p:button>
         </p:column>
         <p:rowExpansion>

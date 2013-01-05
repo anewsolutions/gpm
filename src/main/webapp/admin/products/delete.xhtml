@@ -4,13 +4,13 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/admin.xhtml">
   <ui:define name="mainContent">
-    <h:panelGrid styleClass="left-right-table" columns="2" columnClasses="left-aligned-stuff, right-aligned-stuff">
-      <h:panelGrid columns="2">
-        <p:commandButton value="#{msg.adminButtonsDelete}" action="#{productAdminBean.delete}" ajax="false" />
-        <p:button outcome="index" value="#{msg.adminButtonsCancel}" />
+    <p:panel header="#{msg.adminProductDeleteHeading}">
+      <h:panelGrid styleClass="sectionControlsTable" columns="2" columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
+        <h:panelGroup>
+          <p:commandButton value="#{msg.adminButtonsDelete}" action="#{productAdminBean.delete}" ajax="false" />
+          <p:button outcome="index" value="#{msg.adminButtonsCancel}" />
+        </h:panelGroup>
       </h:panelGrid>
-    </h:panelGrid>
-    <p:panel>
       <h:panelGrid columns="1">
         <h:outputFormat value="#{msg.adminProductDeleteText}">
           <f:param value="#{productAdminBean.selected.name}" />
