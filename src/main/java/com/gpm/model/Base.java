@@ -4,6 +4,7 @@
 package com.gpm.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -15,8 +16,8 @@ import javax.persistence.PrePersist;
 import org.hibernate.annotations.Type;
 
 /**
- * This is the base class for all JPA entities. It contains the database ID, and business
- * ID. All entities in the model should extend this class.
+ * This is the base class for all JPA entities. It contains the database ID, business ID,
+ * and entity creation time. All entities in the model should extend this class.
  * 
  * @author mbooth
  */
@@ -26,6 +27,7 @@ public abstract class Base implements Serializable {
 
   private int id;
   private UUID uuid;
+  private Date created;
 
   public Base() {
   }
@@ -65,13 +67,32 @@ public abstract class Base implements Serializable {
   }
 
   /**
+   * Time stamp of when the entity was created. This is set before new entities are
+   * persisted for the first time.
+   * 
+   * @return a date/time that identifies when the entity was created
+   */
+  @Column(nullable = false)
+  public Date getCreated() {
+    return created;
+  }
+
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  /**
    * Called by the persistence provider before the entity is saved to make sure the entity
-   * has a business key. This should not be called by the application.
+   * has all of it's auto-generated and read-only fields populated. This should not be
+   * called by the application.
    */
   @PrePersist
-  public void ensureUuid() {
+  public void ensureAutoFields() {
     if (getUuid() == null) {
       setUuid(UUID.randomUUID());
+    }
+    if (getCreated() == null) {
+      setCreated(new Date());
     }
   }
 

@@ -13,11 +13,17 @@
       </h:panelGrid>
       <h:panelGrid columns="2">
         <p:outputLabel for="nameField" value="#{msg.adminProductNameField}" />
-        <p:inputText id="nameField" value="#{productAdminBean.selected.name}" required="true"
-          requiredMessage="#{msg.adminProductNameFieldRequired}" />
+        <h:panelGroup>
+          <p:inputText id="nameField" value="#{productAdminBean.selected.name}" required="true"
+            requiredMessage="#{msg.adminProductNameFieldRequired}" />
+          <h:message errorClass="inlineMessage ui-state-error" for="nameField" />
+        </h:panelGroup>
         <p:outputLabel for="codeField" value="#{msg.adminProductCodeField}" />
-        <p:inputText id="codeField" value="#{productAdminBean.selected.code}" required="true"
-          requiredMessage="#{msg.adminProductCodeFieldRequired}" />
+        <h:panelGroup>
+          <p:inputText id="codeField" value="#{productAdminBean.selected.code}" required="true"
+            requiredMessage="#{msg.adminProductCodeFieldRequired}" />
+          <h:message errorClass="inlineMessage ui-state-error" for="codeField" />
+        </h:panelGroup>
         <p:outputLabel for="descriptionField" value="#{msg.adminProductDescriptionField}" />
         <h:panelGroup>
           <p:inputTextarea id="descriptionField" rows="5" cols="45" counter="counterText" maxlength="1000"

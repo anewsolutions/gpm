@@ -13,8 +13,11 @@
       </h:panelGrid>
       <h:panelGrid columns="2">
         <p:outputLabel for="nameField" value="#{msg.adminCategoryNameField}" />
-        <p:inputText id="nameField" value="#{categoryAdminBean.selected.name}" required="true"
-          requiredMessage="#{msg.adminCategoryNameFieldRequired}" />
+        <h:panelGroup>
+          <p:inputText id="nameField" value="#{categoryAdminBean.selected.name}" required="true"
+            requiredMessage="#{msg.adminCategoryNameFieldRequired}" />
+          <h:message errorClass="inlineMessage ui-state-error" for="nameField" />
+        </h:panelGroup>
         <p:outputLabel for="productsField" value="#{msg.adminCategoryProductsField}" />
         <p:pickList id="productsField" value="#{categoryAdminBean.productsPickList}" var="product"
           itemLabel="#{product.name}" itemValue="#{product}" converter="ProductConverter">

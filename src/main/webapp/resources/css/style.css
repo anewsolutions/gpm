@@ -51,3 +51,8 @@
   text-align: center;
   width: 250px;
 }
+
+span.inlineMessage.ui-state-error {
+  border: none;
+  margin-left: 0.3em;
+}
