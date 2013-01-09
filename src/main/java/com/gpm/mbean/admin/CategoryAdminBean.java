@@ -1,5 +1,5 @@
 /**
- * Copyright 2012 Mat Booth <mbooth@apache.org>
+ * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
 package com.gpm.mbean.admin;
 
@@ -78,8 +78,8 @@ public class CategoryAdminBean implements Serializable {
     if (productsPickList == null) {
       productsPickList = new DualListModel<Product>();
       try {
-        productsPickList.setSource(ProductManager.findAvailable(selected));
-        productsPickList.setTarget(selected.getProductsAsList());
+        productsPickList.setSource(ProductManager.findNotInCategory(selected));
+        productsPickList.setTarget(ProductManager.findInCategory(selected));
       } catch (ProductException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();

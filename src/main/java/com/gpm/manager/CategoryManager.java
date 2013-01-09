@@ -1,5 +1,5 @@
 /**
- * Copyright 2012 Mat Booth <mbooth@apache.org>
+ * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
 package com.gpm.manager;
 
@@ -38,7 +38,7 @@ public class CategoryManager {
 
   public static void save(Category category) throws CategoryException {
     try {
-      if (category.getUuid() == null) {
+      if (category.getId() == 0) {
         CategoryController.getInstance().create(category);
       } else {
         CategoryController.getInstance().update(category);

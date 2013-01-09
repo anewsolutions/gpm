@@ -1,5 +1,5 @@
 /**
- * Copyright 2012 Mat Booth <mbooth@apache.org>
+ * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
 package com.gpm.model;
 
@@ -11,7 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
 
 import org.hibernate.annotations.Type;
 
@@ -29,7 +28,13 @@ public abstract class Base implements Serializable {
   private UUID uuid;
   private Date created;
 
+  /**
+   * Default constructor to populate generated/read-only fields. All extending classes
+   * should call super().
+   */
   public Base() {
+    setUuid(UUID.randomUUID());
+    setCreated(new Date());
   }
 
   /**
@@ -52,7 +57,7 @@ public abstract class Base implements Serializable {
   /**
    * Business key of the entity. A universally unique and immutable identifier used for
    * comparing entities that may or may not point to the same row in the database. This is
-   * set before new entities are persisted for the first time.
+   * set when new entities are created, there is no need to set it manually.
    * 
    * @return the business key as a universally unique identifier
    */
@@ -67,8 +72,8 @@ public abstract class Base implements Serializable {
   }
 
   /**
-   * Time stamp of when the entity was created. This is set before new entities are
-   * persisted for the first time.
+   * Time stamp of when the entity was created. This is set when new entities are created,
+   * there is no need to set it manually.
    * 
    * @return a date/time that identifies when the entity was created
    */
@@ -79,21 +84,6 @@ public abstract class Base implements Serializable {
 
   public void setCreated(Date created) {
     this.created = created;
-  }
-
-  /**
-   * Called by the persistence provider before the entity is saved to make sure the entity
-   * has all of it's auto-generated and read-only fields populated. This should not be
-   * called by the application.
-   */
-  @PrePersist
-  public void ensureAutoFields() {
-    if (getUuid() == null) {
-      setUuid(UUID.randomUUID());
-    }
-    if (getCreated() == null) {
-      setCreated(new Date());
-    }
   }
 
   @Override

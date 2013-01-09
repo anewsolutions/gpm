@@ -1,8 +1,9 @@
 /**
- * Copyright 2012 Mat Booth <mbooth@apache.org>
+ * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
 package com.gpm.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.gpm.controller.ControllerException;
@@ -28,17 +29,29 @@ public class ProductManager {
     }
   }
 
-  public static List<Product> findAvailable(Category category) throws ProductException {
-    List<Product> products = findAll();
-    for (Product p : category.getProducts()) {
-      products.remove(p);
+  public static List<Product> findInCategory(Category category) throws ProductException {
+    List<Product> products = new ArrayList<Product>();
+    for (Product p : findAll()) {
+      if (p.getCategories().contains(category)) {
+        products.add(p);
+      }
+    }
+    return products;
+  }
+
+  public static List<Product> findNotInCategory(Category category) throws ProductException {
+    List<Product> products = new ArrayList<Product>();
+    for (Product p : findAll()) {
+      if (!p.getCategories().contains(category)) {
+        products.add(p);
+      }
     }
     return products;
   }
 
   public static void save(Product product) throws ProductException {
     try {
-      if (product.getUuid() == null) {
+      if (product.getId() == 0) {
         ProductController.getInstance().create(product);
       } else {
         ProductController.getInstance().update(product);
@@ -70,20 +83,6 @@ public class ProductManager {
           ProductController.getInstance().update(product);
         }
       }
-    } catch (ControllerException e) {
-      throw new ProductException(e);
-    }
-  }
-
-  public static void addCategoriesToProduct(Product product, List<Category> categoriesAdded, List<Category> categoriesRemoved) throws ProductException {
-    try {
-      if (categoriesAdded != null) {
-        product.getCategories().addAll(categoriesAdded);
-      }
-      if (categoriesRemoved != null) {
-        product.getCategories().removeAll(categoriesRemoved);
-      }
-      ProductController.getInstance().update(product);
     } catch (ControllerException e) {
       throw new ProductException(e);
     }

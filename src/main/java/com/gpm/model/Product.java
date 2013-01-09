@@ -1,5 +1,5 @@
 /**
- * Copyright 2012 Mat Booth <mbooth@apache.org>
+ * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
 package com.gpm.model;
 
@@ -8,10 +8,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 /**
@@ -25,11 +27,8 @@ public class Product extends Base {
 
   private String name;
   private String code;
+  private Set<Variant> variants = new HashSet<Variant>(0);
   private String description;
-  // private String image;
-  // private Float price;
-  // private boolean customisable;
-  // private boolean subscribable;
   private Set<Category> categories = new HashSet<Category>(0);
 
   public Product() {
@@ -51,7 +50,26 @@ public class Product extends Base {
   }
 
   public void setCode(String code) {
-    this.code = code;
+    this.code = code.toUpperCase();
+  }
+
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  public Set<Variant> getVariants() {
+    return variants;
+  }
+
+  @Transient
+  public int getNumVariants() {
+    return getVariants().size();
+  }
+
+  @Transient
+  public List<Variant> getVariantsAsList() {
+    return new ArrayList<Variant>(getVariants());
+  }
+
+  public void setVariants(Set<Variant> variants) {
+    this.variants = variants;
   }
 
   @Column(length = 1000)
@@ -63,7 +81,7 @@ public class Product extends Base {
     this.description = description;
   }
 
-  @ManyToMany(fetch = FetchType.EAGER)
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   public Set<Category> getCategories() {
     return categories;
   }
@@ -76,36 +94,4 @@ public class Product extends Base {
   public void setCategories(Set<Category> categories) {
     this.categories = categories;
   }
-
-  // public String getImage() {
-  // return image;
-  // }
-  //
-  // public void setImage(String image) {
-  // this.image = image;
-  // }
-  //
-  // public Float getPrice() {
-  // return price;
-  // }
-  //
-  // public void setPrice(Float price) {
-  // this.price = price;
-  // }
-  //
-  // public boolean isCustomisable() {
-  // return customisable;
-  // }
-  //
-  // public void setCustomisable(boolean customisable) {
-  // this.customisable = customisable;
-  // }
-  //
-  // public boolean isSubscribable() {
-  // return subscribable;
-  // }
-  //
-  // public void setSubscribable(boolean subscribable) {
-  // this.subscribable = subscribable;
-  // }
 }

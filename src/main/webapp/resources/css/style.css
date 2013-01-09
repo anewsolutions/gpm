@@ -1,5 +1,5 @@
 /**
- * Copyright 2012 Mat Booth <mbooth@apache.org>
+ * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
 
 .ui-menu {
@@ -50,6 +50,10 @@
 .actionColumn {
   text-align: center;
   width: 250px;
+}
+
+.productCode {
+  text-transform: uppercase;
 }
 
 span.inlineMessage.ui-state-error {

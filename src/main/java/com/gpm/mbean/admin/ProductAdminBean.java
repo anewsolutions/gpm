@@ -1,10 +1,9 @@
 /**
- * Copyright 2012 Mat Booth <mbooth@apache.org>
+ * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
 package com.gpm.mbean.admin;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -21,6 +20,7 @@ import com.gpm.manager.exception.CategoryException;
 import com.gpm.manager.exception.ProductException;
 import com.gpm.model.Category;
 import com.gpm.model.Product;
+import com.gpm.model.Variant;
 
 @ManagedBean
 @ViewScoped
@@ -32,9 +32,12 @@ public class ProductAdminBean implements Serializable {
    */
   private Product selected;
 
+  /**
+   * The variant to be removed.
+   */
+  private Variant remove;
+
   private DualListModel<Category> categoriesPickList;
-  private List<Category> categoriesAdded;
-  private List<Category> categoriesRemoved;
 
   @PostConstruct
   public void init() {
@@ -47,6 +50,10 @@ public class ProductAdminBean implements Serializable {
         selected = ProductManager.find(idValue);
       } catch (NumberFormatException e) {
         selected = new Product();
+      }
+      // Must have as least one variant
+      if (selected.getVariants().size() == 0) {
+        addVariant();
       }
     } catch (ProductException e) {
       // TODO Auto-generated catch block
@@ -69,10 +76,6 @@ public class ProductAdminBean implements Serializable {
     return selected;
   }
 
-  public void setSelected(Product selected) {
-    this.selected = selected;
-  }
-
   public DualListModel<Category> getCategoriesPickList() {
     if (categoriesPickList == null) {
       categoriesPickList = new DualListModel<Category>();
@@ -92,27 +95,19 @@ public class ProductAdminBean implements Serializable {
   }
 
   public void onTransferPickList(TransferEvent event) {
-    List<Category> target;
-    if (event.isAdd()) {
-      if (categoriesAdded == null) {
-        categoriesAdded = new ArrayList<Category>(event.getItems().size());
-      }
-      target = categoriesAdded;
-    } else {
-      if (categoriesRemoved == null) {
-        categoriesRemoved = new ArrayList<Category>(event.getItems().size());
-      }
-      target = categoriesRemoved;
-    }
     for(Object item : event.getItems()) {
-      target.add((Category) item);
+      Category category = (Category) item;
+      if (event.isAdd()) {
+        selected.getCategories().add(category);
+      } else {
+        selected.getCategories().remove(category);
+      }
     }
   }
 
   public String save() {
     try {
       ProductManager.save(selected);
-      ProductManager.addCategoriesToProduct(selected, categoriesAdded, categoriesRemoved);
     } catch (ProductException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -128,5 +123,27 @@ public class ProductAdminBean implements Serializable {
       e.printStackTrace();
     }
     return "/admin/products/index?faces-redirect=true";
+  }
+
+  public Variant getRemove() {
+    return remove;
+  }
+
+  public void setRemove(Variant remove) {
+    this.remove = remove;
+  }
+
+  public void addVariant() {
+    Variant v = new Variant();
+    selected.getVariants().add(v);
+    v.setName("");
+    v.setCode(Integer.toString(selected.getVariants().size()));
+  }
+
+  public void removeVariant() {
+    if (remove != null) {
+      selected.getVariants().remove(remove);
+    }
+    remove = null;
   }
 }

@@ -5,8 +5,12 @@
 <ui:composition template="/templates/admin.xhtml">
   <ui:define name="mainContent">
     <p:panel header="#{msg.adminProductAddHeading}">
-      <h:panelGrid styleClass="sectionControlsTable" columns="2" columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
+      <h:panelGrid styleClass="sectionControlsTable" columns="2"
+        columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
         <h:panelGroup>
+          <p:commandButton value="#{msg.adminProductButtonsAddVariant}" action="#{productAdminBean.addVariant}"
+            update="variantsFieldLabelPanel,variantsFieldPanel,priceFieldLabelPanel,priceFieldPanel,weightFieldLabelPanel,weightFieldPanel,stockFieldLabelPanel,stockFieldPanel"
+            ajax="true" process="@this" />
           <p:commandButton value="#{msg.adminButtonsSave}" action="#{productAdminBean.save}" ajax="false" />
           <p:button outcome="index" value="#{msg.adminButtonsCancel}" />
         </h:panelGroup>
@@ -15,28 +19,130 @@
         <p:outputLabel for="nameField" value="#{msg.adminProductNameField}" />
         <h:panelGroup>
           <p:inputText id="nameField" value="#{productAdminBean.selected.name}" required="true"
-            requiredMessage="#{msg.adminProductNameFieldRequired}" />
+            requiredMessage="#{msg.adminProductNameFieldRequired}" size="24">
+            <p:ajax />
+          </p:inputText>
           <h:message errorClass="inlineMessage ui-state-error" for="nameField" />
         </h:panelGroup>
         <p:outputLabel for="codeField" value="#{msg.adminProductCodeField}" />
         <h:panelGroup>
           <p:inputText id="codeField" value="#{productAdminBean.selected.code}" required="true"
-            requiredMessage="#{msg.adminProductCodeFieldRequired}" />
+            requiredMessage="#{msg.adminProductCodeFieldRequired}" size="10" styleClass="productCode">
+            <p:ajax update="variantsFieldPanel" />
+          </p:inputText>
           <h:message errorClass="inlineMessage ui-state-error" for="codeField" />
+        </h:panelGroup>
+        <h:panelGroup id="variantsFieldLabelPanel">
+          <h:outputText value="#{msg.adminProductVariantsField}"
+            rendered="#{productAdminBean.selected.numVariants > 1}" />
+        </h:panelGroup>
+        <h:panelGroup id="variantsFieldPanel">
+          <p:dataGrid id="variantsField" var="variant" value="#{productAdminBean.selected.variantsAsList}" columns="3"
+            rendered="#{productAdminBean.selected.numVariants > 1}">
+            <p:column>
+              <p:commandButton value="#{msg.adminProductButtonsRemoveVariant}" action="#{productAdminBean.removeVariant}"
+                update=":mainForm:variantsFieldLabelPanel,:mainForm:variantsFieldPanel,:mainForm:priceFieldLabelPanel,:mainForm:priceFieldPanel,:mainForm:weightFieldLabelPanel,:mainForm:weightFieldPanel,:mainForm:stockFieldLabelPanel,:mainForm:stockFieldPanel"
+                ajax="true" process="@this">
+                <f:setPropertyActionListener target="#{productAdminBean.remove}" value="#{variant}" />
+              </p:commandButton>
+              <h:panelGrid columns="2">
+                <p:outputLabel for="variantNameField" value="#{msg.adminProductNameField}" />
+                <h:panelGroup>
+                  <p:inputText id="variantNameField" value="#{variant.name}" required="true"
+                    requiredMessage="#{msg.adminProductVariantNameFieldRequired}" size="10">
+                    <p:ajax />
+                  </p:inputText>
+                  <h:message errorClass="inlineMessage ui-state-error" for="variantNameField" />
+                </h:panelGroup>
+                <p:outputLabel for="variantCodeField" value="#{msg.adminProductCodeField}" />
+                <h:panelGroup>
+                  <h:outputText value="#{productAdminBean.selected.code} - "
+                    rendered="#{not empty productAdminBean.selected.code}" />
+                  <p:inputText id="variantCodeField" value="#{variant.code}" required="true"
+                    requiredMessage="#{msg.adminProductVariantCodeFieldRequired}" size="10" styleClass="productCode">
+                    <p:ajax />
+                  </p:inputText>
+                  <h:message errorClass="inlineMessage ui-state-error" for="variantCodeField" />
+                </h:panelGroup>
+                <p:outputLabel for="variantPriceField" value="#{msg.adminProductPriceField}" />
+                <h:panelGroup>
+                  <p:inputText id="variantPriceField" value="#{variant.price}" required="true"
+                    requiredMessage="#{msg.adminProductVariantPriceFieldRequired}" size="10">
+                    <p:ajax />
+                  </p:inputText>
+                  <h:message errorClass="inlineMessage ui-state-error" for="variantPriceField" />
+                </h:panelGroup>
+                <p:outputLabel for="variantWeightField" value="#{msg.adminProductWeightField}" />
+                <h:panelGroup>
+                  <p:inputText id="variantWeightField" value="#{variant.weight}" required="true"
+                    requiredMessage="#{msg.adminProductVariantWeightFieldRequired}" size="10">
+                    <p:ajax />
+                  </p:inputText>
+                  <h:message errorClass="inlineMessage ui-state-error" for="variantWeightField" />
+                </h:panelGroup>
+                <p:outputLabel for="variantStockField" value="#{msg.adminProductStockField}" />
+                <h:panelGroup>
+                  <p:inputText id="variantStockField" value="#{variant.stock}" required="true"
+                    requiredMessage="#{msg.adminProductVariantStockFieldRequired}" size="10">
+                    <p:ajax />
+                  </p:inputText>
+                  <h:message errorClass="inlineMessage ui-state-error" for="variantStockField" />
+                </h:panelGroup>
+              </h:panelGrid>
+            </p:column>
+          </p:dataGrid>
+        </h:panelGroup>
+        <h:panelGroup id="priceFieldLabelPanel">
+          <p:outputLabel for="priceField" value="#{msg.adminProductPriceField}"
+            rendered="#{productAdminBean.selected.numVariants == 1}" />
+        </h:panelGroup>
+        <h:panelGroup id="priceFieldPanel">
+          <p:inputText id="priceField" value="#{productAdminBean.selected.variantsAsList[0].price}" required="true"
+            requiredMessage="#{msg.adminProductPriceFieldRequired}" size="10"
+            rendered="#{productAdminBean.selected.numVariants == 1}">
+            <p:ajax />
+          </p:inputText>
+          <h:message errorClass="inlineMessage ui-state-error" for="priceField" />
+        </h:panelGroup>
+        <h:panelGroup id="weightFieldLabelPanel">
+          <p:outputLabel for="weightField" value="#{msg.adminProductWeightField}"
+            rendered="#{productAdminBean.selected.numVariants == 1}" />
+        </h:panelGroup>
+        <h:panelGroup id="weightFieldPanel">
+          <p:inputText id="weightField" value="#{productAdminBean.selected.variantsAsList[0].weight}" required="true"
+            requiredMessage="#{msg.adminProductWeightFieldRequired}" size="10"
+            rendered="#{productAdminBean.selected.numVariants == 1}">
+            <p:ajax />
+          </p:inputText>
+          <h:message errorClass="inlineMessage ui-state-error" for="weightField" />
+        </h:panelGroup>
+        <h:panelGroup id="stockFieldLabelPanel">
+          <p:outputLabel for="stockField" value="#{msg.adminProductStockField}"
+            rendered="#{productAdminBean.selected.numVariants == 1}" />
+        </h:panelGroup>
+        <h:panelGroup id="stockFieldPanel">
+          <p:inputText id="stockField" value="#{productAdminBean.selected.variantsAsList[0].stock}" required="true"
+            requiredMessage="#{msg.adminProductStockFieldRequired}" size="10"
+            rendered="#{productAdminBean.selected.numVariants == 1}">
+            <p:ajax />
+          </p:inputText>
+          <h:message errorClass="inlineMessage ui-state-error" for="stockField" />
         </h:panelGroup>
         <p:outputLabel for="descriptionField" value="#{msg.adminProductDescriptionField}" />
         <h:panelGroup>
-          <p:inputTextarea id="descriptionField" rows="5" cols="45" counter="counterText" maxlength="1000"
-            counterTemplate="#{msg.adminTextAreaCounter}" value="#{productAdminBean.selected.description}"
+          <p:inputTextarea id="descriptionField" rows="5" cols="45" counter="descriptionFieldHint" maxlength="1000"
+            counterTemplate="#{msg.adminProductDescriptionFieldHint}" value="#{productAdminBean.selected.description}"
             autoResize="false" />
           <br />
-          <h:outputText id="counterText" />
+          <h:outputText id="descriptionFieldHint" />
         </h:panelGroup>
         <p:outputLabel for="categoriesField" value="#{msg.adminProductCategoriesField}" />
-        <p:pickList id="categoriesField" value="#{productAdminBean.categoriesPickList}" var="category"
-          itemLabel="#{category.name}" itemValue="#{category}" converter="CategoryConverter">
-          <p:ajax event="transfer" listener="#{productAdminBean.onTransferPickList}" />
-        </p:pickList>
+        <h:panelGroup>
+          <p:pickList id="categoriesField" value="#{productAdminBean.categoriesPickList}" var="category"
+            itemLabel="#{category.name}" itemValue="#{category}" converter="CategoryConverter">
+            <p:ajax event="transfer" listener="#{productAdminBean.onTransferPickList}" />
+          </p:pickList>
+        </h:panelGroup>
       </h:panelGrid>
     </p:panel>
   </ui:define>

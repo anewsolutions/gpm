@@ -15,7 +15,9 @@
         <p:outputLabel for="nameField" value="#{msg.adminCategoryNameField}" />
         <h:panelGroup>
           <p:inputText id="nameField" value="#{categoryAdminBean.selected.name}" required="true"
-            requiredMessage="#{msg.adminCategoryNameFieldRequired}" />
+            requiredMessage="#{msg.adminCategoryNameFieldRequired}" size="24">
+            <p:ajax />
+          </p:inputText>
           <h:message errorClass="inlineMessage ui-state-error" for="nameField" />
         </h:panelGroup>
         <p:outputLabel for="productsField" value="#{msg.adminCategoryProductsField}" />
