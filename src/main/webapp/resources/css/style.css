@@ -3,7 +3,7 @@
  */
 
 .ui-menu {
-  width: 10em;
+  width: 9.5em;
 }
 
 .ui-picklist .ui-button {
@@ -23,7 +23,11 @@
 }
 
 .adminPageMenuColumn {
-  width: 10.5em;
+  width: 10em;
+  vertical-align: top;
+}
+
+.adminPageSectionColumn {
   vertical-align: top;
 }
 

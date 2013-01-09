@@ -20,6 +20,9 @@
         <p:column headerText="#{msg.adminProductTableCodeColumn}">
           #{prod.code}
         </p:column>
+        <p:column headerText="#{msg.adminProductTableVariantsColumn}">
+          #{prod.numVariants}
+        </p:column>
         <p:column styleClass="actionColumn" headerText="#{msg.adminProductTableActionsColumn}">
           <p:button outcome="edit" value="#{msg.adminButtonsEdit}">
             <f:param name="id" value="#{prod.id}" />
