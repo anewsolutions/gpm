@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<f:view>
+  <h:head>
+    <title>#{msg.storePageTitle}</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <link href="#{request.contextPath}/favicon.ico" rel="icon" type="image/vnd.microsoft.icon" />
+    <link href='#{request.contextPath}/favicon.ico' rel="shortcut icon" type="image/x-icon" />
+  </h:head>
+  <h:body>
+    <h:outputStylesheet target="head" library="css" name="shop.css" />
+    <p:panel id="shopMainPagePanel">
+      <h:panelGrid id="shopHeaderTable" columns="3"
+        columnClasses="shopHeaderTableLeftColumn,shopHeaderTableCentralColumn,shopHeaderTableRightColumn">
+        <h:panelGroup>
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:outputLink value="http://www.guineapigmagazine.com/index.php">
+            <p:graphicImage library="images" name="logo.png" alt="#{msg.storeHeaderLogoAltText}" />
+          </h:outputLink>
+        </h:panelGroup>
+        <h:panelGroup>
+          <iframe scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: 86px; height: 21px;"
+            src="http://www.facebook.com/plugins/like.php?href=http://www.guineapigmagazine.com/&amp;send=false&amp;layout=button_count&amp;width=45&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21"></iframe>
+        </h:panelGroup>
+      </h:panelGrid>
+      <span id="shopHeaderMenu">
+        <h:outputLink value="http://www.guineapigmagazine.com/index.php">Home</h:outputLink>
+        <h:outputLink value="http://www.guineapigmagazine.com/about.php">About</h:outputLink>
+        <h:outputLink value="http://www.guineapigmagazine.com/features.php">Regulars</h:outputLink>
+        <h:outputLink value="http://www.guineapigmagazine.com/current-issue.php">Current Issue</h:outputLink>
+        <h:outputLink value="/shop">Purchase/Subscribe</h:outputLink>
+        <h:outputLink value="http://www.guineapigmagazine.com/interactive.php">Online Issue</h:outputLink>
+        <h:outputLink value="http://www.guineapigmagazine.com/advertising.php">Classifieds/Advertising</h:outputLink>
+        <h:outputLink value="http://www.guineapigmagazine.com/links.php">Links</h:outputLink>
+        <h:outputLink value="http://www.guineapigmagazine.com/contact.php">Contact Us</h:outputLink>
+        <h:outputLink value="/shop">Shop</h:outputLink>
+      </span>
+      <span id="shopContent"> <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+          <ui:insert name="mainContent">This is a template, nothing to see here.</ui:insert>
+        </h:form>
+      </span>
+      <h:panelGrid id="shopFooterTable" columns="2" columnClasses="shopFooterTableLeftColumn,shopFooterTableRightColumn">
+        <h:panelGroup>
+          <h:outputLink styleClass="shopFooterSocialButton"
+            value="http://www.facebook.com/pages/Guinea-Pig-Magazine/114951158562703" target="_blank">
+            <p:graphicImage value="http://www.guineapigmagazine.com/images/fb.jpeg" />
+          </h:outputLink>
+          <h:outputLink styleClass="shopFooterSocialButton" value="https://twitter.com/guineapigmag" target="_blank">
+            <p:graphicImage value="http://www.guineapigmagazine.com/images/tw.jpeg" />
+          </h:outputLink>
+          -
+          <h:outputLink value="http://www.guineapigmagazine.com/terms.php">#{msg.storeFooterTsAndCsLink}</h:outputLink>
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:outputText value="#{msg.storeFooterCopyright}" />
+        </h:panelGroup>
+      </h:panelGrid>
+    </p:panel>
+  </h:body>
+</f:view>
+</html>

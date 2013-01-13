@@ -1,0 +1,103 @@
+/**
+ * Copyright 2013 Mat Booth <mbooth@apache.org>
+ */
+
+body {
+  background-color: #68C9E9;
+}
+
+.ui-widget-content a {
+  text-decoration: none;
+  color: #00B8FF;
+}
+
+.ui-widget-content a:hover {
+  color: red;
+}
+
+#shopMainPagePanel {
+  width: 860px;
+  margin: 20px auto 20px auto;
+  padding: 28px 38px 16px 38px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -o-border-radius: 16px;
+  -ms-border-radius: 16px;
+  border: none;
+  border-radius: 16px;
+  background-color: white;
+}
+
+#shopMainPagePanel_content {
+  padding: 0;
+}
+
+#shopHeaderTable {
+  width: 100%;
+  border-spacing: 0;
+}
+
+.shopHeaderTableLeftColumn {
+  text-align: left;
+  vertical-align: top;
+  width: 15%;
+}
+
+.shopHeaderTableRightColumn {
+  text-align: right;
+  vertical-align: top;
+  width: 15%;
+}
+
+.shopHeaderTableCentralColumn {
+  text-align: center;
+  vertical-align: top;
+  width: 70%;
+}
+
+#shopHeaderMenu {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 0.75em;
+  padding-top: 0.75em;
+}
+
+#shopHeaderMenu a {
+  color: dimGray;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+#shopHeaderMenu a:hover {
+  color: red;
+}
+
+#shopContent {
+  display: block;
+  width: 100%;
+  margin: 0.75em 0;
+  border-top: 1px #E0E0E0 dashed;
+  border-bottom: 1px #E0E0E0 dashed;
+}
+
+#shopFooterTable {
+  width: 100%;
+  border-spacing: 0;
+  font-size: 0.6em;
+  color: #999;
+}
+
+.shopFooterTableLeftColumn {
+  text-align: left;
+  width: 50%;
+}
+
+.shopFooterTableRightColumn {
+  text-align: right;
+  width: 50%;
+}
+
+.shopFooterSocialButton {
+  padding-right: 0.4em;
+}
