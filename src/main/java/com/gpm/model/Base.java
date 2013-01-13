@@ -16,12 +16,13 @@ import org.hibernate.annotations.Type;
 
 /**
  * This is the base class for all JPA entities. It contains the database ID, business ID,
- * and entity creation time. All entities in the model should extend this class.
+ * and entity creation time. It is ordered naturally by the entity creation time. All
+ * entities in the model should extend this class.
  * 
  * @author mbooth
  */
 @MappedSuperclass
-public abstract class Base implements Serializable {
+public abstract class Base implements Comparable<Base>, Serializable {
   private static final long serialVersionUID = 1L;
 
   private int id;
@@ -84,6 +85,11 @@ public abstract class Base implements Serializable {
 
   public void setCreated(Date created) {
     this.created = created;
+  }
+
+  @Override
+  public int compareTo(Base o) {
+    return getCreated().compareTo(o.getCreated());
   }
 
   @Override

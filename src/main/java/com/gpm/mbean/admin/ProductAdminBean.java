@@ -135,9 +135,15 @@ public class ProductAdminBean implements Serializable {
 
   public void addVariant() {
     Variant v = new Variant();
-    selected.getVariants().add(v);
     v.setName("");
-    v.setCode(Integer.toString(selected.getVariants().size()));
+    v.setCode(Integer.toString(selected.getVariants().size() + 1));
+    if (selected.getVariants().size() > 0) {
+      Variant prev = selected.getVariantsAsList().get(selected.getVariants().size() - 1);
+      v.setPrice(prev.getPrice());
+      v.setWeight(prev.getWeight());
+      v.setStock(prev.getStock());
+    }
+    selected.getVariants().add(v);
   }
 
   public void removeVariant() {

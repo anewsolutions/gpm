@@ -4,6 +4,7 @@
 package com.gpm.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,7 +66,9 @@ public class Product extends Base {
 
   @Transient
   public List<Variant> getVariantsAsList() {
-    return new ArrayList<Variant>(getVariants());
+    List<Variant> vars = new ArrayList<Variant>(getVariants());
+    Collections.sort(vars);
+    return vars;
   }
 
   public void setVariants(Set<Variant> variants) {
@@ -88,7 +91,9 @@ public class Product extends Base {
 
   @Transient
   public List<Category> getCategoriesAsList() {
-    return new ArrayList<Category>(getCategories());
+    List<Category> cats = new ArrayList<Category>(getCategories());
+    Collections.sort(cats);
+    return cats;
   }
 
   public void setCategories(Set<Category> categories) {
