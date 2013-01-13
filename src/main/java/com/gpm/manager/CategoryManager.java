@@ -3,6 +3,7 @@
  */
 package com.gpm.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.gpm.controller.CategoryController;
@@ -20,7 +21,7 @@ public class CategoryManager {
     }
   }
 
-  public static List<Category> findAll() throws CategoryException {
+  public static List<Category> findAllCategories() throws CategoryException {
     try {
       return CategoryController.getInstance().getAll(null, true);
     } catch (ControllerException e) {
@@ -28,21 +29,23 @@ public class CategoryManager {
     }
   }
 
-  public static List<Category> findAvailable(Product product) throws CategoryException {
-    List<Category> categories = findAll();
-    for (Category c : product.getCategories()) {
-      categories.remove(c);
+  public static List<Category> findCategoriesInProduct(Product product) throws CategoryException {
+    return product.getCategoriesAsList();
+  }
+
+  public static List<Category> findCategoriesNotInProduct(Product product) throws CategoryException {
+    List<Category> categories = new ArrayList<Category>();
+    for (Category c : findAllCategories()) {
+      if (!product.getCategories().contains(c)) {
+        categories.add(c);
+      }
     }
     return categories;
   }
 
   public static void save(Category category) throws CategoryException {
     try {
-      if (category.getId() == 0) {
-        CategoryController.getInstance().create(category);
-      } else {
-        CategoryController.getInstance().update(category);
-      }
+      CategoryController.getInstance().save(category);
     } catch (ControllerException e) {
       throw new CategoryException(e);
     }

@@ -6,6 +6,11 @@
   width: 9.5em;
 }
 
+.ui-panel .ui-panel-title {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .ui-picklist .ui-button {
   margin-left: 0.3em;
   margin-right: 0.3em;

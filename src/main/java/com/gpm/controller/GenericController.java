@@ -77,36 +77,14 @@ public abstract class GenericController<T extends Base> {
   }
 
   /**
-   * Add an entity of type T to the database.
+   * Creates or updates an entity of type T in the database.
    * 
    * @param ent
-   *          the entity to add
+   *          the entity to create or update
    * @throws ControllerException
-   *           if there was a problem adding the entity
+   *           if there was a problem creating or updating the entity
    */
-  public void create(T ent) throws ControllerException {
-    EntityManager em = getEntityManager();
-    try {
-      em.getTransaction().begin();
-      em.persist(ent);
-      em.getTransaction().commit();
-    } catch (PersistenceException e) {
-      em.getTransaction().rollback();
-      throw new ControllerException("Error creating " + cls.getSimpleName() + ": " + e.getMessage(), e);
-    } finally {
-      em.close();
-    }
-  }
-
-  /**
-   * Updates an entity of type T in the database.
-   * 
-   * @param ent
-   *          the entity to update
-   * @throws ControllerException
-   *           if there was a problem updating the entity
-   */
-  public void update(T ent) throws ControllerException {
+  public void save(T ent) throws ControllerException {
     EntityManager em = getEntityManager();
     try {
       em.getTransaction().begin();
@@ -242,8 +220,7 @@ public abstract class GenericController<T extends Base> {
    * @throws IllegalArgumentException
    *           if null is passed in for the attributes map
    */
-  public List<T> getAll(String orderBy, boolean ascending, Map<String, Object> attributes)
-      throws ControllerException {
+  public List<T> getAll(String orderBy, boolean ascending, Map<String, Object> attributes) throws ControllerException {
     if (orderBy == null || orderBy.isEmpty()) {
       orderBy = "id";
     }

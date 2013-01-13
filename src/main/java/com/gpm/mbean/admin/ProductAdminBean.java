@@ -80,8 +80,8 @@ public class ProductAdminBean implements Serializable {
     if (categoriesPickList == null) {
       categoriesPickList = new DualListModel<Category>();
       try {
-        categoriesPickList.setSource(CategoryManager.findAvailable(selected));
-        categoriesPickList.setTarget(selected.getCategoriesAsList());
+        categoriesPickList.setSource(CategoryManager.findCategoriesNotInProduct(selected));
+        categoriesPickList.setTarget(CategoryManager.findCategoriesInProduct(selected));
       } catch (CategoryException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();

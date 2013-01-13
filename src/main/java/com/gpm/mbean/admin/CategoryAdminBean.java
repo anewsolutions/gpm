@@ -58,7 +58,7 @@ public class CategoryAdminBean implements Serializable {
   public List<Category> getAll() {
     List<Category> all = null;
     try {
-      all = CategoryManager.findAll();
+      all = CategoryManager.findAllCategories();
     } catch (CategoryException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -78,8 +78,8 @@ public class CategoryAdminBean implements Serializable {
     if (productsPickList == null) {
       productsPickList = new DualListModel<Product>();
       try {
-        productsPickList.setSource(ProductManager.findNotInCategory(selected));
-        productsPickList.setTarget(ProductManager.findInCategory(selected));
+        productsPickList.setSource(ProductManager.findProductsNotInCategory(selected));
+        productsPickList.setTarget(ProductManager.findProductsInCategory(selected));
       } catch (ProductException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();

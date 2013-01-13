@@ -29,7 +29,7 @@ public class ProductManager {
     }
   }
 
-  public static List<Product> findInCategory(Category category) throws ProductException {
+  public static List<Product> findProductsInCategory(Category category) throws ProductException {
     List<Product> products = new ArrayList<Product>();
     for (Product p : findAll()) {
       if (p.getCategories().contains(category)) {
@@ -39,7 +39,7 @@ public class ProductManager {
     return products;
   }
 
-  public static List<Product> findNotInCategory(Category category) throws ProductException {
+  public static List<Product> findProductsNotInCategory(Category category) throws ProductException {
     List<Product> products = new ArrayList<Product>();
     for (Product p : findAll()) {
       if (!p.getCategories().contains(category)) {
@@ -51,11 +51,7 @@ public class ProductManager {
 
   public static void save(Product product) throws ProductException {
     try {
-      if (product.getId() == 0) {
-        ProductController.getInstance().create(product);
-      } else {
-        ProductController.getInstance().update(product);
-      }
+      ProductController.getInstance().save(product);
     } catch (ControllerException e) {
       throw new ProductException(e);
     }
@@ -74,13 +70,13 @@ public class ProductManager {
       if (productsAdded != null) {
         for (Product product : productsAdded) {
           product.getCategories().add(category);
-          ProductController.getInstance().update(product);
+          ProductController.getInstance().save(product);
         }
       }
       if (productsRemoved != null) {
         for (Product product : productsRemoved) {
           product.getCategories().remove(category);
-          ProductController.getInstance().update(product);
+          ProductController.getInstance().save(product);
         }
       }
     } catch (ControllerException e) {
