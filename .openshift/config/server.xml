@@ -42,7 +42,7 @@
               factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
               pathname="conf/tomcat-users.xml" />
     <!-- MySQL data source -->
-    <Resource name="jdbc/gpm-store" auth="Container"
+    <Resource name="jdbc/gpm" auth="Container"
               type="javax.sql.DataSource"
               username="${env.OPENSHIFT_MYSQL_DB_USERNAME}"
               password="${env.OPENSHIFT_MYSQL_DB_PASSWORD}"

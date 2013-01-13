@@ -27,5 +27,5 @@
     -->
 
 	<!-- Links to global JNDI resources -->
-    <ResourceLink name="jdbc/gpm-store" global="jdbc/gpm-store" type="javax.sql.DataSource" />
+    <ResourceLink name="jdbc/gpm" global="jdbc/gpm" type="javax.sql.DataSource" />
 </Context>

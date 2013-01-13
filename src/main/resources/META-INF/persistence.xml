@@ -2,9 +2,9 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
   version="2.0">
-  <persistence-unit name="gpm-store" transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="gpm" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <non-jta-data-source>java:/comp/env/jdbc/gpm-store</non-jta-data-source>
+    <non-jta-data-source>java:/comp/env/jdbc/gpm</non-jta-data-source>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
       <property name="hibernate.show_sql" value="false" />

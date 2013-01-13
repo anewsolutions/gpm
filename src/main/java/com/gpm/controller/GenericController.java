@@ -71,7 +71,7 @@ public abstract class GenericController<T extends Base> {
    */
   protected EntityManager getEntityManager() {
     if (emf == null) {
-      emf = Persistence.createEntityManagerFactory("gpm-store");
+      emf = Persistence.createEntityManagerFactory("gpm");
     }
     return emf.createEntityManager();
   }
