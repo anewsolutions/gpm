@@ -43,7 +43,7 @@
           <ui:insert name="mainContent">This is a template, nothing to see here.</ui:insert>
         </h:form>
       </span>
-      <h:panelGrid id="shopFooterTable" columns="2" columnClasses="shopFooterTableLeftColumn,shopFooterTableRightColumn">
+      <h:panelGrid id="shopFooterTable" columns="3" columnClasses="shopFooterTableLeftColumn,shopFooterTableCentralColumn,shopFooterTableRightColumn">
         <h:panelGroup>
           <h:outputLink styleClass="shopFooterSocialButton"
             value="http://www.facebook.com/pages/Guinea-Pig-Magazine/114951158562703" target="_blank">
@@ -52,7 +52,8 @@
           <h:outputLink styleClass="shopFooterSocialButton" value="https://twitter.com/guineapigmag" target="_blank">
             <p:graphicImage value="http://www.guineapigmagazine.com/images/tw.jpeg" />
           </h:outputLink>
-          -
+        </h:panelGroup>
+        <h:panelGroup>
           <h:outputLink value="http://www.guineapigmagazine.com/terms.php">#{msg.storeFooterTsAndCsLink}</h:outputLink>
         </h:panelGroup>
         <h:panelGroup>

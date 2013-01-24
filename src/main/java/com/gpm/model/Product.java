@@ -71,6 +71,17 @@ public class Product extends Base {
     return vars;
   }
 
+  @Transient
+  public Variant getDefaultVariant() {
+    Variant var = null;
+    for (Variant v : variants) {
+      if (var == null || v.isDefaultChoice()) {
+        var = v;
+      }
+    }
+    return var;
+  }
+
   public void setVariants(Set<Variant> variants) {
     this.variants = variants;
   }

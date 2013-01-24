@@ -4,7 +4,18 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/shop.xhtml">
   <ui:define name="mainContent">
-    Index
+    <p:dataGrid id="shopFrontProductTable" var="product" value="#{shopFrontBean.products}" columns="3" paginator="false">
+      <h:panelGrid styleClass="shopFrontProductDetailsTable" columns="1">
+        <h:panelGroup>
+          <h:outputText styleClass="shopFrontName" value="#{product.name}" />
+          <h:outputText styleClass="shopFrontCode" value="#{product.code}" />
+        </h:panelGroup>
+        <p:graphicImage styleClass="shopFrontImage" value="http://placehold.it/245x245" />
+        <h:outputText styleClass="shopFrontDescription" value="#{product.description}" />
+        <h:outputText styleClass="shopFrontPrice" value="£2.00" />
+        <h:outputText styleClass="shopFrontStock" value="5 in stock" />
+      </h:panelGrid>
+    </p:dataGrid>
   </ui:define>
 </ui:composition>
 </html>
