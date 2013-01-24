@@ -142,6 +142,9 @@ public class ProductAdminBean implements Serializable {
       v.setPrice(prev.getPrice());
       v.setWeight(prev.getWeight());
       v.setStock(prev.getStock());
+      v.setDefaultChoice(false);
+    } else {
+      v.setDefaultChoice(true);
     }
     selected.getVariants().add(v);
   }

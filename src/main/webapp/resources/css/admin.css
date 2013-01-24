@@ -2,19 +2,27 @@
  * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
 
+body {
+  font-family: Arial, Helvetica, Verdana, sans-serif;
+}
+
 .ui-menu {
-  width: 9.5em;
+  width: 100%;
+  padding: 0;
 }
 
 .ui-panel .ui-panel-title {
-  margin-left: 0;
-  margin-right: 0;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.ui-helper-hidden-accessible {
+  clip: auto;
 }
 
 .ui-picklist .ui-button {
   margin-left: 0.3em;
   margin-right: 0.3em;
-  margin-bottom: 0.3em;
 }
 
 .ui-picklist-list {
@@ -28,11 +36,11 @@
 }
 
 .adminPageMenuColumn {
-  width: 10em;
   vertical-align: top;
 }
 
 .adminPageSectionColumn {
+  width: 90%;
   vertical-align: top;
 }
 

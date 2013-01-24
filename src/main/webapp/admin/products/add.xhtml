@@ -33,14 +33,14 @@
           <h:message errorClass="inlineMessage ui-state-error" for="codeField" />
         </h:panelGroup>
         <h:panelGroup id="variantsFieldLabelPanel">
-          <h:outputText value="#{msg.adminProductVariantsField}"
-            rendered="#{productAdminBean.selected.numVariants > 1}" />
+          <h:outputText value="#{msg.adminProductVariantsField}" rendered="#{productAdminBean.selected.numVariants > 1}" />
         </h:panelGroup>
         <h:panelGroup id="variantsFieldPanel">
           <p:dataGrid id="variantsField" var="variant" value="#{productAdminBean.selected.variantsAsList}" columns="3"
             rendered="#{productAdminBean.selected.numVariants > 1}">
             <p:column>
-              <p:commandButton value="#{msg.adminProductButtonsRemoveVariant}" action="#{productAdminBean.removeVariant}"
+              <p:commandButton value="#{msg.adminProductButtonsRemoveVariant}"
+                action="#{productAdminBean.removeVariant}"
                 update=":mainForm:variantsFieldLabelPanel,:mainForm:variantsFieldPanel,:mainForm:priceFieldLabelPanel,:mainForm:priceFieldPanel,:mainForm:weightFieldLabelPanel,:mainForm:weightFieldPanel,:mainForm:stockFieldLabelPanel,:mainForm:stockFieldPanel"
                 ajax="true" process="@this">
                 <f:setPropertyActionListener target="#{productAdminBean.remove}" value="#{variant}" />
@@ -87,6 +87,12 @@
                     <p:ajax />
                   </p:inputText>
                   <h:message errorClass="inlineMessage ui-state-error" for="variantStockField" />
+                </h:panelGroup>
+                <p:outputLabel for="variantDefaultVariantField" value="#{msg.adminProductDefaultVariantField}" />
+                <h:panelGroup>
+                  <p:selectBooleanCheckbox id="variantDefaultVariantField" value="#{variant.defaultChoice}">
+                    <p:ajax />
+                  </p:selectBooleanCheckbox>
                 </h:panelGroup>
               </h:panelGrid>
             </p:column>
