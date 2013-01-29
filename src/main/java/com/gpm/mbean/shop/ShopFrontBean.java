@@ -72,7 +72,12 @@ public class ShopFrontBean implements Serializable {
     return format.format(variant.getPrice());
   }
 
-  public String getVariantStock() {
+  public int getVariantStock() {
+    Variant variant = getSelectedVariant();
+    return variant.getStock();
+  }
+
+  public String getVariantStockText() {
     Variant variant = getSelectedVariant();
     if (variant.getStock() == 0) {
       return MessageProvider.getMessage("storeFrontStockNone");

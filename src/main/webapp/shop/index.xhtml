@@ -15,18 +15,22 @@
           <p:selectOneMenu value="#{shopFrontBean.selectedVariant}" effect="none" converter="VariantConverter">
             <f:selectItems value="#{product.variantsAsList}" var="variant" itemLabel="#{variant.name}"
               itemValue="#{variant}" />
-            <p:ajax event="change" update="shopFrontPricePanel shopFrontStockPanel" />
+            <p:ajax event="change" update="shopFrontPricePanel shopFrontStockPanel shopFrontBuyPanel" />
           </p:selectOneMenu>
         </h:panelGroup>
         <h:panelGroup id="shopFrontPricePanel">
           <h:outputText styleClass="shopFrontPrice" value="#{shopFrontBean.variantPrice}" />
         </h:panelGroup>
         <h:panelGroup id="shopFrontStockPanel">
-          <h:outputText styleClass="shopFrontStock" value="#{shopFrontBean.variantStock}" />
+          <h:outputText styleClass="shopFrontStock" value="#{shopFrontBean.variantStockText}" />
         </h:panelGroup>
         <h:panelGroup id="shopFrontBuyPanel">
-          <p:commandButton value="#{msg.storeFrontButtonsAddToBasket}">
-            <f:setPropertyActionListener target="" value="" />
+          <p:commandButton value="#{msg.storeFrontButtonsAddToBasket}" disabled="true"
+            rendered="#{shopFrontBean.variantStock == 0}" />
+          <p:commandButton value="#{msg.storeFrontButtonsAddToBasket}" action="#{basketBean.addItemToBasket}"
+            rendered="#{shopFrontBean.variantStock > 0}">
+            <f:setPropertyActionListener target="#{basketBean.product}" value="#{product}" />
+            <f:setPropertyActionListener target="#{basketBean.variant}" value="#{shopFrontBean.selectedVariant}" />
           </p:commandButton>
         </h:panelGroup>
       </h:panelGrid>

@@ -45,11 +45,13 @@
         <h:outputLink value="http://www.guineapigmagazine.com/contact.php">Contact Us</h:outputLink>
         <h:outputLink value="/shop">Shop</h:outputLink>
       </span>
-      <span id="shopContent"> <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+      <span id="shopContent">
+        <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
           <ui:insert name="mainContent">This is a template, nothing to see here.</ui:insert>
         </h:form>
       </span>
-      <h:panelGrid id="shopFooterTable" columns="3" columnClasses="shopFooterTableLeftColumn,shopFooterTableCentralColumn,shopFooterTableRightColumn">
+      <h:panelGrid id="shopFooterTable" columns="3"
+        columnClasses="shopFooterTableLeftColumn,shopFooterTableCentralColumn,shopFooterTableRightColumn">
         <h:panelGroup>
           <h:outputLink styleClass="shopFooterSocialButton"
             value="http://www.facebook.com/pages/Guinea-Pig-Magazine/114951158562703" target="_blank">
@@ -67,6 +69,25 @@
         </h:panelGroup>
       </h:panelGrid>
     </p:panel>
+    <!-- Javascript fettling to slowly rotate the clouds background image. -->
+    <script type="text/javascript">
+      //<![CDATA[
+      jQuery(document).ready(function() {
+        setInterval(function() {moveBg()}, 50);
+      });
+      function moveBg() {
+        var pos = jQuery("body").css("background-position");
+        var x = pos.split(" ")[0];
+        var y = pos.split(" ")[1];
+        x = parseInt(x, 10) + 1;
+        if (x == 730) {
+          x = 0;
+        }
+        y = parseInt(y, 10);
+        jQuery("body").css("background-position", x + "px " + y + "px");
+      }
+      //]]>
+    </script>
   </h:body>
 </f:view>
 </html>
