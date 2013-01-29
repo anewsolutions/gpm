@@ -6,14 +6,29 @@
   <ui:define name="mainContent">
     <p:dataGrid id="shopFrontProductTable" var="product" value="#{shopFrontBean.products}" columns="3" paginator="false">
       <h:panelGrid styleClass="shopFrontProductDetailsTable" columns="1">
-        <h:panelGroup>
-          <h:outputText styleClass="shopFrontName" value="#{product.name}" />
-          <h:outputText styleClass="shopFrontCode" value="#{product.code}" />
+        <h:outputText styleClass="shopFrontName" value="#{product.name}" />
+        <h:panelGroup id="shopFrontImagePanel">
+          <p:graphicImage styleClass="shopFrontImage" value="http://placehold.it/245x245" />
         </h:panelGroup>
-        <p:graphicImage styleClass="shopFrontImage" value="http://placehold.it/245x245" />
         <h:outputText styleClass="shopFrontDescription" value="#{product.description}" />
-        <h:outputText styleClass="shopFrontPrice" value="£2.00" />
-        <h:outputText styleClass="shopFrontStock" value="5 in stock" />
+        <h:panelGroup rendered="#{product.numVariants > 1}">
+          <p:selectOneMenu value="#{shopFrontBean.selectedVariant}" effect="none" converter="VariantConverter">
+            <f:selectItems value="#{product.variantsAsList}" var="variant" itemLabel="#{variant.name}"
+              itemValue="#{variant}" />
+            <p:ajax event="change" update="shopFrontPricePanel shopFrontStockPanel" />
+          </p:selectOneMenu>
+        </h:panelGroup>
+        <h:panelGroup id="shopFrontPricePanel">
+          <h:outputText styleClass="shopFrontPrice" value="#{shopFrontBean.variantPrice}" />
+        </h:panelGroup>
+        <h:panelGroup id="shopFrontStockPanel">
+          <h:outputText styleClass="shopFrontStock" value="#{shopFrontBean.variantStock}" />
+        </h:panelGroup>
+        <h:panelGroup id="shopFrontBuyPanel">
+          <p:commandButton value="#{msg.storeFrontButtonsAddToBasket}">
+            <f:setPropertyActionListener target="" value="" />
+          </p:commandButton>
+        </h:panelGroup>
       </h:panelGrid>
     </p:dataGrid>
   </ui:define>
