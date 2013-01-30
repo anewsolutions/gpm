@@ -24,11 +24,11 @@ img {
 
 .ui-widget-content a {
   text-decoration: none;
-  color: #00B8FF;
+  color: #696969;
 }
 
 .ui-widget-content a:hover {
-  color: red;
+  color: #ff0000;
 }
 
 #shopMainPagePanel {
@@ -55,19 +55,23 @@ img {
 .shopHeaderTableLeftColumn {
   text-align: left;
   vertical-align: top;
-  width: 15%;
+  width: 20%;
 }
 
 .shopHeaderTableCentralColumn {
   text-align: center;
   vertical-align: top;
-  width: 70%;
+  width: 60%;
 }
 
 .shopHeaderTableRightColumn {
   text-align: right;
   vertical-align: top;
-  width: 15%;
+  width: 20%;
+}
+
+.shopHeaderBasketPanel {
+  vertical-align: middle;
 }
 
 .shopHeaderBasketButton img {
@@ -76,9 +80,13 @@ img {
 }
 
 .shopHeaderBasketCount {
-  color: #ff0000;
   font-size: 1.9em;
   font-weight: bold;
+  padding-right: 0.2em;
+  vertical-align: middle;
+}
+
+.shopHeaderBasketItems {
   vertical-align: middle;
 }
 
@@ -90,13 +98,8 @@ img {
 }
 
 #shopHeaderMenu a {
-  color: dimGray;
   padding-left: 8px;
   padding-right: 8px;
-}
-
-#shopHeaderMenu a:hover {
-  color: red;
 }
 
 #shopContent {

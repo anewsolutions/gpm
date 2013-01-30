@@ -16,12 +16,19 @@
       <h:panelGrid id="shopHeaderTable" columns="3"
         columnClasses="shopHeaderTableLeftColumn,shopHeaderTableCentralColumn,shopHeaderTableRightColumn">
         <h:panelGroup>
-          <div style="vertical-align: middle;">
-            <h:outputLink styleClass="shopHeaderBasketButton">
-              <p:graphicImage library="images" name="basket.png" alt="#{msg.storeHeaderBasketAltText}" />
-              <h:outputText styleClass="shopHeaderBasketCount" value="0" />
-            </h:outputLink>
-          </div>
+          <h:form id="basketForm" prependId="false" acceptcharset="UTF-8">
+            <div class="shopHeaderBasketPanel">
+              <p:commandLink styleClass="shopHeaderBasketButton" ajax="false"
+                action="/shop/basket.xhtml?faces-redirect=true">
+                <p:graphicImage library="images" name="basket.png" alt="#{msg.storeHeaderBasketAltText}" />
+                <h:outputText styleClass="shopHeaderBasketCount" value="#{basketBean.numTotalBasketItems}" />
+                <h:outputText styleClass="shopHeaderBasketItems" value="#{msg.storeHeaderItemInBasket}"
+                  rendered="#{basketBean.numTotalBasketItems == 1}" />
+                <h:outputText styleClass="shopHeaderBasketItems" value="#{msg.storeHeaderItemsInBasket}"
+                  rendered="#{basketBean.numTotalBasketItems != 1}" />
+              </p:commandLink>
+            </div>
+          </h:form>
         </h:panelGroup>
         <h:panelGroup>
           <h:outputLink value="http://www.guineapigmagazine.com/index.php">
