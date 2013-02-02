@@ -16,11 +16,14 @@
 	<property name="target.classes.dir" location="${target.dir}/classes" />
 	<property name="target.tests.dir" location="${target.dir}/tests" />
 	<property name="target.reports.dir" location="${target.dir}/reports" />
-	<property name="target.war" location="${target.dir}/ROOT.war" />
 
 	<property name="libs.test.dir" location="${base.dir}/external/test" />
 	<property name="libs.tomcat.dir" location="${base.dir}/external/tomcat" />
 	<property name="libs.webapp.dir" location="${main.webapp.dir}/WEB-INF/lib" />
+
+	<property name="webapps.dir" location="${base.dir}/webapps"/>
+
+	<property name="gpm.war" value="ROOT.war" />
 
 	<path id="main.classpath">
 		<pathelement location="${target.classes.dir}" />
@@ -55,7 +58,7 @@
 	</target>
 
 	<target name="gpm-build" depends="gpm-compile-main" description="Build application WAR file.">
-		<war destfile="${target.war}">
+		<war destfile="${target.dir}/${gpm.war}">
 			<fileset dir="${main.webapp.dir}" />
 			<classes dir="${target.classes.dir}" />
 		</war>
@@ -78,6 +81,16 @@
 			<classpath refid="test.classpath" />
 			<xmlfileset dir="${target.tests.dir}" includes="testng.xml" />
 		</testng>
+	</target>
+
+	<target name="openshift-deploy" description="Deploy the built WAR file to OpenShift.">
+		<mkdir dir="${webapps.dir}" />
+		<copy file="${target.dir}/${gpm.war}" todir="${webapps.dir}" />
+		<exec executable="rsync">
+			<arg value="-avz" />
+			<arg value="${webapps.dir}/" />
+			<arg value="77169be363d547ea8dd56cda17e1dfeb@gpm-mbooth.rhcloud.com:~/app-root/repo/webapps/" />
+		</exec>
 	</target>
 
 	<target name="all" depends="clean,gpm-build,gpm-test" description="Almight all task, builds and tests everything." />
