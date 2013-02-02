@@ -32,11 +32,6 @@ public class ProductAdminBean implements Serializable {
    */
   private Product selected;
 
-  /**
-   * The variant to be removed.
-   */
-  private Variant remove;
-
   private DualListModel<Category> categoriesPickList;
 
   @PostConstruct
@@ -125,14 +120,6 @@ public class ProductAdminBean implements Serializable {
     return "/admin/products/index?faces-redirect=true";
   }
 
-  public Variant getRemove() {
-    return remove;
-  }
-
-  public void setRemove(Variant remove) {
-    this.remove = remove;
-  }
-
   public void addVariant() {
     Variant v = new Variant();
     v.setName("");
@@ -149,10 +136,9 @@ public class ProductAdminBean implements Serializable {
     selected.getVariants().add(v);
   }
 
-  public void removeVariant() {
-    if (remove != null) {
-      selected.getVariants().remove(remove);
+  public void removeVariant(Variant variant) {
+    if (variant != null) {
+      selected.getVariants().remove(variant);
     }
-    remove = null;
   }
 }

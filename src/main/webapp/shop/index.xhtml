@@ -27,11 +27,9 @@
         <h:panelGroup id="shopFrontBuyPanel">
           <p:commandButton value="#{msg.storeFrontButtonsAddToBasket}" disabled="true"
             rendered="#{shopFrontBean.variantStock == 0}" />
-          <p:commandButton value="#{msg.storeFrontButtonsAddToBasket}" action="#{basketBean.addItemToBasket}"
-            rendered="#{shopFrontBean.variantStock > 0}" update=":basketForm">
-            <f:setPropertyActionListener target="#{basketBean.product}" value="#{product}" />
-            <f:setPropertyActionListener target="#{basketBean.variant}" value="#{shopFrontBean.selectedVariant}" />
-          </p:commandButton>
+          <p:commandButton value="#{msg.storeFrontButtonsAddToBasket}"
+            action="#{basketBean.addItemToBasket(product, shopFrontBean.selectedVariant)}"
+            rendered="#{shopFrontBean.variantStock > 0}" update=":basketForm" />
         </h:panelGroup>
       </h:panelGrid>
     </p:dataGrid>

@@ -40,11 +40,9 @@
             rendered="#{productAdminBean.selected.numVariants > 1}">
             <p:column>
               <p:commandButton value="#{msg.adminProductButtonsRemoveVariant}"
-                action="#{productAdminBean.removeVariant}"
+                action="#{productAdminBean.removeVariant(variant)}"
                 update=":mainForm:variantsFieldLabelPanel,:mainForm:variantsFieldPanel,:mainForm:priceFieldLabelPanel,:mainForm:priceFieldPanel,:mainForm:weightFieldLabelPanel,:mainForm:weightFieldPanel,:mainForm:stockFieldLabelPanel,:mainForm:stockFieldPanel"
-                ajax="true" process="@this">
-                <f:setPropertyActionListener target="#{productAdminBean.remove}" value="#{variant}" />
-              </p:commandButton>
+                ajax="true" process="@this" />
               <h:panelGrid columns="2">
                 <p:outputLabel for="variantNameField" value="#{msg.adminProductNameField}" />
                 <h:panelGroup>

@@ -17,40 +17,15 @@ import com.gpm.model.Variant;
 public class BasketBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  private Product product;
-  private Variant variant;
-
   private Basket basket = new Basket();
-
-  /**
-   * JSF method to set which product we are about to add to the basket.
-   * <p>
-   * TODO This could probably be removed when we move to EL 2.2, because we would be able
-   * to pass parameters directly into addItemToBasket.
-   * 
-   * @param product
-   */
-  public void setProduct(Product product) {
-    this.product = product;
-  }
-
-  /**
-   * JSF method to set which product variant we are about to add to the basket.
-   * <p>
-   * TODO This could probably be removed when we move to EL 2.2, because we would be able
-   * to pass parameters directly into addItemToBasket.
-   * 
-   * @param variant
-   */
-  public void setVariant(Variant variant) {
-    this.variant = variant;
-  }
 
   /**
    * JSF method to add a product and the selected variant to the shopping basket.
    */
-  public void addItemToBasket() {
-    basket.addBasketItem(product, variant);
+  public void addItemToBasket(Product product, Variant variant) {
+    if (product != null && variant != null) {
+      basket.addBasketItem(product, variant);
+    }
   }
 
   /**

@@ -2,22 +2,18 @@
  * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
 
-body {
-  font-family: Arial, Helvetica, Verdana, sans-serif;
+img {
+  border: none;
 }
 
-.ui-menu {
-  width: 100%;
-  padding: 0;
+.ui-widget {
+  font-family: Arial, Helvetica, Verdana, sans-serif;
+  font-size: 0.8em;
 }
 
 .ui-panel .ui-panel-title {
   font-size: 1.25em;
   font-weight: bold;
-}
-
-.ui-helper-hidden-accessible {
-  clip: auto;
 }
 
 .ui-picklist .ui-button {
@@ -36,6 +32,7 @@ body {
 }
 
 .adminPageMenuColumn {
+  width: 10%;
   vertical-align: top;
 }
 
