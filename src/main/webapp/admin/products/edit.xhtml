@@ -4,12 +4,16 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/admin.xhtml">
   <ui:define name="mainContent">
-    <p:panel header="#{msg.adminProductEditHeading}">
+    <p:panel>
+      <f:facet name="header">
+        <h:outputText value="#{msg.adminProductEditHeading}" rendered="#{productAdminBean.editing}"/>
+        <h:outputText value="#{msg.adminProductAddHeading}" rendered="#{!productAdminBean.editing}"/>
+      </f:facet>
       <h:panelGrid styleClass="sectionControlsTable" columns="2"
         columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
         <h:panelGroup>
           <p:commandButton value="#{msg.adminProductButtonsAddVariant}" action="#{productAdminBean.addVariant}"
-            update="variantsFieldLabelPanel,variantsFieldPanel,priceFieldLabelPanel,priceFieldPanel,weightFieldLabelPanel,weightFieldPanel,stockFieldLabelPanel,stockFieldPanel"
+            update="variantsFieldLabelPanel,variantsFieldPanel,imageFieldLabelPanel,imageFieldPanel,priceFieldLabelPanel,priceFieldPanel,weightFieldLabelPanel,weightFieldPanel,stockFieldLabelPanel,stockFieldPanel"
             ajax="true" process="@this" />
           <p:commandButton value="#{msg.adminButtonsSave}" action="#{productAdminBean.save}" ajax="false" />
           <p:button outcome="index" value="#{msg.adminButtonsCancel}" />
@@ -41,7 +45,7 @@
             <p:column>
               <p:commandButton value="#{msg.adminProductButtonsRemoveVariant}"
                 action="#{productAdminBean.removeVariant(variant)}"
-                update=":mainForm:variantsFieldLabelPanel,:mainForm:variantsFieldPanel,:mainForm:priceFieldLabelPanel,:mainForm:priceFieldPanel,:mainForm:weightFieldLabelPanel,:mainForm:weightFieldPanel,:mainForm:stockFieldLabelPanel,:mainForm:stockFieldPanel"
+                update=":mainForm:variantsFieldLabelPanel,:mainForm:variantsFieldPanel,:mainForm:imageFieldLabelPanel,:mainForm:imageFieldPanel,:mainForm:priceFieldLabelPanel,:mainForm:priceFieldPanel,:mainForm:weightFieldLabelPanel,:mainForm:weightFieldPanel,:mainForm:stockFieldLabelPanel,:mainForm:stockFieldPanel"
                 ajax="true" process="@this" />
               <h:panelGrid columns="2">
                 <p:outputLabel for="variantNameField" value="#{msg.adminProductNameField}" />
@@ -61,6 +65,12 @@
                     <p:ajax />
                   </p:inputText>
                   <h:message errorClass="inlineMessage ui-state-error" for="variantCodeField" />
+                </h:panelGroup>
+                <h:outputLabel for="variantImageField" value="#{msg.adminProductImageField}" />
+                <h:panelGroup>
+                  <p:selectOneMenu id="variantImageField" effect="none">
+                    <f:selectItem itemLabel="#{msg.adminProductImageFieldNoImage}" itemValue="" />
+                  </p:selectOneMenu>
                 </h:panelGroup>
                 <p:outputLabel for="variantPriceField" value="#{msg.adminProductPriceField}" />
                 <h:panelGroup>
@@ -95,6 +105,15 @@
               </h:panelGrid>
             </p:column>
           </p:dataGrid>
+        </h:panelGroup>
+        <h:panelGroup id="imageFieldLabelPanel">
+          <h:outputLabel for="imageField" value="#{msg.adminProductImageField}"
+            rendered="#{productAdminBean.selected.numVariants == 1}" />
+        </h:panelGroup>
+        <h:panelGroup id="imageFieldPanel">
+          <p:selectOneMenu id="imageField" effect="none" rendered="#{productAdminBean.selected.numVariants == 1}">
+            <f:selectItem itemLabel="#{msg.adminProductImageFieldNoImage}" itemValue="" />
+          </p:selectOneMenu>
         </h:panelGroup>
         <h:panelGroup id="priceFieldLabelPanel">
           <p:outputLabel for="priceField" value="#{msg.adminProductPriceField}"

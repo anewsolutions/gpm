@@ -29,6 +29,11 @@ public class CategoryAdminBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
+   * Whether we are editing a pre-existing category or adding a new one.
+   */
+  private boolean editing;
+
+  /**
    * The currently selected category.
    */
   private Category selected;
@@ -46,6 +51,7 @@ public class CategoryAdminBean implements Serializable {
       try {
         int idValue = Integer.parseInt(id);
         selected = CategoryManager.find(idValue);
+        editing = true;
       } catch (NumberFormatException e) {
         selected = new Category();
       }
@@ -53,6 +59,10 @@ public class CategoryAdminBean implements Serializable {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+  }
+
+  public boolean isEditing() {
+    return editing;
   }
 
   public List<Category> getAll() {

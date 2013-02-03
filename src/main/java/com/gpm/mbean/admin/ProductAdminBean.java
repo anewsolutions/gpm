@@ -28,6 +28,11 @@ public class ProductAdminBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
+   * Whether we are editing a pre-existing product or adding a new one.
+   */
+  private boolean editing;
+
+  /**
    * The currently selected product.
    */
   private Product selected;
@@ -43,6 +48,7 @@ public class ProductAdminBean implements Serializable {
       try {
         int idValue = Integer.parseInt(id);
         selected = ProductManager.find(idValue);
+        editing = true;
       } catch (NumberFormatException e) {
         selected = new Product();
       }
@@ -54,6 +60,10 @@ public class ProductAdminBean implements Serializable {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+  }
+
+  public boolean isEditing() {
+    return editing;
   }
 
   public List<Product> getAll() {

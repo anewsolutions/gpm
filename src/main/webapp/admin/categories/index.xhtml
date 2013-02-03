@@ -7,7 +7,7 @@
     <p:panel header="#{msg.adminCategoryManageHeading}">
       <h:panelGrid styleClass="sectionControlsTable" columns="2" columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
         <h:panelGroup>
-          <p:button outcome="add" value="#{msg.adminButtonsAdd}" />
+          <p:button outcome="edit" value="#{msg.adminButtonsAdd}" />
         </h:panelGroup>
       </h:panelGrid>
       <p:dataTable id="catTable" var="cat" value="#{categoryAdminBean.all}" emptyMessage="#{msg.adminNoCategoriesFound}">
