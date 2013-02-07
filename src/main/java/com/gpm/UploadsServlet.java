@@ -20,11 +20,12 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author mbooth
  */
-@WebServlet(name = "Uploads Servlet", value = { "/uploads/*" })
+@WebServlet(name = "Uploads Servlet", value = { "/" + UploadsServlet.UPLOADS_PATH + "/*" })
 public class UploadsServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   private static final int BUFFER_SIZE = 10240;
+  public static final String UPLOADS_PATH = "uploads";
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,15 +35,8 @@ public class UploadsServlet extends HttpServlet {
       return;
     }
 
-    // Use current working directory if we are not running on OpenShift
-    String dataDir = System.getenv("OPENSHIFT_DATA_DIR");
-    if (dataDir == null || dataDir.length() == 0) {
-      dataDir = ".";
-    }
-
     // Get path to requested file on disk
-    File uploadsDir = new File(dataDir, request.getServletPath());
-    File path = new File(uploadsDir.getCanonicalFile(), request.getPathInfo());
+    File path = new File(getUploadsDirectory(), request.getPathInfo());
     if (!path.isFile() || !path.canRead()) {
       response.sendError(HttpServletResponse.SC_NOT_FOUND);
       return;
@@ -81,5 +75,29 @@ public class UploadsServlet extends HttpServlet {
         out.close();
       }
     }
+  }
+
+  /**
+   * Utility method to get the uploads data directory.
+   * 
+   * @return an absolute path to a directory
+   * @throws IOException
+   *           if there was a problem reading the file system
+   */
+  public static File getUploadsDirectory() throws IOException {
+    // Use current working directory if we are not running on OpenShift
+    String dataDir = System.getenv("OPENSHIFT_DATA_DIR");
+    if (dataDir == null || dataDir.length() == 0) {
+      dataDir = ".";
+    }
+    // Make sure path is valid
+    File uploads = new File(dataDir, UPLOADS_PATH).getCanonicalFile();
+    if (!uploads.exists()) {
+      uploads.mkdirs();
+    }
+    if (!uploads.isDirectory() || !uploads.canWrite()) {
+      throw new IOException("Not a directory or cannot write to directory");
+    }
+    return uploads;
   }
 }
