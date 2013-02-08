@@ -29,7 +29,7 @@ public class CategoryAdminBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Whether we are editing a pre-existing category or adding a new one.
+   * Whether we are editing a pre-existing category or adding a new category.
    */
   private boolean editing;
 

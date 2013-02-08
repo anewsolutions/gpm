@@ -28,7 +28,7 @@ public class ProductAdminBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Whether we are editing a pre-existing product or adding a new one.
+   * Whether we are editing a pre-existing product or adding a new product.
    */
   private boolean editing;
 
