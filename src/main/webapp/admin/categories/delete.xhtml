@@ -4,19 +4,21 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/admin.xhtml">
   <ui:define name="mainContent">
-    <p:panel header="#{msg.adminCategoryDeleteHeading}">
-      <h:panelGrid styleClass="sectionControlsTable" columns="2" columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
-        <h:panelGroup>
-          <p:commandButton value="#{msg.adminButtonsDelete}" action="#{categoryAdminBean.delete}" ajax="false" />
-          <p:button outcome="index" value="#{msg.adminButtonsCancel}" />
-        </h:panelGroup>
-      </h:panelGrid>
-      <h:panelGrid columns="1">
-        <h:outputFormat value="#{msg.adminCategoryDeleteText}">
-          <f:param value="#{categoryAdminBean.selected.name}"/>
-        </h:outputFormat>
-      </h:panelGrid>
-    </p:panel>
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8" enctype="application/x-www-form-urlencoded">
+      <p:panel header="#{msg.adminCategoryDeleteHeading}">
+        <h:panelGrid styleClass="sectionControlsTable" columns="2" columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
+          <h:panelGroup>
+            <p:commandButton value="#{msg.adminButtonsDelete}" action="#{categoryAdminBean.delete}" ajax="false" />
+            <p:button outcome="index" value="#{msg.adminButtonsCancel}" />
+          </h:panelGroup>
+        </h:panelGrid>
+        <h:panelGrid columns="1">
+          <h:outputFormat value="#{msg.adminCategoryDeleteText}">
+            <f:param value="#{categoryAdminBean.selected.name}"/>
+          </h:outputFormat>
+        </h:panelGrid>
+      </p:panel>
+    </h:form>
   </ui:define>
 </ui:composition>
 </html>

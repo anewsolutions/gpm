@@ -20,12 +20,12 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author mbooth
  */
-@WebServlet(name = "Uploads Servlet", value = { "/" + UploadsServlet.UPLOADS_PATH + "/*" })
+@WebServlet(name = "Uploads Servlet", value = { UploadsServlet.UPLOADS_PATH + "*" })
 public class UploadsServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   private static final int BUFFER_SIZE = 10240;
-  public static final String UPLOADS_PATH = "uploads";
+  public static final String UPLOADS_PATH = "/uploads/";
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

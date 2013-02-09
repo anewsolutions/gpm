@@ -43,11 +43,7 @@ public class ShopFrontBean implements Serializable {
     return products;
   }
 
-  public Variant getSelectedVariant() {
-    // Get the product currently in context
-    FacesContext context = FacesContext.getCurrentInstance();
-    Product product = context.getApplication().evaluateExpressionGet(context, "#{product}", Product.class);
-
+  public Variant getSelectedVariant(Product product) {
     // Get currently selected variant for this product
     Variant variant = selectedVariants.get(product);
     if (variant == null) {
@@ -55,6 +51,13 @@ public class ShopFrontBean implements Serializable {
       selectedVariants.put(product, variant);
     }
     return variant;
+  }
+
+  public Variant getSelectedVariant() {
+    // Get the product currently in context
+    FacesContext context = FacesContext.getCurrentInstance();
+    Product product = context.getApplication().evaluateExpressionGet(context, "#{product}", Product.class);
+    return getSelectedVariant(product);
   }
 
   public void setSelectedVariant(Variant variant) {
@@ -66,19 +69,33 @@ public class ShopFrontBean implements Serializable {
     selectedVariants.put(product, variant);
   }
 
-  public String getVariantPrice() {
-    Variant variant = getSelectedVariant();
+  public String getVariantImage(Product product) {
+    Variant variant = getSelectedVariant(product);
+    if (variant.isHasImage()) {
+      return variant.getImageFilename();
+    } else {
+      variant = product.getDefaultVariant();
+      if (variant.isHasImage()) {
+        return variant.getImageFilename();
+      } else {
+        return "http://placehold.it/245x245";
+      }
+    }
+  }
+
+  public String getVariantPrice(Product product) {
+    Variant variant = getSelectedVariant(product);
     NumberFormat format = NumberFormat.getCurrencyInstance();
     return format.format(variant.getPrice());
   }
 
-  public int getVariantStock() {
-    Variant variant = getSelectedVariant();
+  public int getVariantStock(Product product) {
+    Variant variant = getSelectedVariant(product);
     return variant.getStock();
   }
 
-  public String getVariantStockText() {
-    Variant variant = getSelectedVariant();
+  public String getVariantStockText(Product product) {
+    Variant variant = getSelectedVariant(product);
     if (variant.getStock() == 0) {
       return MessageProvider.getMessage("storeFrontStockNone");
     } else if (variant.getStock() < 10) {

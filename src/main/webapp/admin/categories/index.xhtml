@@ -4,37 +4,39 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/admin.xhtml">
   <ui:define name="mainContent">
-    <p:panel header="#{msg.adminCategoryManageHeading}">
-      <h:panelGrid styleClass="sectionControlsTable" columns="2" columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
-        <h:panelGroup>
-          <p:button outcome="edit" value="#{msg.adminButtonsAdd}" />
-        </h:panelGroup>
-      </h:panelGrid>
-      <p:dataTable id="catTable" var="cat" value="#{categoryAdminBean.all}" emptyMessage="#{msg.adminNoCategoriesFound}">
-        <p:column styleClass="toggleColumn">
-          <p:rowToggler />
-        </p:column>
-        <p:column headerText="#{msg.adminCategoryTableNameColumn}">
-          #{cat.name}
-        </p:column>
-        <p:column styleClass="actionColumn" headerText="#{msg.adminCategoryTableActionsColumn}">
-          <p:button outcome="edit" value="#{msg.adminButtonsEdit}">
-            <f:param name="id" value="#{cat.id}" />
-          </p:button>
-          <p:button outcome="delete" value="#{msg.adminButtonsDelete}">
-            <f:param name="id" value="#{cat.id}" />
-          </p:button>
-        </p:column>
-        <p:rowExpansion>
-          <div class="ui-dt-c">
-            <h:outputText value="Products in this category:" />
-            <p:dataGrid var="prod" value="#{cat.productsAsList}" columns="5">
-              <div>#{prod.name}</div>
-            </p:dataGrid>
-          </div>
-        </p:rowExpansion>
-      </p:dataTable>
-    </p:panel>
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8" enctype="application/x-www-form-urlencoded">
+      <p:panel header="#{msg.adminCategoryManageHeading}">
+        <h:panelGrid styleClass="sectionControlsTable" columns="2" columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
+          <h:panelGroup>
+            <p:button outcome="edit" value="#{msg.adminButtonsAdd}" />
+          </h:panelGroup>
+        </h:panelGrid>
+        <p:dataTable id="catTable" var="cat" value="#{categoryAdminBean.all}" emptyMessage="#{msg.adminNoCategoriesFound}">
+          <p:column styleClass="toggleColumn">
+            <p:rowToggler />
+          </p:column>
+          <p:column headerText="#{msg.adminCategoryTableNameColumn}">
+            #{cat.name}
+          </p:column>
+          <p:column styleClass="actionColumn" headerText="#{msg.adminCategoryTableActionsColumn}">
+            <p:button outcome="edit" value="#{msg.adminButtonsEdit}">
+              <f:param name="id" value="#{cat.id}" />
+            </p:button>
+            <p:button outcome="delete" value="#{msg.adminButtonsDelete}">
+              <f:param name="id" value="#{cat.id}" />
+            </p:button>
+          </p:column>
+          <p:rowExpansion>
+            <div class="ui-dt-c">
+              <h:outputText value="Products in this category:" />
+              <p:dataGrid var="prod" value="#{cat.productsAsList}" columns="5">
+                <div>#{prod.name}</div>
+              </p:dataGrid>
+            </div>
+          </p:rowExpansion>
+        </p:dataTable>
+      </p:panel>
+    </h:form>
   </ui:define>
 </ui:composition>
 </html>

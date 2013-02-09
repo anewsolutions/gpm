@@ -5,6 +5,11 @@ package com.gpm.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+import org.apache.commons.io.FilenameUtils;
+
+import com.gpm.UploadsServlet;
 
 /**
  * A JPA entity for a product variant.
@@ -17,6 +22,9 @@ public class Variant extends Base {
 
   private String name;
   private String code;
+  private boolean hasImage;
+  private String imageName;
+  private String imageType;
   private Float price;
   private Integer weight;
   private Integer stock;
@@ -42,6 +50,35 @@ public class Variant extends Base {
 
   public void setCode(String code) {
     this.code = code.toUpperCase();
+  }
+
+  public boolean isHasImage() {
+    return hasImage;
+  }
+
+  public void setHasImage(boolean hasImage) {
+    this.hasImage = hasImage;
+  }
+
+  public String getImageName() {
+    return imageName;
+  }
+
+  public void setImageName(String imageName) {
+    this.imageName = imageName;
+  }
+
+  public String getImageType() {
+    return imageType;
+  }
+
+  public void setImageType(String imageType) {
+    this.imageType = imageType;
+  }
+
+  @Transient
+  public String getImageFilename() {
+    return UploadsServlet.UPLOADS_PATH + getUuid() + "." + FilenameUtils.getExtension(getImageName());
   }
 
   @Column(nullable = false)
