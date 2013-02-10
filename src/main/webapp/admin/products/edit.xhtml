@@ -38,7 +38,8 @@
             <h:message errorClass="inlineMessage ui-state-error" for="codeField" />
           </h:panelGroup>
           <h:panelGroup id="variantsFieldLabelPanel">
-            <h:outputText value="#{msg.adminProductVariantsField}" rendered="#{productAdminBean.selected.numVariants > 1}" />
+            <h:outputText value="#{msg.adminProductVariantsField}"
+              rendered="#{productAdminBean.selected.numVariants > 1}" />
           </h:panelGroup>
           <h:panelGroup id="variantsFieldPanel">
             <p:dataGrid id="variantsField" var="variant" value="#{productAdminBean.selected.variantsAsList}" columns="4"
@@ -69,10 +70,13 @@
                   </h:panelGroup>
                   <h:outputLabel for="variantImageField" value="#{msg.adminProductImageField}" />
                   <h:panelGroup>
-                    <p:commandLink id="variantImageField" oncomplete="uploadDialogWidget.show()" ajax="true" process="@this"
-                      action="#{productAdminBean.setVariantForImage(variant)}">
-                      <p:graphicImage value="#{variant.imageFilename}" rendered="#{variant.hasImage}" />
-                      <p:graphicImage value="http://placehold.it/98&amp;text=#{msg.adminProductImageFieldNoImage}" rendered="#{!variant.hasImage}" />
+                    <p:commandLink id="variantImageField" oncomplete="uploadDialogWidget.show()" ajax="true"
+                      process="@this" action="#{productAdminBean.setVariantForImage(variant)}">
+                      <p:graphicImage styleClass="previewImage" value="/uploads/#{variant.imageFilename}"
+                        rendered="#{variant.hasImage}" />
+                      <p:graphicImage styleClass="previewImage"
+                        value="http://placehold.it/98&amp;text=#{msg.adminProductImageFieldNoImage}"
+                        rendered="#{!variant.hasImage}" />
                     </p:commandLink>
                   </h:panelGroup>
                   <p:outputLabel for="variantPriceField" value="#{msg.adminProductPriceField}" />
@@ -117,9 +121,11 @@
             <p:commandLink id="imageField" oncomplete="uploadDialogWidget.show()" ajax="true" process="@this"
               action="#{productAdminBean.setVariantForImage(productAdminBean.selected.variantsAsList[0])}"
               rendered="#{productAdminBean.selected.numVariants == 1}">
-              <p:graphicImage value="#{productAdminBean.selected.variantsAsList[0].imageFilename}"
+              <p:graphicImage styleClass="previewImage"
+                value="/uploads/#{productAdminBean.selected.variantsAsList[0].imageFilename}"
                 rendered="#{productAdminBean.selected.variantsAsList[0].hasImage}" />
-              <p:graphicImage value="http://placehold.it/98&amp;text=#{msg.adminProductImageFieldNoImage}"
+              <p:graphicImage styleClass="previewImage"
+                value="http://placehold.it/98&amp;text=#{msg.adminProductImageFieldNoImage}"
                 rendered="#{!productAdminBean.selected.variantsAsList[0].hasImage}" />
             </p:commandLink>
           </h:panelGroup>
