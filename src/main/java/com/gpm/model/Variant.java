@@ -9,8 +9,6 @@ import javax.persistence.Transient;
 
 import org.apache.commons.io.FilenameUtils;
 
-import com.gpm.UploadsServlet;
-
 /**
  * A JPA entity for a product variant.
  * 
@@ -78,7 +76,7 @@ public class Variant extends Base {
 
   @Transient
   public String getImageFilename() {
-    return UploadsServlet.UPLOADS_PATH + getUuid() + "." + FilenameUtils.getExtension(getImageName());
+    return getUuid() + "." + FilenameUtils.getExtension(getImageName());
   }
 
   @Column(nullable = false)

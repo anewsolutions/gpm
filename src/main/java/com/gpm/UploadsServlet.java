@@ -80,7 +80,7 @@ public class UploadsServlet extends HttpServlet {
   /**
    * Utility method to get the uploads data directory.
    * 
-   * @return an absolute path to a directory
+   * @return an absolute path to a directory on disk
    * @throws IOException
    *           if there was a problem reading the file system
    */

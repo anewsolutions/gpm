@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import com.gpm.UploadsServlet;
 import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.ProductManager;
 import com.gpm.manager.exception.ProductException;
@@ -72,11 +73,11 @@ public class ShopFrontBean implements Serializable {
   public String getVariantImage(Product product) {
     Variant variant = getSelectedVariant(product);
     if (variant.isHasImage()) {
-      return variant.getImageFilename();
+      return UploadsServlet.UPLOADS_PATH + variant.getImageFilename();
     } else {
       variant = product.getDefaultVariant();
       if (variant.isHasImage()) {
-        return variant.getImageFilename();
+        return UploadsServlet.UPLOADS_PATH + variant.getImageFilename();
       } else {
         return "http://placehold.it/245x245";
       }
