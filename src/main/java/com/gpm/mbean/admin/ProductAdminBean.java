@@ -154,8 +154,7 @@ public class ProductAdminBean implements Serializable {
 
   public void addVariant() {
     Variant v = new Variant();
-    v.setName("");
-    v.setCode(Integer.toString(selected.getVariants().size() + 1));
+    // If this is not the first variant, re-use price, weight and stock values
     if (selected.getVariants().size() > 0) {
       Variant prev = selected.getVariantsAsList().get(selected.getVariants().size() - 1);
       v.setPrice(prev.getPrice());
@@ -171,6 +170,13 @@ public class ProductAdminBean implements Serializable {
   public void removeVariant(Variant variant) {
     if (variant != null) {
       selected.getVariants().remove(variant);
+      // If there is only one variant left, reset its name/code and make it the default
+      if (selected.getVariants().size() == 1) {
+        Variant v = selected.getDefaultVariant();
+        v.setName("");
+        v.setCode("");
+        v.setDefaultChoice(true);
+      }
     }
   }
 
