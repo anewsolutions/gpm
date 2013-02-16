@@ -2,11 +2,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
-<ui:composition template="/templates/shop.xhtml">
-  <ui:define name="mainContent">
-    <h:outputText id="shopFrontHeading" value="#{msg.storeFrontHeading}" />
+<ui:composition template="/templates/site.xhtml">
+  <ui:param name="sitePageTitle" value="#{msg.shopPageTitle}" />
+  <ui:param name="sitePageHeading" value="#{msg.shopPageHeading}" />
+  <ui:define name="siteContent">
     <p:dataGrid id="shopFrontProductTable" var="product" value="#{shopFrontBean.products}" columns="3" paginator="false"
-      emptyMessage="#{msg.storeFrontNoProducts}">
+      emptyMessage="#{msg.shopNoProducts}">
       <h:panelGrid styleClass="shopFrontProductDetailsTable" columns="1">
         <h:outputText styleClass="shopFrontName" value="#{product.name}" />
         <h:panelGroup id="shopFrontImagePanel">
@@ -17,7 +18,8 @@
           <p:selectOneMenu value="#{shopFrontBean.selectedVariant}" effect="none" converter="VariantConverter">
             <f:selectItems value="#{product.variantsAsList}" var="variant" itemLabel="#{variant.name}"
               itemValue="#{variant}" />
-            <p:ajax event="change" update="shopFrontImagePanel shopFrontPricePanel shopFrontStockPanel shopFrontBuyPanel" />
+            <p:ajax event="change"
+              update="shopFrontImagePanel shopFrontPricePanel shopFrontStockPanel shopFrontBuyPanel" />
           </p:selectOneMenu>
         </h:panelGroup>
         <h:panelGroup id="shopFrontPricePanel">
@@ -27,9 +29,9 @@
           <h:outputText styleClass="shopFrontStock" value="#{shopFrontBean.getVariantStockText(product)}" />
         </h:panelGroup>
         <h:panelGroup id="shopFrontBuyPanel">
-          <p:commandButton value="#{msg.storeFrontButtonsAddToBasket}" disabled="true"
+          <p:commandButton value="#{msg.shopButtonsAddToBasket}" disabled="true"
             rendered="#{shopFrontBean.getVariantStock(product) == 0}" />
-          <p:commandButton value="#{msg.storeFrontButtonsAddToBasket}"
+          <p:commandButton value="#{msg.shopButtonsAddToBasket}"
             action="#{basketBean.addItemToBasket(product, shopFrontBean.selectedVariant)}"
             rendered="#{shopFrontBean.getVariantStock(product) > 0}" update=":basketForm" />
         </h:panelGroup>

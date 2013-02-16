@@ -5,6 +5,7 @@ package com.gpm.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 /**
  * A JPA entity for a shopping basket item.
@@ -48,5 +49,23 @@ public class BasketItem extends Base {
   @Column(nullable = false)
   public void setQuantity(int quantity) {
     this.quantity = quantity;
+  }
+
+  @Transient
+  public String getName() {
+    String name = product.getName();
+    if (!variant.getName().isEmpty()) {
+      name = name + " (" + variant.getName() + ")";
+    }
+    return name;
+  }
+
+  @Transient
+  public String getCode() {
+    String code = product.getCode();
+    if (!variant.getCode().isEmpty()) {
+      code = code + "-" + variant.getCode();
+    }
+    return code;
   }
 }

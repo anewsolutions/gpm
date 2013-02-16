@@ -2,9 +2,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
-<ui:composition template="/templates/shop.xhtml">
-  <ui:define name="mainContent">
-    TODO
+<ui:composition template="/templates/site.xhtml">
+  <ui:param name="sitePageTitle" value="#{msg.basketPageTitle}" />
+  <ui:param name="sitePageHeading" value="#{msg.basketPageHeading}" />
+  <ui:define name="siteContent">
+    <p:dataTable id="basketTable" var="basketItem" value="#{basketBean.allBasketItems}" paginator="false"
+      emptyMessage="#{msg.basketNoItems}">
+      <p:column headerText="#{msg.basketTableItemsColumn}">
+        #{basketItem.name} #{basketItem.code}
+      </p:column>
+      <p:column headerText="#{msg.basketTablePriceColumn}">
+        #{basketItem.variant.price}
+      </p:column>
+      <p:column headerText="#{msg.basketTableQuantityColumn}">
+        <p:spinner value="#{basketItem.quantity}" size="1" min="0" max="#{basketItem.variant.stock}">
+        </p:spinner>
+      </p:column>
+    </p:dataTable>
   </ui:define>
 </ui:composition>
 </html>

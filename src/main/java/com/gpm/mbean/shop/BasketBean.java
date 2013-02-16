@@ -4,11 +4,13 @@
 package com.gpm.mbean.shop;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import com.gpm.model.Basket;
+import com.gpm.model.BasketItem;
 import com.gpm.model.Product;
 import com.gpm.model.Variant;
 
@@ -35,5 +37,9 @@ public class BasketBean implements Serializable {
    */
   public int getNumTotalBasketItems() {
     return basket.getNumTotalBasketItems();
+  }
+
+  public List<BasketItem> getAllBasketItems() {
+    return basket.getBasketItemsAsList();
   }
 }

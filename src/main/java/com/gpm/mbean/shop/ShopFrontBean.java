@@ -98,11 +98,11 @@ public class ShopFrontBean implements Serializable {
   public String getVariantStockText(Product product) {
     Variant variant = getSelectedVariant(product);
     if (variant.getStock() == 0) {
-      return MessageProvider.getMessage("storeFrontStockNone");
+      return MessageProvider.getMessage("shopStockNone");
     } else if (variant.getStock() < 10) {
-      return MessageProvider.getMessage("storeFrontStockSome", variant.getStock());
+      return MessageProvider.getMessage("shopStockSome", variant.getStock());
     } else {
-      return MessageProvider.getMessage("storeFrontStockMany");
+      return MessageProvider.getMessage("shopStockMany");
     }
   }
 }

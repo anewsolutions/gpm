@@ -4,7 +4,7 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <f:view>
   <h:head>
-    <title>#{msg.storePageTitle}</title>
+    <title>#{sitePageTitle}</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta http-equiv="Cache-Control" content="no-cache" />
     <link href="#{request.contextPath}/favicon.ico" rel="icon" type="image/vnd.microsoft.icon" />
@@ -20,11 +20,11 @@
             <div class="shopHeaderBasketPanel">
               <p:commandLink styleClass="shopHeaderBasketButton" ajax="false"
                 action="/shop/basket.xhtml?faces-redirect=true">
-                <p:graphicImage library="images" name="basket.png" alt="#{msg.storeHeaderBasketAltText}" />
+                <p:graphicImage library="images" name="basket.png" alt="#{msg.siteHeaderBasketAltText}" />
                 <h:outputText styleClass="shopHeaderBasketCount" value="#{basketBean.numTotalBasketItems}" />
-                <h:outputText styleClass="shopHeaderBasketItems" value="#{msg.storeHeaderItemInBasket}"
+                <h:outputText styleClass="shopHeaderBasketItems" value="#{msg.siteHeaderItemInBasket}"
                   rendered="#{basketBean.numTotalBasketItems == 1}" />
-                <h:outputText styleClass="shopHeaderBasketItems" value="#{msg.storeHeaderItemsInBasket}"
+                <h:outputText styleClass="shopHeaderBasketItems" value="#{msg.siteHeaderItemsInBasket}"
                   rendered="#{basketBean.numTotalBasketItems != 1}" />
               </p:commandLink>
             </div>
@@ -32,7 +32,7 @@
         </h:panelGroup>
         <h:panelGroup>
           <h:outputLink value="http://www.guineapigmagazine.com/index.php">
-            <p:graphicImage library="images" name="logo.png" alt="#{msg.storeHeaderLogoAltText}" />
+            <p:graphicImage library="images" name="logo.png" alt="#{msg.siteHeaderLogoAltText}" />
           </h:outputLink>
         </h:panelGroup>
         <h:panelGroup>
@@ -53,8 +53,9 @@
         <h:outputLink value="/shop">Shop</h:outputLink>
       </span>
       <span id="shopContent">
+        <h:outputText id="shopFrontHeading" value="#{sitePageHeading}" />
         <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
-          <ui:insert name="mainContent">This is a template, nothing to see here.</ui:insert>
+          <ui:insert name="siteContent">This is a template, nothing to see here.</ui:insert>
         </h:form>
       </span>
       <h:panelGrid id="shopFooterTable" columns="3"
@@ -69,10 +70,10 @@
           </h:outputLink>
         </h:panelGroup>
         <h:panelGroup>
-          <h:outputLink value="http://www.guineapigmagazine.com/terms.php">#{msg.storeFooterTsAndCsLink}</h:outputLink>
+          <h:outputLink value="http://www.guineapigmagazine.com/terms.php">#{msg.siteFooterTsAndCsLink}</h:outputLink>
         </h:panelGroup>
         <h:panelGroup>
-          <h:outputText value="#{msg.storeFooterCopyright}" />
+          <h:outputText value="#{msg.siteFooterCopyright}" />
         </h:panelGroup>
       </h:panelGrid>
     </p:panel>
