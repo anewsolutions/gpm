@@ -164,3 +164,24 @@ img {
   font-size: 1.25em;
   font-weight: bold;
 }
+
+.subtotalPanel {
+  text-align: right;
+}
+
+.subtotalItems {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.subtotalPrice {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #ff0000;
+  margin: 0 0.2em;
+}
+
+.subtotalButtonPanel {
+  margin-left: auto;
+  margin-right: 0;
+}

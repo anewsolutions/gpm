@@ -18,7 +18,7 @@ public class BasketItem extends Base {
 
   private Product product;
   private Variant variant;
-  private int quantity;
+  private Integer quantity;
 
   public BasketItem() {
     super();
@@ -42,12 +42,12 @@ public class BasketItem extends Base {
     this.variant = variant;
   }
 
-  public int getQuantity() {
+  public Integer getQuantity() {
     return quantity;
   }
 
   @Column(nullable = false)
-  public void setQuantity(int quantity) {
+  public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
 

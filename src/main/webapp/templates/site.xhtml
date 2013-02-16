@@ -16,7 +16,7 @@
       <h:panelGrid id="shopHeaderTable" columns="3"
         columnClasses="shopHeaderTableLeftColumn,shopHeaderTableCentralColumn,shopHeaderTableRightColumn">
         <h:panelGroup>
-          <h:form id="basketForm" prependId="false" acceptcharset="UTF-8">
+          <h:form id="headerBasketForm" prependId="false" acceptcharset="UTF-8">
             <div class="shopHeaderBasketPanel">
               <p:commandLink styleClass="shopHeaderBasketButton" ajax="false"
                 action="/basket.xhtml?faces-redirect=true">
@@ -32,7 +32,7 @@
         </h:panelGroup>
         <h:panelGroup>
           <h:outputLink value="http://www.guineapigmagazine.com/index.php">
-            <p:graphicImage library="images" name="logo.png" alt="#{msg.siteHeaderLogoAltText}" />
+            <p:graphicImage library="images" name="logo.png" title="#{msg.siteHeaderLogo}" alt="#{msg.siteHeaderLogoAltText}" />
           </h:outputLink>
         </h:panelGroup>
         <h:panelGroup>

@@ -16,9 +16,33 @@
       </p:column>
       <p:column headerText="#{msg.basketTableQuantityColumn}">
         <p:spinner value="#{basketItem.quantity}" size="1" min="0" max="#{basketItem.variant.stock}">
+          <p:ajax update=":mainForm:subtotalPanel :headerBasketForm" />
         </p:spinner>
       </p:column>
     </p:dataTable>
+    <p:panel id="subtotalPanel" styleClass="subtotalPanel">
+      <h:outputFormat styleClass="subtotalItems" value="#{msg.basketSubtotalItem}"
+        rendered="#{basketBean.numTotalBasketItems == 1}">
+        <f:param value="#{basketBean.numTotalBasketItems}" />
+      </h:outputFormat>
+      <h:outputFormat styleClass="subtotalItems" value="#{msg.basketSubtotalItems}"
+        rendered="#{basketBean.numTotalBasketItems != 1}">
+        <f:param value="#{basketBean.numTotalBasketItems}" />
+      </h:outputFormat>
+      <h:outputText styleClass="subtotalPrice" value="#{basketBean.totalBasketPrice}" />
+      <h:panelGrid styleClass="subtotalButtonPanel" columns="2">
+        <h:panelGroup>
+          <p:commandButton value="#{msg.basketButtonsContinueShopping}" ajax="false"
+            action="/shop.xhtml?faces-redirect=true" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:commandButton value="#{msg.basketButtonsProceedToCheckout}" disabled="true"
+            rendered="#{basketBean.numTotalBasketItems == 0}" />
+          <p:commandButton value="#{msg.basketButtonsProceedToCheckout}"
+            rendered="#{basketBean.numTotalBasketItems > 0}" />
+        </h:panelGroup>
+      </h:panelGrid>
+    </p:panel>
   </ui:define>
 </ui:composition>
 </html>

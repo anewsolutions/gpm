@@ -4,6 +4,7 @@
 package com.gpm.mbean.shop;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -20,6 +21,15 @@ public class BasketBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private Basket basket = new Basket();
+
+  /**
+   * JSF method for displaying all items in the basket.
+   * 
+   * @return a list of unique basket items
+   */
+  public List<BasketItem> getAllBasketItems() {
+    return basket.getBasketItemsAsList();
+  }
 
   /**
    * JSF method to add a product and the selected variant to the shopping basket.
@@ -39,7 +49,13 @@ public class BasketBean implements Serializable {
     return basket.getNumTotalBasketItems();
   }
 
-  public List<BasketItem> getAllBasketItems() {
-    return basket.getBasketItemsAsList();
+  /**
+   * JSF method to get the total price for the entire contents of the basket.
+   * 
+   * @return a formatted price
+   */
+  public String getTotalBasketPrice() {
+    NumberFormat format = NumberFormat.getCurrencyInstance();
+    return format.format(basket.getTotalBasketPrice());
   }
 }

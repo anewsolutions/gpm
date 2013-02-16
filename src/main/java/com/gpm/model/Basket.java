@@ -56,6 +56,17 @@ public class Basket extends Base {
   }
 
   @Transient
+  public float getTotalBasketPrice() {
+    float price = 0;
+    Iterator<BasketItem> i = getBasketItems().iterator();
+    while (i.hasNext()) {
+      BasketItem item = i.next();
+      price += (item.getVariant().getPrice() * item.getQuantity());
+    }
+    return price;
+  }
+
+  @Transient
   public List<BasketItem> getBasketItemsAsList() {
     List<BasketItem> items = new ArrayList<BasketItem>(getBasketItems());
     Collections.sort(items);
@@ -78,7 +89,7 @@ public class Basket extends Base {
         break;
       }
     }
-    // If not already basket, add new item
+    // If not already in basket, add new item
     if (!done) {
       BasketItem item = new BasketItem();
       item.setProduct(product);

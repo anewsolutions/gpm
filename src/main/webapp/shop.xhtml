@@ -33,7 +33,7 @@
             rendered="#{shopFrontBean.getVariantStock(product) == 0}" />
           <p:commandButton value="#{msg.shopButtonsAddToBasket}"
             action="#{basketBean.addItemToBasket(product, shopFrontBean.selectedVariant)}"
-            rendered="#{shopFrontBean.getVariantStock(product) > 0}" update=":basketForm" />
+            rendered="#{shopFrontBean.getVariantStock(product) > 0}" update=":headerBasketForm" />
         </h:panelGroup>
       </h:panelGrid>
     </p:dataGrid>
