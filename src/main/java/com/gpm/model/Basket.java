@@ -98,4 +98,9 @@ public class Basket extends Base {
       getBasketItems().add(item);
     }
   }
+
+  @Transient
+  public void removeBasketItem(BasketItem item) {
+    getBasketItems().remove(item);
+  }
 }

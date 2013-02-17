@@ -8,15 +8,32 @@
   <ui:define name="siteContent">
     <p:dataTable id="basketTable" var="basketItem" value="#{basketBean.allBasketItems}" paginator="false"
       emptyMessage="#{msg.basketNoItems}">
-      <p:column headerText="#{msg.basketTableItemsColumn}">
-        #{basketItem.name} #{basketItem.code}
+      <p:column styleClass="basketItemsColumn" headerText="#{msg.basketTableItemsColumn}">
+        <h:panelGrid styleClass="basketItemPanel" columns="2"
+          columnClasses="basketItemPanelImageColumn,basketItemPanelDescColumn">
+          <p:graphicImage value="http://placehold.it/98x98" />
+          <h:panelGrid columns="1">
+            <h:panelGroup>
+              <h:outputText styleClass="basketItemName" value="#{basketItem.name}" />
+            </h:panelGroup>
+            <h:panelGroup>
+              <h:outputFormat styleClass="basketItemCode" value="#{msg.basketItemCode}">
+                <f:param value="#{basketItem.code}" />
+              </h:outputFormat>
+            </h:panelGroup>
+            <p:commandLink action="#{basketBean.removeItemFromBasket(basketItem)}" ajax="true"
+              update=":mainForm:subtotalPanel :headerBasketForm basketTable" process="@this">
+              <h:outputText value="#{msg.basketButtonsRemoveItem}" />
+            </p:commandLink>
+          </h:panelGrid>
+        </h:panelGrid>
       </p:column>
-      <p:column headerText="#{msg.basketTablePriceColumn}">
-        #{basketItem.variant.price}
+      <p:column styleClass="basketPriceColumn" headerText="#{msg.basketTablePriceColumn}">
+        <h:outputText styleClass="basketPrice" value="#{basketBean.getItemPrice(basketItem)}" />
       </p:column>
-      <p:column headerText="#{msg.basketTableQuantityColumn}">
+      <p:column styleClass="basketQuantityColumn" headerText="#{msg.basketTableQuantityColumn}">
         <p:spinner value="#{basketItem.quantity}" size="1" min="0" max="#{basketItem.variant.stock}">
-          <p:ajax update=":mainForm:subtotalPanel :headerBasketForm" />
+          <p:ajax update=":mainForm:subtotalPanel :headerBasketForm" process="@this" />
         </p:spinner>
       </p:column>
     </p:dataTable>

@@ -41,6 +41,15 @@ public class BasketBean implements Serializable {
   }
 
   /**
+   * JSF method to completely remove a product and its variant from the shopping basket.
+   */
+  public void removeItemFromBasket(BasketItem item) {
+    if (item != null) {
+      basket.removeBasketItem(item);
+    }
+  }
+
+  /**
    * JSF method to get the total number of individual items in the shopping basket.
    * 
    * @return the total number of basket items
@@ -52,10 +61,20 @@ public class BasketBean implements Serializable {
   /**
    * JSF method to get the total price for the entire contents of the basket.
    * 
-   * @return a formatted price
+   * @return a formatted price for the user's locale
    */
   public String getTotalBasketPrice() {
     NumberFormat format = NumberFormat.getCurrencyInstance();
     return format.format(basket.getTotalBasketPrice());
+  }
+
+  /**
+   * JSF method to get the unit price for an individual item the basket.
+   * 
+   * @return a formatted price for the user's locale
+   */
+  public String getItemPrice(BasketItem item) {
+    NumberFormat format = NumberFormat.getCurrencyInstance();
+    return format.format(item.getVariant().getPrice());
   }
 }

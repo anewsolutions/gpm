@@ -6,7 +6,7 @@ body {
   background-color: #68C9E9;
   background-image: url('/javax.faces.resource/clouds.png.xhtml?ln=images');
   background-repeat: repeat-x;
-  background-position: 0px 65px;
+  background-position: 0 65px;
   color: #373737;
 }
 
@@ -165,6 +165,66 @@ img {
   font-weight: bold;
 }
 
+#basketTable.ui-datatable .ui-datatable-data td, #basketTable.ui-datatable .ui-datatable-data-empty td {
+  border: none;
+}
+
+#basketTable.ui-datatable .ui-datatable-empty-message {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+#basketTable.ui-datatable th.basketItemsColumn {
+  text-align: left;
+}
+
+#basketTable.ui-datatable .ui-datatable-data td.basketItemsColumn {
+  text-align: left;
+}
+
+#basketTable.ui-datatable th.basketPriceColumn {
+  text-align: center;
+  width: 10%;
+}
+
+#basketTable.ui-datatable .ui-datatable-data td.basketPriceColumn {
+  text-align: center;
+  width: 10%;
+  vertical-align: top;
+}
+
+#basketTable.ui-datatable th.basketQuantityColumn {
+  text-align: center;
+  width: 10%;
+}
+
+#basketTable.ui-datatable .ui-datatable-data td.basketQuantityColumn {
+  text-align: center;
+  width: 10%;
+  vertical-align: top;
+}
+
+.basketItemPanel td.basketItemPanelImageColumn {
+  width: 98px;
+  vertical-align: top;
+}
+
+.basketItemPanel td.basketItemPanelDescColumn {
+  padding-left: 0.5em;
+  vertical-align: top;
+}
+
+.basketItemName {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.basketPrice {
+  color: #ff0000;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
 .subtotalPanel {
   text-align: right;
 }
@@ -175,9 +235,9 @@ img {
 }
 
 .subtotalPrice {
+  color: #ff0000;
   font-size: 1.5em;
   font-weight: bold;
-  color: #ff0000;
   margin: 0 0.2em;
 }
 

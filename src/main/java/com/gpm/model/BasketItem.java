@@ -51,6 +51,11 @@ public class BasketItem extends Base {
     this.quantity = quantity;
   }
 
+  /**
+   * Gets the name of the item made up from the product name and the variant name.
+   * 
+   * @return the full item name
+   */
   @Transient
   public String getName() {
     String name = product.getName();
@@ -60,6 +65,11 @@ public class BasketItem extends Base {
     return name;
   }
 
+  /**
+   * Gets the code of the item made up from the product code and the variant code.
+   * 
+   * @return the full item code
+   */
   @Transient
   public String getCode() {
     String code = product.getCode();
