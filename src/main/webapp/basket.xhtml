@@ -4,8 +4,9 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/site.xhtml">
   <ui:param name="sitePageTitle" value="#{msg.basketPageTitle}" />
-  <ui:param name="sitePageHeading" value="#{msg.basketPageHeading}" />
-  <ui:define name="siteContent">
+  <ui:define name="sitePageContent">
+    <h:outputStylesheet target="head" library="css" name="basket.css" />
+    <h:outputText styleClass="pageHeading" value="#{msg.basketPageHeading}" />
     <p:dataTable id="basketTable" var="basketItem" value="#{basketBean.allBasketItems}" paginator="false"
       emptyMessage="#{msg.basketNoItems}">
       <p:column styleClass="basketItemsColumn" headerText="#{msg.basketTableItemsColumn}">
@@ -22,7 +23,7 @@
               </h:outputFormat>
             </h:panelGroup>
             <p:commandLink action="#{basketBean.removeItemFromBasket(basketItem)}" ajax="true"
-              update=":mainForm:subtotalPanel :headerBasketForm basketTable" process="@this">
+              update=":mainForm:subtotalPanel :siteHeaderBasketForm basketTable" process="@this">
               <h:outputText value="#{msg.basketButtonsRemoveItem}" />
             </p:commandLink>
           </h:panelGrid>
@@ -33,7 +34,7 @@
       </p:column>
       <p:column styleClass="basketQuantityColumn" headerText="#{msg.basketTableQuantityColumn}">
         <p:spinner value="#{basketItem.quantity}" size="1" min="0" max="#{basketItem.variant.stock}">
-          <p:ajax update=":mainForm:subtotalPanel :headerBasketForm" process="@this" />
+          <p:ajax update=":mainForm:subtotalPanel :siteHeaderBasketForm" process="@this" />
         </p:spinner>
       </p:column>
     </p:dataTable>

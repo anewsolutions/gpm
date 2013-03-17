@@ -4,8 +4,9 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/site.xhtml">
   <ui:param name="sitePageTitle" value="#{msg.shopPageTitle}" />
-  <ui:param name="sitePageHeading" value="#{msg.shopPageHeading}" />
-  <ui:define name="siteContent">
+  <ui:define name="sitePageContent">
+    <h:outputStylesheet target="head" library="css" name="shop.css" />
+    <h:outputText styleClass="pageHeading" value="#{msg.shopPageHeading}" />
     <p:dataGrid id="shopFrontProductTable" var="product" value="#{shopFrontBean.products}" columns="3" paginator="false"
       emptyMessage="#{msg.shopNoProducts}">
       <h:panelGrid styleClass="shopFrontProductDetailsTable" columns="1">
@@ -33,7 +34,7 @@
             rendered="#{shopFrontBean.getVariantStock(product) == 0}" />
           <p:commandButton value="#{msg.shopButtonsAddToBasket}"
             action="#{basketBean.addItemToBasket(product, shopFrontBean.selectedVariant)}"
-            rendered="#{shopFrontBean.getVariantStock(product) > 0}" update=":headerBasketForm" />
+            rendered="#{shopFrontBean.getVariantStock(product) > 0}" update=":siteHeaderBasketForm" />
         </h:panelGroup>
       </h:panelGrid>
     </p:dataGrid>

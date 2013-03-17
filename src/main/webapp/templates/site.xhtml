@@ -6,80 +6,86 @@
   <h:head>
     <!-- Copyright 2013 Mat Booth - mbooth@apache.org -->
     <title>#{sitePageTitle}</title>
+    <meta name="description" content="Guinea Pig Magazine is the UK's first ever magazine for owners and lovers of the domestic pet guinea pig." />
+    <meta name="keywords" content="guinea pig, guinea, piggy, guinea pig magazine, cavy, cavies, magazine, publication, monthly, guinea pig pet, guinea pig pictures, guinea pig problems, guinea pig question, guinea pig rescue, guinea pig re-homing, guinea pig rehoming, guinea pig products, guinea pig classifieds, guinea pig health, guinea pig welfare, guinea pig club, concern about guinea pig, guinea pig expert, guinea pig help, guinea pig discussion, guinea pig forum, pet guinea pig, rodents, rodentologist, rodentology, small animal"/>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta http-equiv="Cache-Control" content="no-cache" />
     <link href="#{request.contextPath}/favicon.ico" rel="icon" type="image/vnd.microsoft.icon" />
     <link href='#{request.contextPath}/favicon.ico' rel="shortcut icon" type="image/x-icon" />
   </h:head>
   <h:body>
-    <h:outputStylesheet target="head" library="css" name="shop.css" />
-    <p:panel id="shopMainPagePanel">
-      <h:panelGrid id="shopHeaderTable" columns="3"
-        columnClasses="shopHeaderTableLeftColumn,shopHeaderTableCentralColumn,shopHeaderTableRightColumn">
-        <h:panelGroup>
-          <h:form id="headerBasketForm" prependId="false" acceptcharset="UTF-8">
-            <div class="shopHeaderBasketPanel">
+    <h:outputStylesheet target="head" library="css" name="site.css" />
+    <div class="siteWrapper">
+      <div class="siteWrapperTopSpacer" />
+      <div class="siteWrapperContent">
+        <h:panelGrid id="siteHeader" columns="3"
+          columnClasses="siteHeaderLeftColumn,siteHeaderCentralColumn,siteHeaderRightColumn">
+          <h:panelGroup>
+            <h:form id="siteHeaderBasketForm" prependId="false" acceptcharset="UTF-8">
               <p:commandLink styleClass="shopHeaderBasketButton" ajax="false"
                 action="/basket.xhtml?faces-redirect=true">
                 <p:graphicImage library="images" name="basket.png" alt="#{msg.siteHeaderBasketAltText}" />
-                <h:outputText styleClass="shopHeaderBasketCount" value="#{basketBean.numTotalBasketItems}" />
-                <h:outputText styleClass="shopHeaderBasketItems" value="#{msg.siteHeaderItemInBasket}"
-                  rendered="#{basketBean.numTotalBasketItems == 1}" />
-                <h:outputText styleClass="shopHeaderBasketItems" value="#{msg.siteHeaderItemsInBasket}"
-                  rendered="#{basketBean.numTotalBasketItems != 1}" />
+                <h:outputText styleClass="siteHeaderBasketCount" value="#{basketBean.numTotalBasketItems}" />
+                <h:outputText value="#{msg.siteHeaderItemInBasket}" rendered="#{basketBean.numTotalBasketItems == 1}" />
+                <h:outputText value="#{msg.siteHeaderItemsInBasket}" rendered="#{basketBean.numTotalBasketItems != 1}" />
               </p:commandLink>
-            </div>
+            </h:form>
+          </h:panelGroup>
+          <h:panelGroup>
+            <h:outputLink value="http://www.guineapigmagazine.com/index.php">
+              <p:graphicImage library="images" name="logo.png" title="#{msg.siteHeaderLogo}"
+                alt="#{msg.siteHeaderLogoAltText}" />
+            </h:outputLink>
+          </h:panelGroup>
+          <h:panelGroup>
+            <iframe scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: 86px; height: 21px;"
+              src="http://www.facebook.com/plugins/like.php?href=http://www.guineapigmagazine.com/&amp;send=false&amp;layout=button_count&amp;width=45&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21"></iframe>
+          </h:panelGroup>
+        </h:panelGrid>
+        <span id="siteMenu">
+          <h:outputLink value="http://www.guineapigmagazine.com/index.php">Home</h:outputLink>
+          <h:outputLink value="http://www.guineapigmagazine.com/about.php">About</h:outputLink>
+          <h:outputLink value="http://www.guineapigmagazine.com/features.php">Regulars</h:outputLink>
+          <h:outputLink value="http://www.guineapigmagazine.com/current-issue.php">Current Issue</h:outputLink>
+          <h:outputLink value="/shop.xhtml">Purchase/Subscribe</h:outputLink>
+          <h:outputLink value="http://www.guineapigmagazine.com/interactive.php">Online Issue</h:outputLink>
+          <h:outputLink value="http://www.guineapigmagazine.com/advertising.php">Classifieds/Advertising</h:outputLink>
+          <h:outputLink value="http://www.guineapigmagazine.com/links.php">Links</h:outputLink>
+          <h:outputLink value="http://www.guineapigmagazine.com/contact.php">Contact Us</h:outputLink>
+          <h:outputLink value="/shop.xhtml"><h:outputText value="#{msg.siteNavigationShop}" /></h:outputLink>
+        </span>
+        <span id="sitePage">
+          <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+            <ui:insert name="sitePageContent">This is a template, nothing to see here.</ui:insert>
           </h:form>
-        </h:panelGroup>
-        <h:panelGroup>
-          <h:outputLink value="http://www.guineapigmagazine.com/index.php">
-            <p:graphicImage library="images" name="logo.png" title="#{msg.siteHeaderLogo}" alt="#{msg.siteHeaderLogoAltText}" />
-          </h:outputLink>
-        </h:panelGroup>
-        <h:panelGroup>
-          <iframe scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: 86px; height: 21px;"
-            src="http://www.facebook.com/plugins/like.php?href=http://www.guineapigmagazine.com/&amp;send=false&amp;layout=button_count&amp;width=45&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21"></iframe>
-        </h:panelGroup>
-      </h:panelGrid>
-      <span id="shopHeaderMenu">
-        <h:outputLink value="http://www.guineapigmagazine.com/index.php">Home</h:outputLink>
-        <h:outputLink value="http://www.guineapigmagazine.com/about.php">About</h:outputLink>
-        <h:outputLink value="http://www.guineapigmagazine.com/features.php">Regulars</h:outputLink>
-        <h:outputLink value="http://www.guineapigmagazine.com/current-issue.php">Current Issue</h:outputLink>
-        <h:outputLink value="/shop.xhtml">Purchase/Subscribe</h:outputLink>
-        <h:outputLink value="http://www.guineapigmagazine.com/interactive.php">Online Issue</h:outputLink>
-        <h:outputLink value="http://www.guineapigmagazine.com/advertising.php">Classifieds/Advertising</h:outputLink>
-        <h:outputLink value="http://www.guineapigmagazine.com/links.php">Links</h:outputLink>
-        <h:outputLink value="http://www.guineapigmagazine.com/contact.php">Contact Us</h:outputLink>
-        <h:outputLink value="/shop.xhtml">Shop</h:outputLink>
-      </span>
-      <span id="shopContent">
-        <h:outputText id="shopFrontHeading" value="#{sitePageHeading}" />
-        <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
-          <ui:insert name="siteContent">This is a template, nothing to see here.</ui:insert>
-        </h:form>
-      </span>
-      <h:panelGrid id="shopFooterTable" columns="3"
-        columnClasses="shopFooterTableLeftColumn,shopFooterTableCentralColumn,shopFooterTableRightColumn">
-        <h:panelGroup>
-          <h:outputLink styleClass="shopFooterSocialButton"
-            value="http://www.facebook.com/pages/Guinea-Pig-Magazine/114951158562703" target="_blank">
-            <p:graphicImage value="http://www.guineapigmagazine.com/images/fb.jpeg" />
-          </h:outputLink>
-          <h:outputLink styleClass="shopFooterSocialButton" value="https://twitter.com/guineapigmag" target="_blank">
-            <p:graphicImage value="http://www.guineapigmagazine.com/images/tw.jpeg" />
-          </h:outputLink>
-        </h:panelGroup>
-        <h:panelGroup>
-          <h:outputLink value="http://www.guineapigmagazine.com/terms.php">#{msg.siteFooterTsAndCsLink}</h:outputLink>
-        </h:panelGroup>
-        <h:panelGroup>
-          <h:outputText value="#{msg.siteFooterCopyright}" />
-        </h:panelGroup>
-      </h:panelGrid>
-    </p:panel>
+        </span>
+        <h:panelGrid id="siteFooter" columns="3"
+          columnClasses="siteFooterLeftColumn,siteFooterCentralColumn,siteFooterRightColumn">
+          <h:panelGroup>
+            <h:outputLink value="http://www.facebook.com/pages/Guinea-Pig-Magazine/114951158562703" target="_blank">
+              <p:graphicImage library="images" name="social_fb.jpg" title="#{msg.siteFooterSocialFacebook}"
+                alt="#{msg.siteFooterSocialFacebookAltText}" />
+            </h:outputLink>
+            <h:outputLink value="https://twitter.com/guineapigmag" target="_blank">
+              <p:graphicImage library="images" name="social_tw.jpg" title="#{msg.siteFooterSocialTwitter}"
+                alt="#{msg.siteFooterSocialTwitterAltText}" />
+            </h:outputLink>
+            <h:outputLink value="/terms.xhtml">
+              <h:outputText value="#{msg.siteNavigationTsAndCs}" />
+            </h:outputLink>
+          </h:panelGroup>
+          <h:panelGroup>
+          </h:panelGroup>
+          <h:panelGroup>
+            <h:outputText value="#{msg.siteFooterCopyright}" />
+          </h:panelGroup>
+        </h:panelGrid>
+      </div>
+      <div class="siteWrapperBottomSpacer" />
+    </div>
+    <div class="sitePiggyPen" />
     <!-- Javascript fettling to slowly rotate the clouds background image. -->
-    <script type="text/javascript">
+    <script type="text/javascript" charset="utf-8">
       //<![CDATA[
       jQuery(document).ready(function() {
         setInterval(function() {moveBg()}, 50);
@@ -97,6 +103,8 @@
       }
       //]]>
     </script>
+    <!-- Javascript fettling to animate the piggies. -->
+    <script type="text/javascript" charset="utf-8" src="#{request.contextPath}/resources/js/grass_edgePreload.js"></script>
   </h:body>
 </f:view>
 </html>

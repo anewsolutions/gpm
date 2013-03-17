@@ -58,7 +58,8 @@
 	</target>
 
 	<target name="gpm-build" depends="gpm-compile-main" description="Build application WAR file.">
-		<war destfile="${target.dir}/${gpm.war}">
+		<mkdir dir="${webapps.dir}" />
+		<war destfile="${webapps.dir}/${gpm.war}">
 			<fileset dir="${main.webapp.dir}" />
 			<classes dir="${target.classes.dir}" />
 		</war>
@@ -84,8 +85,6 @@
 	</target>
 
 	<target name="openshift-deploy" description="Deploy the built WAR file to OpenShift.">
-		<mkdir dir="${webapps.dir}" />
-		<copy file="${target.dir}/${gpm.war}" todir="${webapps.dir}" />
 		<exec executable="rsync">
 			<arg value="-avz" />
 			<arg value="${webapps.dir}/" />

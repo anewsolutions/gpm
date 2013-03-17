@@ -1,0 +1,195 @@
+/**
+ * Copyright 2013 Mat Booth <mbooth@apache.org>
+ */
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #68C9E9;
+  background-image: url('/javax.faces.resource/clouds.png.xhtml?ln=images');
+  background-repeat: repeat-x;
+  background-position: 0 65px;
+  height: 100%;
+  color: #373737;
+  margin: 0;
+  padding: 0;
+  font-family: Arial,sans-serif;
+  font-size: 0.8em;
+}
+
+img {
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: #696969;
+}
+
+a:hover {
+  color: #ff0000;
+}
+
+.ui-widget-content {
+  border: none;
+}
+
+/* Content wrapper that keeps the animated pigs fixed to the page bottom */
+.siteWrapper {
+  margin: 0 auto -120px auto;
+  padding: 0;
+  min-height: 100%;
+  /* Following height attributes needed for IE */
+  height: auto !important;
+  height: 100%;
+}
+
+.siteWrapperTopSpacer {
+  height: 20px;
+}
+
+.siteWrapperContent {
+  width: 860px;
+  margin: 0 auto;
+  padding: 28px 38px 16px 38px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -o-border-radius: 16px;
+  -ms-border-radius: 16px;
+  border-radius: 16px;
+  background-color: #FFFFFF;
+}
+
+.siteWrapperBottomSpacer {
+  height: 120px;
+}
+
+/* Container for animated pigs */
+.sitePiggyPen {
+  background-color: #68C9E9;
+  background-image: url('/javax.faces.resource/grass.png.xhtml?ln=images');
+  background-repeat: repeat-x;
+  overflow: hidden;
+  height: 120px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header table */
+#siteHeader {
+  width: 100%;
+  border-spacing: 0;
+}
+
+.siteHeaderLeftColumn {
+  text-align: left;
+  width: 20%;
+  vertical-align: top;
+}
+
+.siteHeaderLeftColumn img {
+  padding-right: 0.4em;
+}
+
+.siteHeaderLeftColumn a, .siteHeaderLeftColumn img, .siteHeaderLeftColumn span {
+  vertical-align: middle;
+}
+
+.siteHeaderCentralColumn {
+  text-align: center;
+  vertical-align: top;
+  width: 60%;
+}
+
+.siteHeaderRightColumn {
+  text-align: right;
+  vertical-align: top;
+  width: 20%;
+}
+
+.siteHeaderBasketCount {
+  font-size: 1.9em;
+  font-weight: bold;
+  padding-right: 0.2em;
+}
+
+/* Footer table */
+#siteFooter {
+  width: 100%;
+  border-spacing: 0;
+  font-size: 0.85em;
+}
+
+.siteFooterLeftColumn {
+  text-align: left;
+  width: 50%;
+}
+
+.siteFooterLeftColumn img {
+  padding-right: 0.3em;
+}
+
+.siteFooterLeftColumn a, .siteFooterLeftColumn img {
+  vertical-align: middle;
+}
+
+.siteFooterCentralColumn {
+  text-align: left;
+  width: 0%;
+}
+
+.siteFooterRightColumn {
+  text-align: right;
+  width: 50%;
+}
+
+/* Navigation menu */
+#siteMenu {
+  display: block;
+  padding-top: 1em;
+  text-align: center;
+  width: 100%;
+}
+
+#siteMenu a {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+/* Main site content */
+#sitePage {
+  display: block;
+  width: 100%;
+  margin: 0.8em 0;
+  border-top: 1px #E0E0E0 dashed;
+  border-bottom: 1px #E0E0E0 dashed;
+}
+
+/* Headings for content */
+.pageHeading {
+  display: block;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  margin: 1em 0;
+  width: 100%;
+}
+
+.pageSectionHeading {
+  display: block;
+  font-size: 1.25em;
+  font-weight: bold;
+  margin: 1em 0;
+  width: 100%;
+}
+
+.pageSubSectionHeading {
+  display: block;
+  font-size: 1em;
+  font-weight: bold;
+  margin: 1em 0;
+  width: 100%;
+}
