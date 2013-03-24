@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Noddy servlet to dish up file that were previously uploaded by the user.
+ * Noddy servlet to serve up files that were previously uploaded by the user.
  * 
  * @author mbooth
  */
