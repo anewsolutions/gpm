@@ -168,7 +168,7 @@ a:hover {
   border-bottom: 1px #E0E0E0 dashed;
 }
 
-/* Headings for content */
+/* Styles for page content headings */
 .pageHeading {
   display: block;
   font-size: 1.5em;
@@ -192,4 +192,15 @@ a:hover {
   font-weight: bold;
   margin: 1em 0;
   width: 100%;
+}
+
+/* Styles for page content */
+.pageParagraph {
+  display: block;
+  margin: 1em 0;
+}
+
+.pageIndent {
+  margin-left: 2em;
+  margin-right: 2em;
 }

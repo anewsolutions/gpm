@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/site.xhtml">
+  <ui:param name="sitePageTitle" value="#{msg.loginPageTitle}" />
+  <ui:define name="sitePageContent">
+    <h:outputText styleClass="pageHeading" value="#{msg.loginPageHeading}" />
+    <h:outputText styleClass="pageParagraph" value="#{msg.loginLogInWithThirdPartyCreds}" />
+    <h:panelGrid styleClass="pageParagraph pageIndent" columns="1">
+      <h:panelGroup>
+        <p:commandLink ajax="false">
+          <!-- https://www.facebook.com/dialog/oauth?client_id=263163767149645&amp;redirect_uri=http://localhost:8080/shop.xhtml&amp;scope=email -->
+          <p:graphicImage library="images" name="login-facebook.png" alt="#{msg.loginFacebookAltText}"
+            title="#{msg.loginFacebook}" />
+        </p:commandLink>
+      </h:panelGroup>
+    </h:panelGrid>
+    <h:outputText styleClass="pageParagraph" value="#{msg.loginLogInWithGPMCreds}" />
+    <h:panelGrid id="loginUser" styleClass="pageParagraph pageIndent" columns="3">
+      <h:panelGroup>
+        <h:outputLabel for="loginEmail" value="#{msg.loginEmail}" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <p:inputText id="loginEmail" maxlength="250" size="25" required="true"
+          requiredMessage="#{msg.loginEmailRequired}">
+          <f:validator validatorId="EmailValidator" />
+        </p:inputText>
+        <p:watermark for="loginEmail" value="#{msg.loginEmailWatermark}" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <h:message for="loginEmail" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <h:outputLabel for="loginPassword" value="#{msg.loginPassword}" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <p:password id="loginPassword" size="25" required="true" requiredMessage="#{msg.loginPasswordRequired}" />
+        <p:watermark for="loginPassword" value="#{msg.loginPasswordWatermark}" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <h:message for="loginPassword" />
+      </h:panelGroup>
+      <p:commandButton value="#{msg.loginButton}" update="loginUser" />
+    </h:panelGrid>
+    <h:outputText styleClass="pageParagraph" value="#{msg.loginDontHaveGPMCreds}" />
+    <h:panelGrid styleClass="pageParagraph pageIndent" columns="1">
+      <p:commandButton value="#{msg.loginRegisterButton}" action="/secure/register.xhtml?faces-redirect=true"
+        ajax="false" immediate="true" />
+    </h:panelGrid>
+    <h:outputText styleClass="pageParagraph" value="#{msg.loginForgotGPMCreds}" />
+    <h:panelGrid styleClass="pageParagraph pageIndent" columns="1">
+      <p:commandButton value="#{msg.loginRecoverButton}" action="/secure/recover.xhtml?faces-redirect=true" ajax="false"
+        immediate="true" />
+    </h:panelGrid>
+  </ui:define>
+</ui:composition>
+</html>

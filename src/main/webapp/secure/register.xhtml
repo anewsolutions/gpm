@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/site.xhtml">
+  <ui:param name="sitePageTitle" value="#{msg.registerPageTitle}" />
+  <ui:define name="sitePageContent">
+    <h:outputText styleClass="pageHeading" value="#{msg.registerPageHeading}" />
+    <h:outputText styleClass="pageParagraph" value="#{msg.registerNewGPMAccount}" />
+    <h:panelGrid id="registerUser" styleClass="pageParagraph pageIndent" columns="3">
+      <h:panelGroup>
+        <h:outputLabel for="registerEmail" value="#{msg.registerEmail}" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <p:inputText id="registerEmail" maxlength="250" size="25" required="true"
+          requiredMessage="#{msg.registerEmailRequired}">
+          <f:validator validatorId="EmailValidator" />
+        </p:inputText>
+        <p:watermark for="registerEmail" value="#{msg.registerEmailWatermark}" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <h:message for="registerEmail" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <h:outputLabel for="registerName" value="#{msg.registerName}" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <p:inputText id="registerName" maxlength="250" size="25" required="true"
+          requiredMessage="#{msg.registerNameRequired}" />
+        <p:watermark for="registerName" value="#{msg.registerNameWatermark}" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <h:message for="registerName" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <h:outputLabel for="registerPassword1" value="#{msg.registerPassword1}" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <p:password id="registerPassword1" size="25" required="true"
+          requiredMessage="#{msg.registerPasswordRequired}" />
+        <p:watermark for="registerPassword1" value="#{msg.registerPassword1Watermark}" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <h:message for="registerPassword1" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <h:outputLabel for="registerPassword2" value="#{msg.registerPassword2}" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <p:password id="registerPassword2" size="25" required="true"
+          requiredMessage="#{msg.registerPasswordRequired}" />
+        <p:watermark for="registerPassword2" value="#{msg.registerPassword2Watermark}" />
+      </h:panelGroup>
+      <h:panelGroup>
+        <h:message for="registerPassword2" />
+      </h:panelGroup>
+      <p:commandButton value="#{msg.registerButton}" update="registerUser" />
+    </h:panelGrid>
+  </ui:define>
+</ui:composition>
+</html>

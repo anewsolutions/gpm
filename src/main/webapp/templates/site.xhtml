@@ -5,7 +5,7 @@
 <f:view>
   <h:head>
     <!-- Copyright 2013 Mat Booth - mbooth@apache.org -->
-    <title>#{sitePageTitle}</title>
+    <title>#{sitePageTitle} • #{msg.sitePageTitle}</title>
     <meta name="description" content="Guinea Pig Magazine is the UK's first ever magazine for owners and lovers of the domestic pet guinea pig." />
     <meta name="keywords" content="guinea pig, guinea, piggy, guinea pig magazine, cavy, cavies, magazine, publication, monthly, guinea pig pet, guinea pig pictures, guinea pig problems, guinea pig question, guinea pig rescue, guinea pig re-homing, guinea pig rehoming, guinea pig products, guinea pig classifieds, guinea pig health, guinea pig welfare, guinea pig club, concern about guinea pig, guinea pig expert, guinea pig help, guinea pig discussion, guinea pig forum, pet guinea pig, rodents, rodentologist, rodentology, small animal"/>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
@@ -21,6 +21,9 @@
         <h:panelGrid id="siteHeader" columns="3"
           columnClasses="siteHeaderLeftColumn,siteHeaderCentralColumn,siteHeaderRightColumn">
           <h:panelGroup>
+            <h:outputLink value="/secure/login.xhtml">
+              <h:outputText value="#{msg.siteNavigationLogIn}" />
+            </h:outputLink>
             <h:form id="siteHeaderBasketForm" prependId="false" acceptcharset="UTF-8">
               <p:commandLink styleClass="shopHeaderBasketButton" ajax="false"
                 action="/basket.xhtml?faces-redirect=true">
@@ -32,7 +35,7 @@
             </h:form>
           </h:panelGroup>
           <h:panelGroup>
-            <h:outputLink value="http://www.guineapigmagazine.com/index.php">
+            <h:outputLink value="/index.xhtml">
               <p:graphicImage library="images" name="logo.png" title="#{msg.siteHeaderLogo}"
                 alt="#{msg.siteHeaderLogoAltText}" />
             </h:outputLink>
@@ -43,7 +46,7 @@
           </h:panelGroup>
         </h:panelGrid>
         <span id="siteMenu">
-          <h:outputLink value="http://www.guineapigmagazine.com/index.php">Home</h:outputLink>
+          <h:outputLink value="/index.xhtml"><h:outputText value="#{msg.siteNavigationHome}" /></h:outputLink>
           <h:outputLink value="http://www.guineapigmagazine.com/about.php">About</h:outputLink>
           <h:outputLink value="http://www.guineapigmagazine.com/features.php">Regulars</h:outputLink>
           <h:outputLink value="http://www.guineapigmagazine.com/current-issue.php">Current Issue</h:outputLink>
@@ -72,6 +75,10 @@
             </h:outputLink>
             <h:outputLink value="/terms.xhtml">
               <h:outputText value="#{msg.siteNavigationTsAndCs}" />
+            </h:outputLink>
+            •
+            <h:outputLink value="/privacy.xhtml">
+              <h:outputText value="#{msg.siteNavigationPrivacy}" />
             </h:outputLink>
           </h:panelGroup>
           <h:panelGroup>
