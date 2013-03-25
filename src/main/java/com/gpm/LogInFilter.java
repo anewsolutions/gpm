@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.gpm.mbean.shop.LogInBean;
+import com.gpm.mbean.site.LogInBean;
 
 /**
  * Filter to determine whether users are authenticated when trying to access secure URIs
