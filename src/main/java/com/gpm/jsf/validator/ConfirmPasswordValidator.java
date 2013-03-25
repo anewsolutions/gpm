@@ -3,11 +3,9 @@
  */
 package com.gpm.jsf.validator;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
@@ -16,21 +14,21 @@ import javax.faces.validator.ValidatorException;
 import com.gpm.i18n.MessageProvider;
 
 /**
- * Simple JSF validator to check if given email addresses are valid.
+ * JSF validator to check if a password and a confirmation password are the same.
  * 
  * @author mbooth
  */
-@FacesValidator("EmailValidator")
-public class EmailValidator implements Validator {
-
-  private static final Pattern PATTERN = Pattern.compile("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)");
+@FacesValidator("ConfirmPasswordValidator")
+public class ConfirmPasswordValidator implements Validator {
 
   @Override
   public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-    Matcher matcher = PATTERN.matcher(value.toString());
-    if (!matcher.matches()) {
-      // Given email address is not valid
-      FacesMessage message = new FacesMessage(MessageProvider.getMessage(component.getId() + "Required"));
+    UIInput passwordComponent = (UIInput) component.getAttributes().get("passwordComponent");
+    String password = (String) passwordComponent.getValue();
+    String passwordConfirm = (String) value;
+    if (!passwordConfirm.equals(password)) {
+      // Given passwords do not match
+      FacesMessage message = new FacesMessage(MessageProvider.getMessage(component.getId() + "DoesNotMatch"));
       message.setSeverity(FacesMessage.SEVERITY_ERROR);
       throw new ValidatorException(message);
     }
