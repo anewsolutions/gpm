@@ -13,7 +13,7 @@
       </h:panelGroup>
       <h:panelGroup>
         <p:inputText id="registerEmail" maxlength="250" size="25" required="true"
-          requiredMessage="#{msg.registerEmailRequired}" value="#{registerBean.user.email}">
+          requiredMessage="#{msg.registerEmailRequired}" value="#{registerBean.email}">
           <f:validator validatorId="EmailValidator" />
         </p:inputText>
         <p:watermark for="registerEmail" value="#{msg.registerEmailWatermark}" />
@@ -26,7 +26,7 @@
       </h:panelGroup>
       <h:panelGroup>
         <p:inputText id="registerName" maxlength="250" size="25" required="true"
-          requiredMessage="#{msg.registerNameRequired}" value="#{registerBean.user.name}" />
+          requiredMessage="#{msg.registerNameRequired}" value="#{registerBean.name}" />
         <p:watermark for="registerName" value="#{msg.registerNameWatermark}" />
       </h:panelGroup>
       <h:panelGroup>
