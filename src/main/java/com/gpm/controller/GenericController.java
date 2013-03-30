@@ -1,5 +1,5 @@
 /**
- * Copyright 2012 Mat Booth <mbooth@apache.org>
+ * Copyright 2012-2013 Mat Booth <mbooth@apache.org>
  */
 package com.gpm.controller;
 
@@ -183,7 +183,7 @@ public abstract class GenericController<T extends Base> {
    *           if there was a problem getting the entities
    */
   public List<T> getAll() throws ControllerException {
-    return getAll("id", true);
+    return getAll("id", true, null);
   }
 
   /**
@@ -202,8 +202,24 @@ public abstract class GenericController<T extends Base> {
   }
 
   /**
-   * Get all entities of type T where the specified entity attributes match the specified
-   * values, ordered by the specified field.
+   * Get all entities of type T filtered by the specified entity attribute values.
+   * 
+   * @param attributes
+   *          a map of attribute/value pairs with which to filter the entities, passing an
+   *          empty map is equivalent to calling {@link #getAll()}
+   * @return a list of entities or an empty list if none exist whose attributes match the
+   *         specified values
+   * @throws ControllerException
+   *           if there was a problem getting the entities or any of the given attributes
+   *           are invalid for entity type T
+   */
+  public List<T> getAll(Map<String, Object> attributes) throws ControllerException {
+    return getAll("id", true, attributes);
+  }
+
+  /**
+   * Get all entities of type T filtered by the specified entity attribute values, ordered
+   * by the specified field.
    * 
    * @param orderBy
    *          the field name to order the results by
@@ -217,8 +233,6 @@ public abstract class GenericController<T extends Base> {
    * @throws ControllerException
    *           if there was a problem getting the entities or any of the given attributes
    *           are invalid for entity type T
-   * @throws IllegalArgumentException
-   *           if null is passed in for the attributes map
    */
   public List<T> getAll(String orderBy, boolean ascending, Map<String, Object> attributes) throws ControllerException {
     if (orderBy == null || orderBy.isEmpty()) {

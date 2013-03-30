@@ -8,6 +8,9 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import com.gpm.manager.UserAccountManager;
+import com.gpm.manager.exception.UserAccountException;
+
 @ManagedBean
 @ViewScoped
 public class RegisterBean implements Serializable {
@@ -19,6 +22,12 @@ public class RegisterBean implements Serializable {
   private String password;
 
   public void createAccount() {
+    try {
+      UserAccountManager.createNew(email, name, password);
+    } catch (UserAccountException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   public String getEmail() {

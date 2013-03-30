@@ -29,7 +29,7 @@ public class UserAccount extends Base {
     return email;
   }
 
-  public void setEmail(String email) {
+  public void setEmail(final String email) {
     this.email = email;
   }
 
@@ -38,16 +38,16 @@ public class UserAccount extends Base {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
-  @Column(length = 128, nullable = false)
+  @Column(length = 64, nullable = false)
   public String getPasswordSalt() {
     return passwordSalt;
   }
 
-  public void setPasswordSalt(String passwordSalt) {
+  public void setPasswordSalt(final String passwordSalt) {
     this.passwordSalt = passwordSalt;
   }
 
@@ -56,7 +56,7 @@ public class UserAccount extends Base {
     return passwordHash;
   }
 
-  public void setPasswordHash(String passwordHash) {
+  public void setPasswordHash(final String passwordHash) {
     this.passwordHash = passwordHash;
   }
 }
