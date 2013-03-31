@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gpm.controller.ControllerException;
-import com.gpm.controller.ProductController;
+import com.gpm.controller.ControllerFactory;
 import com.gpm.manager.exception.ProductException;
 import com.gpm.model.Category;
 import com.gpm.model.Product;
@@ -15,7 +15,7 @@ import com.gpm.model.Product;
 public class ProductManager {
   public static Product find(int id) throws ProductException {
     try {
-      return ProductController.getInstance().get(id);
+      return ControllerFactory.getProductController().get(id);
     } catch (ControllerException e) {
       throw new ProductException(e);
     }
@@ -23,7 +23,7 @@ public class ProductManager {
 
   public static List<Product> findAll() throws ProductException {
     try {
-      return ProductController.getInstance().getAll(null, true);
+      return ControllerFactory.getProductController().getAll(null, true);
     } catch (ControllerException e) {
       throw new ProductException(e);
     }
@@ -51,7 +51,7 @@ public class ProductManager {
 
   public static void save(Product product) throws ProductException {
     try {
-      ProductController.getInstance().save(product);
+      ControllerFactory.getProductController().save(product);
     } catch (ControllerException e) {
       throw new ProductException(e);
     }
@@ -59,7 +59,7 @@ public class ProductManager {
 
   public static void delete(Product product) throws ProductException {
     try {
-      ProductController.getInstance().delete(product.getId());
+      ControllerFactory.getProductController().delete(product.getId());
     } catch (ControllerException e) {
       throw new ProductException(e);
     }
@@ -70,13 +70,13 @@ public class ProductManager {
       if (productsAdded != null) {
         for (Product product : productsAdded) {
           product.getCategories().add(category);
-          ProductController.getInstance().save(product);
+          ControllerFactory.getProductController().save(product);
         }
       }
       if (productsRemoved != null) {
         for (Product product : productsRemoved) {
           product.getCategories().remove(category);
-          ProductController.getInstance().save(product);
+          ControllerFactory.getProductController().save(product);
         }
       }
     } catch (ControllerException e) {

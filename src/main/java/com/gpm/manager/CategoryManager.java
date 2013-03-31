@@ -6,8 +6,8 @@ package com.gpm.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gpm.controller.CategoryController;
 import com.gpm.controller.ControllerException;
+import com.gpm.controller.ControllerFactory;
 import com.gpm.manager.exception.CategoryException;
 import com.gpm.model.Category;
 import com.gpm.model.Product;
@@ -15,7 +15,7 @@ import com.gpm.model.Product;
 public class CategoryManager {
   public static Category find(int id) throws CategoryException {
     try {
-      return CategoryController.getInstance().get(id);
+      return ControllerFactory.getCategoryController().get(id);
     } catch (ControllerException e) {
       throw new CategoryException(e);
     }
@@ -23,7 +23,7 @@ public class CategoryManager {
 
   public static List<Category> findAllCategories() throws CategoryException {
     try {
-      return CategoryController.getInstance().getAll(null, true);
+      return ControllerFactory.getCategoryController().getAll(null, true);
     } catch (ControllerException e) {
       throw new CategoryException(e);
     }
@@ -45,7 +45,7 @@ public class CategoryManager {
 
   public static void save(Category category) throws CategoryException {
     try {
-      CategoryController.getInstance().save(category);
+      ControllerFactory.getCategoryController().save(category);
     } catch (ControllerException e) {
       throw new CategoryException(e);
     }
@@ -53,7 +53,7 @@ public class CategoryManager {
 
   public static void delete(Category category) throws CategoryException {
     try {
-      CategoryController.getInstance().delete(category.getId());
+      ControllerFactory.getCategoryController().delete(category.getId());
     } catch (ControllerException e) {
       throw new CategoryException(e);
     }

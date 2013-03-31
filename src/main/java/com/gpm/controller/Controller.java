@@ -23,16 +23,17 @@ import org.hibernate.HibernateException;
 import com.gpm.model.Base;
 
 /**
- * A generic entity controller that handles creation of entity managers and implements
- * basic persistence CRUD operations on JPA entities of type T. All other entity
- * controllers should extend this class.
+ * A generic JPA entity controller that handles creation of entity managers and implements
+ * basic persistence operations for entities of type T. Entity type specific instances of
+ * this class should be gotten using the {@link ControllerFactory} methods.
  * 
  * @author mbooth
  * 
  * @param T
  *          a type that is an annotated JPA entity
+ * @see ControllerFactory
  */
-public abstract class GenericController<T extends Base> {
+public class Controller<T extends Base> {
 
   /**
    * The class of type T.
@@ -45,15 +46,15 @@ public abstract class GenericController<T extends Base> {
   private static EntityManagerFactory emf;
 
   /**
-   * Constructor that receives the class of type T. Due to Java's type erasure we can't
-   * just do "T.class".
+   * Constructor that receives the class of type T to store for later use. Due to Java's
+   * type erasure we can't just do "T.class".
    * 
    * @param cls
    *          the class of type T
    * @throws IllegalArgumentException
    *           if the specified class is null or not a valid annotated JPA entity
    */
-  public GenericController(Class<T> cls) throws IllegalArgumentException {
+  Controller(Class<T> cls) throws IllegalArgumentException {
     this.cls = cls;
     if (cls == null) {
       throw new IllegalArgumentException("Specified class must not be null");
@@ -69,7 +70,7 @@ public abstract class GenericController<T extends Base> {
    * 
    * @return an entity manager that can be used for database persistence
    */
-  protected EntityManager getEntityManager() {
+  private EntityManager getEntityManager() {
     if (emf == null) {
       emf = Persistence.createEntityManagerFactory("gpm");
     }

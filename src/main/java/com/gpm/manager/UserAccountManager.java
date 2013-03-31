@@ -12,7 +12,7 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import com.gpm.controller.ControllerException;
-import com.gpm.controller.UserAccountController;
+import com.gpm.controller.ControllerFactory;
 import com.gpm.manager.exception.UserAccountException;
 import com.gpm.model.UserAccount;
 
@@ -21,7 +21,7 @@ public class UserAccountManager {
     try {
       Map<String, Object> attributes = new HashMap<String, Object>();
       attributes.put("email", email);
-      return UserAccountController.getInstance().getAll(attributes);
+      return ControllerFactory.getUserAccountController().getAll(attributes);
     } catch (ControllerException e) {
       throw new UserAccountException(e);
     }
@@ -46,7 +46,7 @@ public class UserAccountManager {
     account.setPasswordSalt(Hex.encodeHexString(salt));
     account.setPasswordHash(Hex.encodeHexString(hash));
     try {
-      UserAccountController.getInstance().save(account);
+      ControllerFactory.getUserAccountController().save(account);
     } catch (ControllerException e) {
       throw new UserAccountException(e);
     }

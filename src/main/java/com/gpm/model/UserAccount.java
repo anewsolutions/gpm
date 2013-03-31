@@ -24,7 +24,7 @@ public class UserAccount extends Base {
     super();
   }
 
-  @Column(nullable = false)
+  @Column(unique = true, nullable = false)
   public String getEmail() {
     return email;
   }
