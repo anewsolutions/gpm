@@ -16,16 +16,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.TransferEvent;
-import org.primefaces.model.DualListModel;
 import org.primefaces.model.UploadedFile;
 
 import com.gpm.UploadsServlet;
-import com.gpm.manager.CategoryManager;
 import com.gpm.manager.ProductManager;
-import com.gpm.manager.exception.CategoryException;
 import com.gpm.manager.exception.ProductException;
-import com.gpm.model.Category;
 import com.gpm.model.Product;
 import com.gpm.model.Variant;
 
@@ -40,8 +35,6 @@ public class ProductAdminBean implements Serializable {
   private Product selected;
 
   private Variant variantForImage;
-
-  private DualListModel<Category> categoriesPickList;
 
   /**
    * Bean initialisation.
@@ -103,35 +96,6 @@ public class ProductAdminBean implements Serializable {
     return all;
   }
 
-  public DualListModel<Category> getCategoriesPickList() {
-    if (categoriesPickList == null) {
-      categoriesPickList = new DualListModel<Category>();
-      try {
-        categoriesPickList.setSource(CategoryManager.findCategoriesNotInProduct(selected));
-        categoriesPickList.setTarget(CategoryManager.findCategoriesInProduct(selected));
-      } catch (CategoryException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
-    return categoriesPickList;
-  }
-
-  public void setCategoriesPickList(DualListModel<Category> categoriesPickList) {
-    this.categoriesPickList = categoriesPickList;
-  }
-
-  public void onTransferPickList(TransferEvent event) {
-    for (Object item : event.getItems()) {
-      Category category = (Category) item;
-      if (event.isAdd()) {
-        selected.getCategories().add(category);
-      } else {
-        selected.getCategories().remove(category);
-      }
-    }
-  }
-
   public String save() {
     try {
       ProductManager.save(selected);
@@ -162,6 +126,8 @@ public class ProductAdminBean implements Serializable {
       v.setStock(prev.getStock());
       v.setDefaultChoice(false);
     } else {
+      v.setName("");
+      v.setCode("");
       v.setDefaultChoice(true);
     }
     selected.getVariants().add(v);

@@ -132,7 +132,7 @@ public class Controller<T extends Base> {
    * @param ent
    *          the entity whose collections should be initialised
    */
-  protected void initialiseCollections(T ent) throws ControllerException {
+  private void initialiseCollections(T ent) throws ControllerException {
     Method[] meths = cls.getMethods();
     for (Method meth : meths) {
       if (meth.getAnnotation(ElementCollection.class) != null) {

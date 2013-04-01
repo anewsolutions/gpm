@@ -173,13 +173,6 @@
             <br />
             <h:outputText id="descriptionFieldHint" />
           </h:panelGroup>
-          <p:outputLabel for="categoriesField" value="#{msg.adminProductCategoriesField}" />
-          <h:panelGroup>
-            <p:pickList id="categoriesField" value="#{productAdminBean.categoriesPickList}" var="category"
-              itemLabel="#{category.name}" itemValue="#{category}" converter="CategoryConverter">
-              <p:ajax event="transfer" listener="#{productAdminBean.onTransferPickList}" />
-            </p:pickList>
-          </h:panelGroup>
         </h:panelGrid>
       </p:panel>
     </h:form>

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.gpm.model.Base;
-import com.gpm.model.Category;
 import com.gpm.model.Product;
 import com.gpm.model.UserAccount;
 import com.gpm.model.Variant;
@@ -28,14 +27,6 @@ public class ControllerFactory {
       controllers.put(UserAccount.class, new Controller<UserAccount>(UserAccount.class));
     }
     return (Controller<UserAccount>) controllers.get(UserAccount.class);
-  }
-
-  @SuppressWarnings("unchecked")
-  public static Controller<Category> getCategoryController() {
-    if (!controllers.containsKey(Category.class)) {
-      controllers.put(Category.class, new Controller<Category>(Category.class));
-    }
-    return (Controller<Category>) controllers.get(Category.class);
   }
 
   @SuppressWarnings("unchecked")

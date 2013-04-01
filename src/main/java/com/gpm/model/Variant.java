@@ -37,7 +37,7 @@ public class Variant extends Base {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
@@ -46,7 +46,7 @@ public class Variant extends Base {
     return code;
   }
 
-  public void setCode(String code) {
+  public void setCode(final String code) {
     this.code = code.toUpperCase();
   }
 
@@ -54,7 +54,7 @@ public class Variant extends Base {
     return hasImage;
   }
 
-  public void setHasImage(boolean hasImage) {
+  public void setHasImage(final boolean hasImage) {
     this.hasImage = hasImage;
   }
 
@@ -62,7 +62,7 @@ public class Variant extends Base {
     return imageName;
   }
 
-  public void setImageName(String imageName) {
+  public void setImageName(final String imageName) {
     this.imageName = imageName;
   }
 
@@ -70,7 +70,7 @@ public class Variant extends Base {
     return imageType;
   }
 
-  public void setImageType(String imageType) {
+  public void setImageType(final String imageType) {
     this.imageType = imageType;
   }
 
@@ -84,7 +84,7 @@ public class Variant extends Base {
     return price;
   }
 
-  public void setPrice(Float price) {
+  public void setPrice(final Float price) {
     this.price = price;
   }
 
@@ -93,7 +93,7 @@ public class Variant extends Base {
     return weight;
   }
 
-  public void setWeight(Integer weight) {
+  public void setWeight(final Integer weight) {
     this.weight = weight;
   }
 
@@ -102,7 +102,7 @@ public class Variant extends Base {
     return stock;
   }
 
-  public void setStock(Integer stock) {
+  public void setStock(final Integer stock) {
     this.stock = stock;
   }
 
@@ -110,7 +110,7 @@ public class Variant extends Base {
     return defaultChoice;
   }
 
-  public void setDefaultChoice(boolean defaultChoice) {
+  public void setDefaultChoice(final boolean defaultChoice) {
     this.defaultChoice = defaultChoice;
   }
 }

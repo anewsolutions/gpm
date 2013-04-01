@@ -51,7 +51,7 @@ public abstract class Base implements Comparable<Base>, Serializable {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(final int id) {
     this.id = id;
   }
 
@@ -68,7 +68,7 @@ public abstract class Base implements Comparable<Base>, Serializable {
     return uuid;
   }
 
-  public void setUuid(UUID uuid) {
+  public void setUuid(final UUID uuid) {
     this.uuid = uuid;
   }
 
@@ -83,12 +83,12 @@ public abstract class Base implements Comparable<Base>, Serializable {
     return created;
   }
 
-  public void setCreated(Date created) {
+  public void setCreated(final Date created) {
     this.created = created;
   }
 
   @Override
-  public int compareTo(Base o) {
+  public int compareTo(final Base o) {
     return getCreated().compareTo(o.getCreated());
   }
 
@@ -99,7 +99,7 @@ public abstract class Base implements Comparable<Base>, Serializable {
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj) {
       return true;
     }
