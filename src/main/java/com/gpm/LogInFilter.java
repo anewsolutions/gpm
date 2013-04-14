@@ -4,6 +4,8 @@
 package com.gpm;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -62,10 +64,26 @@ public class LogInFilter implements Filter {
       } else {
         // We are not logged in
         if (uri.startsWith(LOGIN) || uri.startsWith(REGISTER) || uri.startsWith(RECOVER)) {
-          // Let users log into, register or recover accounts
+          // These pages are fine, so store the referring URI and let users through to the
+          // log in, register or recover pages
+          if (logIn.getRedirect() == null) {
+            try {
+              logIn.setRedirect(new URI(req.getHeader("referer")));
+            } catch (URISyntaxException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
+          }
           chain.doFilter(request, res);
         } else {
-          // Everything else must go through the log in page
+          // Everything else must go through the log in page, so store the original URI
+          // and redirect to the log in page
+          try {
+            logIn.setRedirect(new URI(uri));
+          } catch (URISyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
           res.sendRedirect(LOGIN);
         }
       }

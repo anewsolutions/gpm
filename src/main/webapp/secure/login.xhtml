@@ -9,11 +9,10 @@
     <h:outputText styleClass="pageParagraph" value="#{msg.loginLogInWithThirdPartyCreds}" />
     <h:panelGrid styleClass="pageParagraph pageIndent" columns="1">
       <h:panelGroup>
-        <p:commandLink ajax="false">
-          <!-- https://www.facebook.com/dialog/oauth?client_id=263163767149645&amp;redirect_uri=http://localhost:8080/shop.xhtml&amp;scope=email -->
+        <h:outputLink value="#{logInBean.facebookLoginUrl}">
           <p:graphicImage library="images" name="login-facebook.png" alt="#{msg.loginFacebookAltText}"
             title="#{msg.loginFacebook}" />
-        </p:commandLink>
+        </h:outputLink>
       </h:panelGroup>
     </h:panelGrid>
     <h:outputText styleClass="pageParagraph" value="#{msg.loginLogInWithGPMCreds}" />
@@ -22,9 +21,9 @@
         <h:outputLabel for="loginEmail" value="#{msg.loginEmail}" />
       </h:panelGroup>
       <h:panelGroup>
-        <p:inputText id="loginEmail" maxlength="250" size="25" required="true"
-          requiredMessage="#{msg.loginEmailRequired}">
-          <f:validator validatorId="EmailValidator" />
+        <p:inputText id="loginEmail" maxlength="250" size="25" required="true" binding="#{emailComponent}"
+          requiredMessage="#{msg.loginEmailRequired}" value="#{logInBean.email}">
+          <f:validator validatorId="EmailFormatValidator" />
         </p:inputText>
         <p:watermark for="loginEmail" value="#{msg.loginEmailWatermark}" />
       </h:panelGroup>
@@ -35,13 +34,16 @@
         <h:outputLabel for="loginPassword" value="#{msg.loginPassword}" />
       </h:panelGroup>
       <h:panelGroup>
-        <p:password id="loginPassword" size="25" required="true" requiredMessage="#{msg.loginPasswordRequired}" />
+        <p:password id="loginPassword" size="25" required="true" requiredMessage="#{msg.loginPasswordRequired}">
+          <f:validator validatorId="CredentialsValidator" />
+          <f:attribute name="emailComponent" value="#{emailComponent}" />
+        </p:password>
         <p:watermark for="loginPassword" value="#{msg.loginPasswordWatermark}" />
       </h:panelGroup>
       <h:panelGroup>
         <h:message for="loginPassword" />
       </h:panelGroup>
-      <p:commandButton value="#{msg.loginButton}" update="loginUser" />
+      <p:commandButton value="#{msg.loginButton}" action="#{logInBean.login}" update="loginUser" />
     </h:panelGrid>
     <h:outputText styleClass="pageParagraph" value="#{msg.loginDontHaveGPMCreds}" />
     <h:panelGrid styleClass="pageParagraph pageIndent" columns="1">

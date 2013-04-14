@@ -5,6 +5,7 @@ package com.gpm.jsf.validator;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
@@ -16,26 +17,30 @@ import com.gpm.manager.exception.UserAccountException;
 import com.gpm.model.UserAccount;
 
 /**
- * Simple JSF validator to check that email addresses are unique. Validation fails if a
- * given email address is already known to the database.
+ * JSF validator for authenticating GPM account credentials. Validation fails if there is
+ * no account for the email address or if the password is not valid for the account
+ * belonging to the email address.
  * 
  * @author mbooth
  */
-@FacesValidator("EmailUniquenessValidator")
-public class EmailUniquenessValidator implements Validator {
+@FacesValidator("CredentialsValidator")
+public class CredentialsValidator implements Validator {
 
   @Override
   public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+    UIInput emailComponent = (UIInput) component.getAttributes().get("emailComponent");
+    String email = emailComponent.getValue().toString();
+    String password = value.toString();
     UserAccount account = null;
     try {
-      account = UserAccountManager.findByEmail(value.toString());
+      account = UserAccountManager.findByCredentials(email, password);
     } catch (UserAccountException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    if (account != null) {
-      // Given email address is already in the database
-      FacesMessage message = new FacesMessage(MessageProvider.getMessage(component.getId() + "Unique"));
+    if (account == null) {
+      // Given email is not known to the database
+      FacesMessage message = new FacesMessage(MessageProvider.getMessage(component.getId() + "InvalidCreds"));
       message.setSeverity(FacesMessage.SEVERITY_ERROR);
       throw new ValidatorException(message);
     }

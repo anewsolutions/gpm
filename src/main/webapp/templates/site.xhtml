@@ -21,18 +21,29 @@
         <h:panelGrid id="siteHeader" columns="3"
           columnClasses="siteHeaderLeftColumn,siteHeaderCentralColumn,siteHeaderRightColumn">
           <h:panelGroup>
-            <h:outputLink value="/secure/login.xhtml">
-              <h:outputText value="#{msg.siteNavigationLogIn}" />
-            </h:outputLink>
-            <h:form id="siteHeaderBasketForm" prependId="false" acceptcharset="UTF-8">
-              <p:commandLink styleClass="shopHeaderBasketButton" ajax="false"
-                action="/basket.xhtml?faces-redirect=true">
-                <p:graphicImage library="images" name="basket.png" alt="#{msg.siteHeaderBasketAltText}" />
-                <h:outputText styleClass="siteHeaderBasketCount" value="#{basketBean.numTotalBasketItems}" />
-                <h:outputText value="#{msg.siteHeaderItemInBasket}" rendered="#{basketBean.numTotalBasketItems == 1}" />
-                <h:outputText value="#{msg.siteHeaderItemsInBasket}" rendered="#{basketBean.numTotalBasketItems != 1}" />
-              </p:commandLink>
-            </h:form>
+            <h:panelGrid columns="1">
+              <h:panelGroup>
+                <h:form id="siteHeaderBasketForm" prependId="false" acceptcharset="UTF-8">
+                  <p:commandLink styleClass="shopHeaderBasketButton" ajax="false"
+                    action="/basket.xhtml?faces-redirect=true">
+                    <p:graphicImage library="images" name="basket.png" alt="#{msg.siteHeaderBasketAltText}" />
+                    <h:outputText styleClass="siteHeaderBasketCount" value="#{basketBean.numTotalBasketItems}" />
+                    <h:outputText value="#{msg.siteHeaderItemInBasket}" rendered="#{basketBean.numTotalBasketItems == 1}" />
+                    <h:outputText value="#{msg.siteHeaderItemsInBasket}" rendered="#{basketBean.numTotalBasketItems != 1}" />
+                  </p:commandLink>
+                </h:form>
+              </h:panelGroup>
+              <h:panelGroup>
+                <h:form id="siteHeaderLoginForm" prependId="false" acceptcharset="UTF-8">
+                  <h:commandLink action="/secure/login.xhtml?faces-redirect=true" rendered="#{!logInBean.loggedIn}">
+                    <h:outputText value="#{msg.siteNavigationLogIn}" />
+                  </h:commandLink>
+                  <h:commandLink action="#{logInBean.logout}" rendered="#{logInBean.loggedIn}">
+                    <h:outputText value="#{msg.siteNavigationLogOut}" />
+                  </h:commandLink>
+                </h:form>
+              </h:panelGroup>
+            </h:panelGrid>
           </h:panelGroup>
           <h:panelGroup>
             <h:outputLink value="/index.xhtml">

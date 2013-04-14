@@ -16,12 +16,13 @@ import javax.faces.validator.ValidatorException;
 import com.gpm.i18n.MessageProvider;
 
 /**
- * Simple JSF validator to check if given email addresses are valid.
+ * Simple JSF validator to check the format of given email addresses. Validation fails if
+ * the email address does not conform to a basic "x@x.x" pattern.
  * 
  * @author mbooth
  */
-@FacesValidator("EmailValidator")
-public class EmailValidator implements Validator {
+@FacesValidator("EmailFormatValidator")
+public class EmailFormatValidator implements Validator {
 
   private static final Pattern PATTERN = Pattern.compile("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)");
 

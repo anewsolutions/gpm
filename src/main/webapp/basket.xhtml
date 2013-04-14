@@ -56,8 +56,8 @@
         <h:panelGroup>
           <p:commandButton value="#{msg.basketButtonsProceedToCheckout}" disabled="true"
             rendered="#{basketBean.numTotalBasketItems == 0}" />
-          <p:commandButton value="#{msg.basketButtonsProceedToCheckout}"
-            rendered="#{basketBean.numTotalBasketItems > 0}" />
+          <p:commandButton value="#{msg.basketButtonsProceedToCheckout}" ajax="false"
+            rendered="#{basketBean.numTotalBasketItems > 0}" action="/secure/checkout.xhtml?faces-redirect=true" />
         </h:panelGroup>
       </h:panelGrid>
     </p:panel>

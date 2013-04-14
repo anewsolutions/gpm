@@ -87,7 +87,7 @@ public class UserAccount extends Base {
     return facebookToken;
   }
 
-  public void setFacebookToken(String facebookToken) {
+  public void setFacebookToken(final String facebookToken) {
     this.facebookToken = facebookToken;
   }
 }

@@ -15,6 +15,7 @@ import com.gpm.i18n.MessageProvider;
 
 /**
  * JSF validator to check if a password and a confirmation password are the same.
+ * Validation fails if they are not the same.
  * 
  * @author mbooth
  */
@@ -24,8 +25,8 @@ public class ConfirmPasswordValidator implements Validator {
   @Override
   public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
     UIInput passwordComponent = (UIInput) component.getAttributes().get("passwordComponent");
-    String password = (String) passwordComponent.getValue();
-    String passwordConfirm = (String) value;
+    String password = passwordComponent.getValue().toString();
+    String passwordConfirm = value.toString();
     if (!passwordConfirm.equals(password)) {
       // Given passwords do not match
       FacesMessage message = new FacesMessage(MessageProvider.getMessage(component.getId() + "DoesNotMatch"));

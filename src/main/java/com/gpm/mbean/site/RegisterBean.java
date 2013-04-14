@@ -21,7 +21,7 @@ public class RegisterBean implements Serializable {
   private String name;
   private String password;
 
-  public void createAccount() {
+  public void register() {
     try {
       UserAccountManager.createNew(email, name, password);
     } catch (UserAccountException e) {
@@ -34,7 +34,7 @@ public class RegisterBean implements Serializable {
     return email;
   }
 
-  public void setEmail(String email) {
+  public void setEmail(final String email) {
     this.email = email;
   }
 
@@ -42,7 +42,7 @@ public class RegisterBean implements Serializable {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
@@ -50,7 +50,7 @@ public class RegisterBean implements Serializable {
     return password;
   }
 
-  public void setPassword(String password) {
+  public void setPassword(final String password) {
     this.password = password;
   }
 }

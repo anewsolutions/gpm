@@ -14,7 +14,7 @@
       <h:panelGroup>
         <p:inputText id="registerEmail" maxlength="250" size="25" required="true"
           requiredMessage="#{msg.registerEmailRequired}" value="#{registerBean.email}">
-          <f:validator validatorId="EmailValidator" />
+          <f:validator validatorId="EmailFormatValidator" />
           <f:validator validatorId="EmailUniquenessValidator" />
         </p:inputText>
         <p:watermark for="registerEmail" value="#{msg.registerEmailWatermark}" />
@@ -38,7 +38,7 @@
       </h:panelGroup>
       <h:panelGroup>
         <p:password id="registerPassword" size="25" required="true" binding="#{passwordComponent}"
-          requiredMessage="#{msg.registerPasswordRequired}"/>
+          requiredMessage="#{msg.registerPasswordRequired}" />
         <p:watermark for="registerPassword" value="#{msg.registerPasswordWatermark}" />
       </h:panelGroup>
       <h:panelGroup>
@@ -58,7 +58,7 @@
       <h:panelGroup>
         <h:message for="registerPasswordConfirm" />
       </h:panelGroup>
-      <p:commandButton value="#{msg.registerButton}" action="#{registerBean.createAccount}" update="registerUser" />
+      <p:commandButton value="#{msg.registerButton}" action="#{registerBean.register}" update="registerUser" />
     </h:panelGrid>
   </ui:define>
 </ui:composition>
