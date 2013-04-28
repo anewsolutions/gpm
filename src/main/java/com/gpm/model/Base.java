@@ -8,16 +8,15 @@ import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.Type;
 
 /**
- * This is the base class for all JPA entities. It contains the database ID, business ID,
- * and entity creation time. It is ordered naturally by the entity creation time. All
- * entities in the model should extend this class.
+ * This is the base class for all JPA entities. It contains the entity UUID, and creation
+ * time. It is ordered naturally by the entity creation time. All entities in the model
+ * should extend this class.
  * 
  * @author mbooth
  */
@@ -25,7 +24,6 @@ import org.hibernate.annotations.Type;
 public abstract class Base implements Comparable<Base>, Serializable {
   private static final long serialVersionUID = 1L;
 
-  private int id;
   private UUID uuid;
   private Date created;
 
@@ -39,29 +37,13 @@ public abstract class Base implements Comparable<Base>, Serializable {
   }
 
   /**
-   * Database primary key of the entity. This is a database table row identifier that is
-   * auto-incremented by the persistence provider when new entities are created, there is
-   * normally no need to set it manually.
-   * 
-   * @return the primary key as an integer
-   */
-  @Id
-  @GeneratedValue
-  public int getId() {
-    return id;
-  }
-
-  public void setId(final int id) {
-    this.id = id;
-  }
-
-  /**
-   * Business key of the entity. A universally unique and immutable identifier used for
+   * Primary key of the entity. A universally unique and immutable identifier used for
    * comparing entities that may or may not point to the same row in the database. This is
    * set when new entities are created, there is no need to set it manually.
    * 
-   * @return the business key as a universally unique identifier
+   * @return the primary key as a universally unique identifier
    */
+  @Id
   @Column(length = 36, nullable = false)
   @Type(type = "uuid-char")
   public UUID getUuid() {

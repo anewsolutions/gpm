@@ -19,9 +19,7 @@ public class ProductConverter implements Converter {
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String value) {
     try {
-      return ProductManager.find(Integer.parseInt(value));
-    } catch (NumberFormatException e) {
-      throw new ConverterException(e);
+      return ProductManager.findProduct(value);
     } catch (ProductException e) {
       throw new ConverterException(e);
     }
@@ -29,6 +27,6 @@ public class ProductConverter implements Converter {
 
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object value) {
-    return Integer.toString(((Product) value).getId());
+    return ((Product) value).getUuid().toString();
   }
 }

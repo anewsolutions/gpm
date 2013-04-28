@@ -44,12 +44,11 @@ public class ProductAdminBean implements Serializable {
     try {
       // Load the selected product, if an ID is passed as a query parameter
       FacesContext fc = FacesContext.getCurrentInstance();
-      String id = fc.getExternalContext().getRequestParameterMap().get("id");
-      try {
-        int idValue = Integer.parseInt(id);
-        selected = ProductManager.find(idValue);
+      String uuid = fc.getExternalContext().getRequestParameterMap().get("uuid");
+      if (uuid != null && !uuid.isEmpty()) {
+        selected = ProductManager.findProduct(uuid);
         editing = true;
-      } catch (NumberFormatException e) {
+      } else {
         selected = new Product();
       }
       // Must have as least one variant

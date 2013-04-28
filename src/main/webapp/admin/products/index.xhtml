@@ -26,10 +26,10 @@
           </p:column>
           <p:column styleClass="actionColumn" headerText="#{msg.adminProductTableActionsColumn}">
             <p:button outcome="edit" value="#{msg.adminButtonsEdit}">
-              <f:param name="id" value="#{prod.id}" />
+              <f:param name="uuid" value="#{prod.uuid}" />
             </p:button>
             <p:button outcome="delete" value="#{msg.adminButtonsDelete}">
-              <f:param name="id" value="#{prod.id}" />
+              <f:param name="uuid" value="#{prod.uuid}" />
             </p:button>
           </p:column>
           <p:rowExpansion>

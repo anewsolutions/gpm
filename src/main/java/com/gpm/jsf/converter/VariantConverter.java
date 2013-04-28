@@ -19,9 +19,7 @@ public class VariantConverter implements Converter {
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String value) {
     try {
-      return VariantManager.find(Integer.parseInt(value));
-    } catch (NumberFormatException e) {
-      throw new ConverterException(e);
+      return VariantManager.findVariant(value);
     } catch (VariantException e) {
       throw new ConverterException(e);
     }
@@ -29,6 +27,6 @@ public class VariantConverter implements Converter {
 
   @Override
   public String getAsString(FacesContext context, UIComponent component, Object value) {
-    return Integer.toString(((Variant) value).getId());
+    return ((Variant) value).getUuid().toString();
   }
 }

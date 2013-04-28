@@ -3,21 +3,21 @@
  */
 package com.gpm.manager;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.gpm.controller.ControllerException;
 import com.gpm.controller.ControllerFactory;
+import com.gpm.controller.ControllerFilter;
 import com.gpm.manager.exception.ConfigurationException;
 import com.gpm.model.Configuration;
 
 public class ConfigurationManager {
   public static Configuration findByKey(final String key) throws ConfigurationException {
     try {
-      Map<String, Object> attributes = new HashMap<String, Object>();
-      attributes.put("key", key);
-      List<Configuration> configs = ControllerFactory.getConfigurationController().getAll(attributes);
+      List<ControllerFilter> filters = new ArrayList<ControllerFilter>();
+      filters.add(new ControllerFilter("key", "=", key));
+      List<Configuration> configs = ControllerFactory.getConfigurationController().getAll(filters);
       // Configuration keys are unique, so should be safe to return first result only
       if (!configs.isEmpty()) {
         return configs.get(0);

@@ -4,9 +4,8 @@
 package com.gpm.manager;
 
 import java.security.SecureRandom;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
@@ -14,15 +13,16 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import com.gpm.controller.ControllerException;
 import com.gpm.controller.ControllerFactory;
+import com.gpm.controller.ControllerFilter;
 import com.gpm.manager.exception.UserAccountException;
 import com.gpm.model.UserAccount;
 
 public class UserAccountManager {
   public static UserAccount findByEmail(final String email) throws UserAccountException {
     try {
-      Map<String, Object> attributes = new HashMap<String, Object>();
-      attributes.put("email", email);
-      List<UserAccount> accounts = ControllerFactory.getUserAccountController().getAll(attributes);
+      List<ControllerFilter> filters = new ArrayList<ControllerFilter>();
+      filters.add(new ControllerFilter("email", "=", email));
+      List<UserAccount> accounts = ControllerFactory.getUserAccountController().getAll(filters);
       // Email addresses are unique, so should be safe to return first result only
       if (!accounts.isEmpty()) {
         return accounts.get(0);
@@ -36,9 +36,9 @@ public class UserAccountManager {
 
   public static UserAccount findByFacebookIdent(final String facebookIdent) throws UserAccountException {
     try {
-      Map<String, Object> attributes = new HashMap<String, Object>();
-      attributes.put("facebookIdent", facebookIdent);
-      List<UserAccount> accounts = ControllerFactory.getUserAccountController().getAll(attributes);
+      List<ControllerFilter> filters = new ArrayList<ControllerFilter>();
+      filters.add(new ControllerFilter("facebookIdent", "=", facebookIdent));
+      List<UserAccount> accounts = ControllerFactory.getUserAccountController().getAll(filters);
       // Facebook identities are unique, so should be safe to return first result only
       if (!accounts.isEmpty()) {
         return accounts.get(0);
