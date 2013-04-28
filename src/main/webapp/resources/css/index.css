@@ -1,0 +1,64 @@
+/**
+ * Copyright 2013 Mat Booth <mbooth@apache.org>
+ */
+
+.indexGrid {
+  border-spacing: 0;
+  width: 100%;
+}
+
+.indexGridLeft {
+  text-align: left;
+  vertical-align: top;
+}
+
+.indexGridRight {
+  text-align: right;
+  vertical-align: top;
+}
+
+.indexGridLeft span:first-child {
+  margin-top: 0;
+}
+
+.indexIssuePanel {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -o-border-radius: 6px;
+  -ms-border-radius: 6px;
+  border-radius: 6px;
+  background-color: #666;
+  margin-bottom: 125px;
+  display: inline-block;
+}
+
+.indexIssuePanel .ui-panel-content {
+  padding: 0.5em;
+  text-align: center;
+  color: #fff;
+}
+
+.indexIssuePanel .ui-panel-content img {
+  padding: 0.5em 0;
+  width: 200px;
+}
+
+.indexIssuePanelHeading {
+  display: block;
+  font-size: 1.25em;
+  font-weight: bold;
+  width: 100%;
+}
+
+.indexIssuePanelName {
+  display: block;
+  font-weight: bold;
+  padding: 0 0 0.5em 0;
+  width: 100%;
+}
+
+.indexCornerPig {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}

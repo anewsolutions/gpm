@@ -90,14 +90,6 @@ a:hover {
   vertical-align: top;
 }
 
-.siteHeaderLeftColumn img {
-  padding-right: 0.4em;
-}
-
-.siteHeaderLeftColumn a, .siteHeaderLeftColumn img, .siteHeaderLeftColumn span {
-  vertical-align: middle;
-}
-
 .siteHeaderCentralColumn {
   text-align: center;
   vertical-align: top;
@@ -108,6 +100,15 @@ a:hover {
   text-align: right;
   vertical-align: top;
   width: 25%;
+}
+
+.shopHeaderBasketButton, .shopHeaderBasketButton span {
+  vertical-align: middle;
+}
+
+.siteHeaderBasketIcon {
+  padding-right: 0.4em;
+  vertical-align: middle;
 }
 
 .siteHeaderBasketCount {
@@ -162,6 +163,7 @@ a:hover {
 /* Main site content */
 #sitePage {
   display: block;
+  position: relative;
   width: 100%;
   margin: 0.8em 0;
   border-top: 1px #E0E0E0 dashed;
