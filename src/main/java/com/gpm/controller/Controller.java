@@ -94,7 +94,9 @@ public class Controller<T extends Base> {
       em.merge(ent);
       em.getTransaction().commit();
     } catch (PersistenceException e) {
-      em.getTransaction().rollback();
+      if (em.getTransaction().isActive()) {
+        em.getTransaction().rollback();
+      }
       throw new ControllerException("Error updating " + cls.getSimpleName() + " with uuid " + ent.getUuid() + ": "
           + e.getMessage(), e);
     } finally {
@@ -146,7 +148,9 @@ public class Controller<T extends Base> {
       }
       em.getTransaction().commit();
     } catch (PersistenceException e) {
-      em.getTransaction().rollback();
+      if (em.getTransaction().isActive()) {
+        em.getTransaction().rollback();
+      }
       throw new ControllerException("Error deleting " + cls.getSimpleName() + " with uuid " + uuid + ": "
           + e.getMessage(), e);
     } finally {
