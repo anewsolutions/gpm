@@ -3,12 +3,18 @@
  */
 package com.gpm.model;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * JPA entity for an issue of the magazine.
@@ -21,6 +27,7 @@ public class Issue extends Base {
 
   private int number;
   private Date published;
+  private String inThisIssue;
 
   public Issue() {
     super();
@@ -41,7 +48,35 @@ public class Issue extends Base {
     return published;
   }
 
+  @Transient
+  public String getPublishedForLocale(Locale locale) {
+    SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", locale);
+    return sdf.format(getPublished());
+  }
+
   public void setPublished(final Date published) {
     this.published = published;
+  }
+
+  @Column(nullable = false)
+  @Lob
+  public String getInThisIssue() {
+    return inThisIssue;
+  }
+
+  @Transient
+  public List<String> getInThisIssueLines() {
+    String inThisIssueLines[] = getInThisIssue().split("\\r?\\n");
+    List<String> lines = new ArrayList<String>(inThisIssueLines.length);
+    for (String line : inThisIssueLines) {
+      if (!line.isEmpty()) {
+        lines.add(line);
+      }
+    }
+    return lines;
+  }
+
+  public void setInThisIssue(String inThisIssue) {
+    this.inThisIssue = inThisIssue;
   }
 }

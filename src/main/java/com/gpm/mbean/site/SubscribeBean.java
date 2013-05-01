@@ -11,28 +11,24 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import com.gpm.i18n.MessageProvider;
-import com.gpm.manager.ConfigurationManager;
 import com.gpm.manager.IssueManager;
-import com.gpm.manager.exception.ConfigurationException;
 import com.gpm.manager.exception.IssueException;
-import com.gpm.model.Configuration;
 import com.gpm.model.Issue;
 
 @ManagedBean
 @ViewScoped
-public class HomePageBean implements Serializable {
+public class SubscribeBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  public String getFacebookKey() {
-    String key = "";
+  public Issue getCurrentIssue() {
+    Issue issue = null;
     try {
-      Configuration config = ConfigurationManager.findByKey("facebook.key");
-      key = config.getValue();
-    } catch (ConfigurationException e) {
+      issue = IssueManager.findCurrentIssue();
+    } catch (IssueException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    return key;
+    return issue;
   }
 
   public String getCurrentIssueEdition() {
@@ -46,7 +42,7 @@ public class HomePageBean implements Serializable {
     }
     if (issue != null) {
       Locale locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
-      edition = MessageProvider.getMessage("indexEdition", issue.getNumber(), issue.getPublishedForLocale(locale));
+      edition = MessageProvider.getMessage("subThisIssueEdition", issue.getNumber(), issue.getPublishedForLocale(locale));
     }
     return edition;
   }

@@ -19,12 +19,14 @@
             src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2FGuineaPigMagazine&amp;width=620&amp;height=750&amp;show_faces=false&amp;colorscheme=light&amp;stream=true&amp;border_color=white&amp;header=false&amp;appId=#{homePageBean.facebookKey}"></iframe>
         </h:panelGroup>
       </h:panelGrid>
-      <p:panel styleClass="indexIssuePanel">
-        <h:outputText styleClass="indexIssuePanelHeading" value="#{msg.indexOutNow}" />
-        <p:graphicImage library="images" name="cover13.jpg" />
-        <h:outputText styleClass="indexIssuePanelName" value="Issue 13, March 2013" />
-        <p:commandButton value="#{msg.indexBuyOnline}" />
-      </p:panel>
+      <h:panelGroup>
+        <p:panel styleClass="indexIssuePanel">
+          <h:outputText styleClass="indexIssuePanelHeading" value="#{msg.indexOutNow}" />
+          <p:graphicImage library="images" name="cover13.jpg" />
+          <h:outputText styleClass="indexIssuePanelName" value="#{homePageBean.currentIssueEdition}" />
+          <p:commandButton value="#{msg.indexBuyOnline}" action="/subscribe.xhtml?faces-redirect=true" />
+        </p:panel>
+      </h:panelGroup>
     </h:panelGrid>
     <p:graphicImage library="images" name="cpigs.png" styleClass="indexCornerPig" />
   </ui:define>

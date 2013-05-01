@@ -8,12 +8,13 @@
 }
 
 .indexGridLeft {
+  width: 80%;
   text-align: left;
   vertical-align: top;
 }
 
 .indexGridRight {
-  text-align: right;
+  text-align: left;
   vertical-align: top;
 }
 

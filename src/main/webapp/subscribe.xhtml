@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/site.xhtml">
+  <ui:param name="sitePageTitle" value="#{msg.subPageTitle}" />
+  <ui:define name="sitePageContent">
+    <h:outputStylesheet target="head" library="css" name="subscribe.css" />
+    <h:outputText styleClass="pageHeading" value="#{msg.subPageHeading}" />
+    <h:panelGrid columns="2" styleClass="subscribeGrid" columnClasses="subscribeGridLeft,subscribeGridRight">
+      <p:graphicImage library="images" name="cover13.jpg" />
+      <h:panelGroup>
+        <h:outputText styleClass="pageSectionHeading" value="#{subscribeBean.currentIssueEdition}" />
+        <h:outputText styleClass="pageSubSectionHeading" value="#{msg.subWhatsInThisIssue}" />
+        <ui:repeat var="inThisIssue" value="#{subscribeBean.currentIssue.inThisIssueLines}">
+          <h:outputText styleClass="pageParagraph" value="#{inThisIssue}" />
+        </ui:repeat>
+      </h:panelGroup>
+    </h:panelGrid>
+  </ui:define>
+</ui:composition>
+</html>
