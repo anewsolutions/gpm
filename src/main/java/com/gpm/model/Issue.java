@@ -3,11 +3,9 @@
  */
 package com.gpm.model;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,12 +44,6 @@ public class Issue extends Base {
   @Temporal(TemporalType.DATE)
   public Date getPublished() {
     return published;
-  }
-
-  @Transient
-  public String getPublishedForLocale(Locale locale) {
-    SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", locale);
-    return sdf.format(getPublished());
   }
 
   public void setPublished(final Date published) {

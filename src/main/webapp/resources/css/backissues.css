@@ -2,3 +2,19 @@
  * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
 
+#backIssuesTable .ui-datagrid-column {
+  vertical-align: top;
+  width: 25%;
+}
+
+.backIssueDetailsTable {
+  border-spacing: 0;
+}
+
+.backIssueDetailsTable td span:FIRST-CHILD {
+  margin-top: 0;
+}
+
+.backIssueCover {
+  width: 200px;
+}

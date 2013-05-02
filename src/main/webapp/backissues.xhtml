@@ -7,6 +7,16 @@
   <ui:define name="sitePageContent">
     <h:outputStylesheet target="head" library="css" name="backissues.css" />
     <h:outputText styleClass="pageHeading" value="#{msg.backPageHeading}" />
+    <p:dataGrid id="backIssuesTable" var="issue" value="#{backIssueBean.issues}" columns="4" paginator="false"
+      emptyMessage="#{msg.shopNoProducts}">
+      <h:panelGrid styleClass="backIssueDetailsTable" columns="1">
+        <h:panelGroup>
+          <h:outputText styleClass="pageSubSectionHeading" value="#{backIssueBean.getIssueEdition(issue)}" />
+          <span class="pageParagraph"><p:graphicImage styleClass="backIssueCover" library="images"
+              name="cover13.jpg" /></span>
+        </h:panelGroup>
+      </h:panelGrid>
+    </p:dataGrid>
   </ui:define>
 </ui:composition>
 </html>

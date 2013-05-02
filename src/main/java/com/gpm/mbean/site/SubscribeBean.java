@@ -4,8 +4,10 @@
 package com.gpm.mbean.site;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -20,6 +22,18 @@ import com.gpm.model.Issue;
 public class SubscribeBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
+  private Issue issue = null;
+
+  @PostConstruct
+  public void init() {
+    try {
+      issue = IssueManager.findCurrentIssue();
+    } catch (IssueException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
   public Issue getCurrentIssue() {
     Issue issue = null;
     try {
@@ -33,16 +47,11 @@ public class SubscribeBean implements Serializable {
 
   public String getCurrentIssueEdition() {
     String edition = "";
-    Issue issue = null;
-    try {
-      issue = IssueManager.findCurrentIssue();
-    } catch (IssueException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
     if (issue != null) {
       Locale locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
-      edition = MessageProvider.getMessage("subThisIssueEdition", issue.getNumber(), issue.getPublishedForLocale(locale));
+      SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", locale);
+      String published = sdf.format(issue.getPublished());
+      edition = MessageProvider.getMessage("subThisIssueEdition", issue.getNumber(), published);
     }
     return edition;
   }
