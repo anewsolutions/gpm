@@ -24,6 +24,9 @@ public class SubscribeBean implements Serializable {
 
   private Issue issue = null;
 
+  private String format = "ezine";
+  private int length = 1;
+
   @PostConstruct
   public void init() {
     try {
@@ -54,5 +57,21 @@ public class SubscribeBean implements Serializable {
       edition = MessageProvider.getMessage("subThisIssueEdition", issue.getNumber(), published);
     }
     return edition;
+  }
+
+  public String getFormat() {
+    return format;
+  }
+
+  public void setFormat(final String format) {
+    this.format = format;
+  }
+
+  public int getLength() {
+    return length;
+  }
+
+  public void setLength(final int length) {
+    this.length = length;
   }
 }

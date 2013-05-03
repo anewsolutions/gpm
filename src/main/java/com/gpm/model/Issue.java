@@ -68,7 +68,7 @@ public class Issue extends Base {
     return lines;
   }
 
-  public void setInThisIssue(String inThisIssue) {
+  public void setInThisIssue(final String inThisIssue) {
     this.inThisIssue = inThisIssue;
   }
 }

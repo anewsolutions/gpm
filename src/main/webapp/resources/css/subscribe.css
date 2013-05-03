@@ -13,9 +13,12 @@
 }
 
 .subscribeGridRight {
-  width: 80%;
   text-align: left;
   vertical-align: top;
+}
+
+.subscribeGridDominant {
+  width: 80%;
 }
 
 .subscribeGridLeft img {
@@ -23,6 +26,6 @@
   margin: 0 1em 1em 0;
 }
 
-.subscribeGridRight span:first-child {
+.subscribeGrid td span:first-child {
   margin-top: 0;
 }
