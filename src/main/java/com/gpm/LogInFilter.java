@@ -67,8 +67,13 @@ public class LogInFilter implements Filter {
           // These pages are fine, so store the referring URI and let users through to the
           // log in, register or recover pages
           if (logIn.getRedirect() == null) {
+            String referer = req.getHeader("referer");
+            if (referer == null) {
+              // If we cannot determine referer then use HOME as the referer
+              referer = HOME;
+            }
             try {
-              logIn.setRedirect(new URI(req.getHeader("referer")));
+              logIn.setRedirect(new URI(referer));
             } catch (URISyntaxException e) {
               // TODO Auto-generated catch block
               e.printStackTrace();
