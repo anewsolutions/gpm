@@ -5,8 +5,10 @@ package com.gpm.mbean.site;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -86,7 +88,9 @@ public class ShopFrontBean implements Serializable {
 
   public String getVariantPrice(Product product) {
     Variant variant = getSelectedVariant(product);
-    NumberFormat format = NumberFormat.getCurrencyInstance();
+    Locale locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+    NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+    format.setCurrency(Currency.getInstance("GBP"));
     return format.format(variant.getPrice());
   }
 

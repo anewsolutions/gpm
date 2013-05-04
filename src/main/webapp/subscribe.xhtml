@@ -24,6 +24,7 @@
               <f:selectItem itemValue="1" />
               <f:selectItem itemValue="3" />
               <f:selectItem itemValue="6" />
+              <p:ajax process="@this" update="subPrice,subDescription" />
             </p:selectOneRadio>
             <h:panelGrid columns="2">
               <p:radioButton id="subLength1" for="subLengthRadio" itemIndex="0" />
@@ -39,15 +40,21 @@
             <p:selectOneRadio id="subFormatRadio" value="#{subscribeBean.format}" layout="custom">
               <f:selectItem itemValue="ezine" />
               <f:selectItem itemValue="hcopy" />
+              <p:ajax process="@this" update="subPrice,subDescription" />
             </p:selectOneRadio>
             <h:panelGrid columns="2">
               <p:radioButton id="subFormatEzine" for="subFormatRadio" itemIndex="0" />
-              <h:outputLabel for="subFormatEzine" value="#{msg.subElectronicEdition}" />
-              <p:radioButton id="subFormatHcopy" for="subFormatRadio" itemIndex="1" />
-              <h:outputLabel for="subFormatHcopy" value="#{msg.subPhysicalCopy}" />
+              <h:outputLabel for="subFormatEzine" value="#{msg.subOnlineEdition}" />
+              <p:radioButton id="subFormatHcopy" for="subFormatRadio" itemIndex="1"
+                rendered="#{subscribeBean.currentIssue.stock > 0}" />
+              <h:outputLabel for="subFormatHcopy" value="#{msg.subPhysicalCopy}"
+                rendered="#{subscribeBean.currentIssue.stock > 0}" />
             </h:panelGrid>
           </h:panelGroup>
         </h:panelGrid>
+        <h:outputText id="subPrice" styleClass="pageParagraph subscribePrice" value="#{subscribeBean.subscriptionPrice}" />
+        <h:outputText id="subDescription" styleClass="pageParagraph" value="#{subscribeBean.subscriptionDescription}" />
+        <span class="pageParagraph"><p:commandButton value="#{msg.subBuyNow}" /></span>
       </h:panelGroup>
     </h:panelGrid>
   </ui:define>

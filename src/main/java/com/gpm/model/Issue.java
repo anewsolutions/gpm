@@ -23,20 +23,25 @@ import javax.persistence.Transient;
 public class Issue extends Base {
   private static final long serialVersionUID = 1L;
 
-  private int number;
+  private Integer number;
   private Date published;
+  private Integer stock;
   private String inThisIssue;
+
+  // TODO have a magazine object to keep this stuff in
+  public static final float currentPrice = 3.95f;
+  public static final float backIssuePrice = 3.30f;
 
   public Issue() {
     super();
   }
 
   @Column(nullable = false)
-  public int getNumber() {
+  public Integer getNumber() {
     return number;
   }
 
-  public void setNumber(final int number) {
+  public void setNumber(final Integer number) {
     this.number = number;
   }
 
@@ -48,6 +53,15 @@ public class Issue extends Base {
 
   public void setPublished(final Date published) {
     this.published = published;
+  }
+
+  @Column(nullable = false)
+  public Integer getStock() {
+    return stock;
+  }
+
+  public void setStock(Integer stock) {
+    this.stock = stock;
   }
 
   @Column(nullable = false)

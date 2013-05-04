@@ -4,7 +4,9 @@
 package com.gpm.mbean.site;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Currency;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
@@ -24,6 +26,8 @@ public class SubscribeBean implements Serializable {
 
   private Issue issue = null;
 
+  // Subscription attributes
+  // TODO make the format an enum
   private String format = "ezine";
   private int length = 1;
 
@@ -73,5 +77,36 @@ public class SubscribeBean implements Serializable {
 
   public void setLength(final int length) {
     this.length = length;
+  }
+
+  public String getSubscriptionDescription() {
+    if (issue != null) {
+      StringBuilder next = new StringBuilder();
+      for (int i = issue.getNumber() + 1; i < issue.getNumber() + getLength(); i++) {
+        if (next.length() != 0) {
+          next.append(", ");
+        }
+        next.append(i);
+      }
+      if ("ezine".equals(getFormat())) {
+        return MessageProvider.getMessage("subDesc" + getLength() + "Online", issue.getNumber(), next.toString());
+      } else {
+        return MessageProvider.getMessage("subDesc" + getLength() + "Physical", issue.getNumber(), next.toString());
+      }
+    } else {
+      return "";
+    }
+  }
+
+  public String getSubscriptionPrice() {
+    Locale locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+    NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+    format.setCurrency(Currency.getInstance("GBP"));
+    Float price = Issue.currentPrice * new Float(getLength());
+    if ("ezine".equals(getFormat())) {
+      return MessageProvider.getMessage("subNoPostageAndPackaging", format.format(price));
+    } else {
+      return MessageProvider.getMessage("subPostageAndPackaging", format.format(price));
+    }
   }
 }
