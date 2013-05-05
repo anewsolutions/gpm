@@ -38,8 +38,8 @@
           <h:panelGroup>
             <h:outputText styleClass="pageParagraph" value="#{msg.subChooseFormat}" />
             <p:selectOneRadio id="subFormatRadio" value="#{subscribeBean.format}" layout="custom">
-              <f:selectItem itemValue="ezine" />
-              <f:selectItem itemValue="hcopy" />
+              <f:selectItem itemValue="EZINE" />
+              <f:selectItem itemValue="HCOPY" />
               <p:ajax process="@this" update="subPrice,subDescription" />
             </p:selectOneRadio>
             <h:panelGrid columns="2">

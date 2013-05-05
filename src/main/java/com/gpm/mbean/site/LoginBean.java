@@ -19,7 +19,7 @@ import com.gpm.model.UserAccount;
 
 @ManagedBean
 @SessionScoped
-public class LogInBean implements Serializable {
+public class LoginBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   // URI to redirect to after successfully logging in

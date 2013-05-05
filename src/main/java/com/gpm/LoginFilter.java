@@ -17,7 +17,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.gpm.mbean.site.LogInBean;
+import com.gpm.mbean.site.LoginBean;
 
 /**
  * Filter to determine whether users are authenticated when trying to access secure URIs
@@ -51,7 +51,7 @@ public class LoginFilter implements Filter {
     HttpServletResponse res = (HttpServletResponse) response;
     String uri = req.getRequestURI();
     if (uri.startsWith(SECURE_PATH)) {
-      LogInBean logIn = (LogInBean) req.getSession().getAttribute("logInBean");
+      LoginBean logIn = (LoginBean) req.getSession().getAttribute("loginBean");
       if (logIn != null && logIn.isLoggedIn()) {
         // We are logged in already
         if (uri.startsWith(LOGIN) || uri.startsWith(REGISTER) || uri.startsWith(RECOVER)) {

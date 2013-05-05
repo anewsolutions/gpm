@@ -22,10 +22,10 @@
           columnClasses="siteHeaderLeftColumn,siteHeaderCentralColumn,siteHeaderRightColumn">
           <h:panelGroup>
             <h:form id="siteHeaderLoginForm" prependId="false" acceptcharset="UTF-8">
-              <h:commandLink action="/secure/login.xhtml?faces-redirect=true" rendered="#{!logInBean.loggedIn}">
+              <h:commandLink action="/secure/login.xhtml?faces-redirect=true" rendered="#{!loginBean.loggedIn}">
                 <h:outputText value="#{msg.siteNavigationLogIn}" />
               </h:commandLink>
-              <h:commandLink action="#{logInBean.logout}" rendered="#{logInBean.loggedIn}">
+              <h:commandLink action="#{loginBean.logout}" rendered="#{loginBean.loggedIn}">
                 <h:outputText value="#{msg.siteNavigationLogOut}" />
               </h:commandLink>
             </h:form>

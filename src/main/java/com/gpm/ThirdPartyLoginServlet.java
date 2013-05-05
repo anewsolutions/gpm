@@ -26,7 +26,7 @@ import com.gpm.manager.ConfigurationManager;
 import com.gpm.manager.UserAccountManager;
 import com.gpm.manager.exception.ConfigurationException;
 import com.gpm.manager.exception.UserAccountException;
-import com.gpm.mbean.site.LogInBean;
+import com.gpm.mbean.site.LoginBean;
 import com.gpm.model.Configuration;
 
 /**
@@ -74,7 +74,7 @@ public class ThirdPartyLoginServlet extends HttpServlet {
         try {
           // Log in and redirect to the original page the user wanted
           UserAccountManager.createNewFacebook(details.get("email"), details.get("name"), ident, token);
-          LogInBean logIn = (LogInBean) request.getSession().getAttribute("logInBean");
+          LoginBean logIn = (LoginBean) request.getSession().getAttribute("loginBean");
           logIn.loginFacebook(ident);
           response.sendRedirect(logIn.getRedirect().toString());
         } catch (UserAccountException e) {

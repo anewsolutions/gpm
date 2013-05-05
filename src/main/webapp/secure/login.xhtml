@@ -9,7 +9,7 @@
     <h:outputText styleClass="pageParagraph" value="#{msg.loginLogInWithThirdPartyCreds}" />
     <h:panelGrid styleClass="pageParagraph pageIndent" columns="1">
       <h:panelGroup>
-        <h:outputLink value="#{logInBean.facebookLoginUrl}">
+        <h:outputLink value="#{loginBean.facebookLoginUrl}">
           <p:graphicImage library="images" name="login-facebook.png" alt="#{msg.loginFacebookAltText}"
             title="#{msg.loginFacebook}" />
         </h:outputLink>
@@ -22,7 +22,7 @@
       </h:panelGroup>
       <h:panelGroup>
         <p:inputText id="loginEmail" maxlength="250" size="25" required="true" binding="#{emailComponent}"
-          requiredMessage="#{msg.loginEmailRequired}" value="#{logInBean.email}">
+          requiredMessage="#{msg.loginEmailRequired}" value="#{loginBean.email}">
           <f:validator validatorId="EmailFormatValidator" />
         </p:inputText>
         <p:watermark for="loginEmail" value="#{msg.loginEmailWatermark}" />
@@ -43,7 +43,7 @@
       <h:panelGroup>
         <h:message for="loginPassword" />
       </h:panelGroup>
-      <p:commandButton value="#{msg.loginButton}" action="#{logInBean.login}" update="loginUser" />
+      <p:commandButton value="#{msg.loginButton}" action="#{loginBean.login}" update="loginUser" />
     </h:panelGrid>
     <h:outputText styleClass="pageParagraph" value="#{msg.loginDontHaveGPMCreds}" />
     <h:panelGrid styleClass="pageParagraph pageIndent" columns="1">
