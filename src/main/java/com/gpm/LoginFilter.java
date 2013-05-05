@@ -25,8 +25,8 @@ import com.gpm.mbean.site.LogInBean;
  * 
  * @author mbooth
  */
-@WebFilter(filterName = "Log in Filter", value = { LogInFilter.SECURE_PATH + "*" })
-public class LogInFilter implements Filter {
+@WebFilter(filterName = "Log in Filter", value = { LoginFilter.SECURE_PATH + "*" })
+public class LoginFilter implements Filter {
 
   public static final String SECURE_PATH = "/secure/";
 
