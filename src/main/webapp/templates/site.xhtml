@@ -41,9 +41,9 @@
               <p:commandLink styleClass="shopHeaderBasketButton" ajax="false" action="/basket.xhtml?faces-redirect=true">
                 <p:graphicImage styleClass="siteHeaderBasketIcon" library="images" name="basket.png"
                   alt="#{msg.siteHeaderBasketAltText}" />
-                <h:outputText styleClass="siteHeaderBasketCount" value="#{basketBean.numTotalBasketItems}" />
-                <h:outputText value="#{msg.siteHeaderItemInBasket}" rendered="#{basketBean.numTotalBasketItems == 1}" />
-                <h:outputText value="#{msg.siteHeaderItemsInBasket}" rendered="#{basketBean.numTotalBasketItems != 1}" />
+                <h:outputText styleClass="siteHeaderBasketCount" value="#{basketBean.totalBasketItems}" />
+                <h:outputText value="#{msg.siteHeaderItemInBasket}" rendered="#{basketBean.totalBasketItems == 1}" />
+                <h:outputText value="#{msg.siteHeaderItemsInBasket}" rendered="#{basketBean.totalBasketItems != 1}" />
               </p:commandLink>
             </h:form>
           </h:panelGroup>

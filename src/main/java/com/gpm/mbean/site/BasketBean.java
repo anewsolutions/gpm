@@ -4,77 +4,63 @@
 package com.gpm.mbean.site;
 
 import java.io.Serializable;
-import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import com.gpm.model.Basket;
-import com.gpm.model.BasketItem;
-import com.gpm.model.Product;
-import com.gpm.model.Variant;
+import com.gpm.model.Item;
 
 @ManagedBean
 @SessionScoped
 public class BasketBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  private Basket basket = new Basket();
+  private List<Item> items = new ArrayList<Item>();
 
-  /**
-   * JSF method for displaying all items in the basket.
-   * 
-   * @return a list of unique basket items
-   */
-  public List<BasketItem> getAllBasketItems() {
-    return basket.getBasketItemsAsList();
+  public List<Item> getAllBasketItems() {
+    return items;
   }
 
-  /**
-   * JSF method to add a product and the selected variant to the shopping basket.
-   */
-  public void addItemToBasket(Product product, Variant variant) {
-    if (product != null && variant != null) {
-      basket.addBasketItem(product, variant);
-    }
-  }
-
-  /**
-   * JSF method to completely remove a product and its variant from the shopping basket.
-   */
-  public void removeItemFromBasket(BasketItem item) {
+  public void addItemToBasket(Item item) {
     if (item != null) {
-      basket.removeBasketItem(item);
+      items.add(item);
     }
   }
 
-  /**
-   * JSF method to get the total number of individual items in the shopping basket.
-   * 
-   * @return the total number of basket items
-   */
-  public int getNumTotalBasketItems() {
-    return basket.getNumTotalBasketItems();
+  public void removeItemFromBasket(Item item) {
+    if (item != null) {
+      items.remove(item);
+    }
   }
 
-  /**
-   * JSF method to get the total price for the entire contents of the basket.
-   * 
-   * @return a formatted price for the user's locale
-   */
+  public int getTotalUniqueBasketItems() {
+    return items.size();
+  }
+
+  public int getTotalBasketItems() {
+    int num = 0;
+    Iterator<Item> i = items.iterator();
+    while (i.hasNext()) {
+      Item item = i.next();
+      num += item.getQuantity();
+    }
+    return num;
+  }
+
   public String getTotalBasketPrice() {
-    NumberFormat format = NumberFormat.getCurrencyInstance();
-    return format.format(basket.getTotalBasketPrice());
+    int price = 0;
+    Iterator<Item> i = items.iterator();
+    while (i.hasNext()) {
+      Item item = i.next();
+      price += item.getPrice() * item.getQuantity();
+    }
+    return BeanUtils.formatPrice(price);
   }
 
-  /**
-   * JSF method to get the unit price for an individual item the basket.
-   * 
-   * @return a formatted price for the user's locale
-   */
-  public String getItemPrice(BasketItem item) {
-    NumberFormat format = NumberFormat.getCurrencyInstance();
-    return format.format(item.getVariant().getPrice());
+  public String getItemPrice(Item item) {
+    return BeanUtils.formatPrice(item.getPrice());
   }
 }

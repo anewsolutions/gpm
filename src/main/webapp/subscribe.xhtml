@@ -11,7 +11,7 @@
       columnClasses="subscribeGridLeft,subscribeGridRight subscribeGridDominant">
       <p:graphicImage library="images" name="cover13.jpg" />
       <h:panelGroup>
-        <h:outputText styleClass="pageSectionHeading" value="#{subscribeBean.currentIssueEdition}" />
+        <h:outputText styleClass="pageSectionHeading" value="#{subscribeBean.edition}" />
         <h:outputText styleClass="pageSubSectionHeading" value="#{msg.subWhatsInThisIssue}" />
         <ui:repeat var="inThisIssue" value="#{subscribeBean.currentIssue.inThisIssueLines}">
           <h:outputText styleClass="pageParagraph" value="#{inThisIssue}" />
@@ -43,8 +43,10 @@
               <p:ajax process="@this" update="subPrice,subDescription" />
             </p:selectOneRadio>
             <h:panelGrid columns="2">
-              <p:radioButton id="subFormatEzine" for="subFormatRadio" itemIndex="0" />
-              <h:outputLabel for="subFormatEzine" value="#{msg.subOnlineEdition}" />
+              <p:radioButton id="subFormatEzine" for="subFormatRadio" itemIndex="0"
+                rendered="#{subscribeBean.currentIssue.ezine}" />
+              <h:outputLabel for="subFormatEzine" value="#{msg.subOnlineEdition}"
+                rendered="#{subscribeBean.currentIssue.ezine}" />
               <p:radioButton id="subFormatHcopy" for="subFormatRadio" itemIndex="1"
                 rendered="#{subscribeBean.currentIssue.stock > 0}" />
               <h:outputLabel for="subFormatHcopy" value="#{msg.subPhysicalCopy}"
@@ -54,7 +56,8 @@
         </h:panelGrid>
         <h:outputText id="subPrice" styleClass="pageParagraph subscribePrice" value="#{subscribeBean.subscriptionPrice}" />
         <h:outputText id="subDescription" styleClass="pageParagraph" value="#{subscribeBean.subscriptionDescription}" />
-        <span class="pageParagraph"><p:commandButton value="#{msg.subBuyNow}" /></span>
+        <span class="pageParagraph"><p:commandButton value="#{msg.subButtonsBuyNow}"
+            action="#{subscribeBean.buy}" /></span>
       </h:panelGroup>
     </h:panelGrid>
   </ui:define>

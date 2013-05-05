@@ -4,20 +4,19 @@
 package com.gpm.mbean.site;
 
 import java.io.Serializable;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Currency;
-import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.IssueManager;
 import com.gpm.manager.exception.IssueException;
 import com.gpm.model.Issue;
+import com.gpm.model.SubscriptionItem;
+import com.gpm.model.enums.Format;
 
 @ManagedBean
 @ViewScoped
@@ -27,14 +26,16 @@ public class SubscribeBean implements Serializable {
   private Issue issue = null;
 
   // Subscription attributes
-  // TODO make the format an enum
-  private String format = "ezine";
   private int length = 1;
+  private Format format = Format.EZINE;
 
   @PostConstruct
   public void init() {
     try {
       issue = IssueManager.findCurrentIssue();
+      if (!issue.isEzine()) {
+        format = Format.HCOPY;
+      }
     } catch (IssueException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -52,23 +53,13 @@ public class SubscribeBean implements Serializable {
     return issue;
   }
 
-  public String getCurrentIssueEdition() {
+  public String getEdition() {
     String edition = "";
     if (issue != null) {
-      Locale locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
-      SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", locale);
-      String published = sdf.format(issue.getPublished());
+      String published = BeanUtils.formatPublished(issue.getPublished());
       edition = MessageProvider.getMessage("subThisIssueEdition", issue.getNumber(), published);
     }
     return edition;
-  }
-
-  public String getFormat() {
-    return format;
-  }
-
-  public void setFormat(final String format) {
-    this.format = format;
   }
 
   public int getLength() {
@@ -77,6 +68,14 @@ public class SubscribeBean implements Serializable {
 
   public void setLength(final int length) {
     this.length = length;
+  }
+
+  public String getFormat() {
+    return format.name();
+  }
+
+  public void setFormat(final String format) {
+    this.format = Format.valueOf(format);
   }
 
   public String getSubscriptionDescription() {
@@ -88,25 +87,32 @@ public class SubscribeBean implements Serializable {
         }
         next.append(i);
       }
-      if ("ezine".equals(getFormat())) {
-        return MessageProvider.getMessage("subDesc" + getLength() + "Online", issue.getNumber(), next.toString());
-      } else {
-        return MessageProvider.getMessage("subDesc" + getLength() + "Physical", issue.getNumber(), next.toString());
-      }
+      return MessageProvider.getMessage("subDesc" + getFormat() + getLength(), issue.getNumber(), next.toString());
     } else {
       return "";
     }
   }
 
   public String getSubscriptionPrice() {
-    Locale locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
-    NumberFormat format = NumberFormat.getCurrencyInstance(locale);
-    format.setCurrency(Currency.getInstance("GBP"));
-    Float price = Issue.currentPrice * new Float(getLength());
-    if ("ezine".equals(getFormat())) {
-      return MessageProvider.getMessage("subNoPostageAndPackaging", format.format(price));
-    } else {
-      return MessageProvider.getMessage("subPostageAndPackaging", format.format(price));
-    }
+    String price = BeanUtils.formatPrice(Issue.currentPrice * getLength());
+    return MessageProvider.getMessage("subPostageAndPackaging" + getFormat(), price);
+  }
+
+  public String buy() {
+    // Build order
+    SubscriptionItem order = new SubscriptionItem();
+    String published = BeanUtils.formatPublished(issue.getPublished());
+    order.setName(MessageProvider.getMessage("subShortDesc" + getFormat() + getLength(), issue.getNumber(), published));
+    order.setPrice(Issue.currentPrice * getLength());
+    order.setQuantity(1);
+    // Subscription details
+    order.setFirst(issue.getUuid());
+    order.setLength(length);
+    order.setFormat(format);
+    // Add to basket
+    HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+    BasketBean basket = (BasketBean) session.getAttribute("basketBean");
+    basket.addItemToBasket(order);
+    return "/basket.xhtml?faces-redirect=true";
   }
 }

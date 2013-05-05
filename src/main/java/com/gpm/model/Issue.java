@@ -25,12 +25,13 @@ public class Issue extends Base {
 
   private Integer number;
   private Date published;
-  private Integer stock;
   private String inThisIssue;
+  private Integer stock;
+  private boolean ezine;
 
   // TODO have a magazine object to keep this stuff in
-  public static final float currentPrice = 3.95f;
-  public static final float backIssuePrice = 3.30f;
+  public static final int currentPrice = 395;
+  public static final int backIssuePrice = 330;
 
   public Issue() {
     super();
@@ -56,15 +57,6 @@ public class Issue extends Base {
   }
 
   @Column(nullable = false)
-  public Integer getStock() {
-    return stock;
-  }
-
-  public void setStock(Integer stock) {
-    this.stock = stock;
-  }
-
-  @Column(nullable = false)
   @Lob
   public String getInThisIssue() {
     return inThisIssue;
@@ -84,5 +76,22 @@ public class Issue extends Base {
 
   public void setInThisIssue(final String inThisIssue) {
     this.inThisIssue = inThisIssue;
+  }
+
+  @Column(nullable = false)
+  public Integer getStock() {
+    return stock;
+  }
+
+  public void setStock(final Integer stock) {
+    this.stock = stock;
+  }
+
+  public boolean isEzine() {
+    return ezine;
+  }
+
+  public void setEzine(final boolean ezine) {
+    this.ezine = ezine;
   }
 }

@@ -23,7 +23,7 @@ public class Variant extends Base {
   private boolean hasImage;
   private String imageName;
   private String imageType;
-  private Float price;
+  private Integer price;
   private Integer weight;
   private Integer stock;
   private boolean defaultChoice;
@@ -80,11 +80,11 @@ public class Variant extends Base {
   }
 
   @Column(nullable = false)
-  public Float getPrice() {
+  public Integer getPrice() {
     return price;
   }
 
-  public void setPrice(final Float price) {
+  public void setPrice(final Integer price) {
     this.price = price;
   }
 

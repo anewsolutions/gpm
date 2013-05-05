@@ -36,6 +36,10 @@ a:hover {
   border: none;
 }
 
+.ui-datagrid-column {
+  padding: 0;
+}
+
 /* Content wrapper that keeps the animated pigs fixed to the page bottom */
 .siteWrapper {
   margin: 0 auto -120px auto;
