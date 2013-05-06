@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 public class BeanUtils {
   public static String formatPrice(final int price) {
@@ -25,5 +26,11 @@ public class BeanUtils {
     Locale locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
     SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", locale);
     return sdf.format(published);
+  }
+
+  public static LoginBean fetchLoginBean() {
+    HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+    LoginBean bean = (LoginBean)req.getSession().getAttribute("loginBean");
+    return bean;
   }
 }

@@ -127,4 +127,22 @@ public class UserAccountManager {
     System.arraycopy(password, 0, data, salt.length, password.length);
     return DigestUtils.sha512(data);
   }
+
+  /**
+   * Persist the given user account to the data store.
+   * 
+   * @param account
+   *          the user account to be saved
+   * @throws UserAccountException
+   *           if there was a problem saving the user account
+   */
+  public static void storeUserAccount(final UserAccount account) throws UserAccountException {
+    try {
+      ControllerFactory.getUserAddressController().save(account.getBillingAddress());
+      ControllerFactory.getUserAddressController().save(account.getDeliveryAddress());
+      ControllerFactory.getUserAccountController().save(account);
+    } catch (ControllerException e) {
+      throw new UserAccountException(e);
+    }
+  }
 }

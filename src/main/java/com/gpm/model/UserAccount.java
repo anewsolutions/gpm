@@ -25,7 +25,7 @@ public class UserAccount extends Base {
   private String facebookIdent;
   private String facebookToken;
   private UserAddress billingAddress;
-  private UserAddress shippingAddress;
+  private UserAddress deliveryAddress;
 
   public UserAccount() {
     super();
@@ -100,16 +100,16 @@ public class UserAccount extends Base {
     return billingAddress;
   }
 
-  public void setBillingAddress(UserAddress billingAddress) {
+  public void setBillingAddress(final UserAddress billingAddress) {
     this.billingAddress = billingAddress;
   }
 
   @OneToOne(fetch = FetchType.EAGER)
-  public UserAddress getShippingAddress() {
-    return shippingAddress;
+  public UserAddress getDeliveryAddress() {
+    return deliveryAddress;
   }
 
-  public void setShippingAddress(UserAddress shippingAddress) {
-    this.shippingAddress = shippingAddress;
+  public void setDeliveryAddress(final UserAddress deliveryAddress) {
+    this.deliveryAddress = deliveryAddress;
   }
 }

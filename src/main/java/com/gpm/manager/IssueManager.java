@@ -101,6 +101,7 @@ public class IssueManager {
    * Persist the given issue to the data store.
    * 
    * @param issue
+   *          the issue to be saved
    * @throws IssueException
    *           if there was a problem saving the issue
    */

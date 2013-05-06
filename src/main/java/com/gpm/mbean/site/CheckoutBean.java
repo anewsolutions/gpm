@@ -5,20 +5,62 @@ package com.gpm.mbean.site;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import com.gpm.PayPointCallbackServlet;
 import com.gpm.manager.ConfigurationManager;
+import com.gpm.manager.UserAccountManager;
 import com.gpm.manager.exception.ConfigurationException;
+import com.gpm.manager.exception.UserAccountException;
 import com.gpm.model.Configuration;
+import com.gpm.model.UserAccount;
+import com.gpm.model.UserAddress;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class CheckoutBean implements Serializable {
   private static final long serialVersionUID = 1L;
+
+  private UserAccount user;
+
+  @PostConstruct
+  public void init() {
+    user = BeanUtils.fetchLoginBean().getUser();
+  }
+
+  public UserAddress getBillingAddress() {
+    UserAddress address = user.getBillingAddress();
+    if (address == null) {
+      address = new UserAddress();
+      address.setName(user.getName());
+      user.setBillingAddress(address);
+    }
+    return address;
+  }
+
+  public UserAddress getDeliveryAddress() {
+    UserAddress address = user.getDeliveryAddress();
+    if (address == null) {
+      address = new UserAddress();
+      address.setName(user.getName());
+      user.setDeliveryAddress(address);
+    }
+    return address;
+  }
+
+  public String finishCheckout1() {
+    try {
+      UserAccountManager.storeUserAccount(user);
+    } catch (UserAccountException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return "/secure/checkout2.xhtml?faces-redirect=true";
+  }
 
   public String getPaypointMerchant() {
     String merchant = "";
