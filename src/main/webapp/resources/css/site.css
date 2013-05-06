@@ -206,6 +206,10 @@ a:hover {
   margin: 1em 0;
 }
 
+.pageCentred {
+  text-align: center;
+}
+
 .pageIndent {
   margin-left: 2em;
   margin-right: 2em;
