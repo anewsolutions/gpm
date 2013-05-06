@@ -1,0 +1,17 @@
+/**
+ * Copyright 2013 Mat Booth <mbooth@apache.org>
+ */
+
+.shippingGrid {
+  border-spacing: 0;
+  width: 100%;
+}
+
+.shippingGrid td span:first-child {
+  margin-top: 0;
+}
+
+.shippingGridLeft, .shippingGridRight {
+  text-align: left;
+  width: 50%;
+}
