@@ -8,10 +8,10 @@
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
       <h:outputStylesheet target="head" library="css" name="checkout.css" />
       <h:outputText styleClass="pageHeading" value="#{msg.checkout1PageHeading}" />
+      <h:outputText styleClass="pageParagraph" value="#{msg.shippingAddressConfirm}" />
       <h:panelGrid styleClass="shippingGrid" columns="2" columnClasses="shippingGridLeft,shippingGridRight">
         <h:panelGroup>
           <h:outputText styleClass="pageSectionHeading" value="#{msg.shippingBillingAddress}" />
-          <h:outputText styleClass="pageParagraph" value="#{msg.shippingBillingAddressConfirm}" />
           <h:panelGrid id="billingAddress" styleClass="pageParagraph pageIndent" columns="2">
             <h:outputLabel for="billingName" value="#{msg.shippingName}" />
             <p:inputText id="billingName" value="#{checkoutBean.billingAddress.name}" maxlength="250" required="true" />
@@ -33,7 +33,6 @@
         </h:panelGroup>
         <h:panelGroup>
           <h:outputText styleClass="pageSectionHeading" value="#{msg.shippingDeliveryAddress}" />
-          <h:outputText styleClass="pageParagraph" value="#{msg.shippingDeliveryAddressConfirm}" />
           <h:panelGrid id="deliveryAddress" styleClass="pageParagraph pageIndent" columns="2">
             <h:outputLabel for="deliveryName" value="#{msg.shippingName}" />
             <p:inputText id="deliveryName" value="#{checkoutBean.deliveryAddress.name}" maxlength="250" required="true" />
