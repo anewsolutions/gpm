@@ -43,13 +43,6 @@ public class SubscribeBean implements Serializable {
   }
 
   public Issue getCurrentIssue() {
-    Issue issue = null;
-    try {
-      issue = IssueManager.findCurrentIssue();
-    } catch (IssueException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
     return issue;
   }
 

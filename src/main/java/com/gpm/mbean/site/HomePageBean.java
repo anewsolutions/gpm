@@ -49,6 +49,14 @@ public class HomePageBean implements Serializable {
     return key;
   }
 
+  public String getCurrentIssueCover() {
+    String cover = "";
+    if (issue != null) {
+      cover = issue.getCoverImageUri();
+    }
+    return cover;
+  }
+
   public String getCurrentIssueEdition() {
     String edition = "";
     if (issue != null) {

@@ -13,8 +13,8 @@
         <h:panelGrid styleClass="backIssueDetailsTable" columns="1">
           <h:panelGroup>
             <h:outputText styleClass="pageSubSectionHeading" value="#{backIssueBean.edition}" />
-            <span class="pageParagraph"><p:graphicImage styleClass="backIssueCover" library="images"
-                name="cover13.jpg" /></span>
+            <span class="pageParagraph"><p:graphicImage styleClass="backIssueCover"
+                value="#{issue.coverImageUri}" /></span>
             <h:outputText styleClass="pageParagraph" value="#{msg.backChooseFormat}" />
             <p:selectOneRadio id="backFormatRadio" value="#{backIssueBean.format}" layout="custom">
               <f:selectItem itemValue="EZINE" />

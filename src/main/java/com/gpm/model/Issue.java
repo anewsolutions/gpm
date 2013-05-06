@@ -14,6 +14,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.gpm.UploadsServlet;
+
 /**
  * JPA entity for an issue of the magazine.
  * 
@@ -26,6 +28,7 @@ public class Issue extends Base {
   private Integer number;
   private Date published;
   private String inThisIssue;
+  private String coverImage;
   private Integer stock;
   private boolean ezine;
 
@@ -37,7 +40,7 @@ public class Issue extends Base {
     super();
   }
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   public Integer getNumber() {
     return number;
   }
@@ -76,6 +79,25 @@ public class Issue extends Base {
 
   public void setInThisIssue(final String inThisIssue) {
     this.inThisIssue = inThisIssue;
+  }
+
+  @Column(nullable = false)
+  public String getCoverImage() {
+    return coverImage;
+  }
+
+  @Transient
+  public String getCoverImageUri() {
+    String ci = getCoverImage();
+    if (ci != null && !ci.isEmpty()) {
+      return UploadsServlet.UPLOADS_PATH + getCoverImage();
+    } else {
+      return "http://placehold.it/300x419&text=No%20Image";
+    }
+  }
+
+  public void setCoverImage(final String coverImage) {
+    this.coverImage = coverImage;
   }
 
   @Column(nullable = false)

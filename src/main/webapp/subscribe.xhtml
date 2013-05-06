@@ -10,7 +10,7 @@
       <h:outputText styleClass="pageHeading" value="#{msg.subPageHeading}" />
       <h:panelGrid columns="2" styleClass="subscribeGrid"
         columnClasses="subscribeGridLeft,subscribeGridRight subscribeGridDominant">
-        <p:graphicImage library="images" name="cover13.jpg" />
+        <p:graphicImage value="#{subscribeBean.currentIssue.coverImageUri}" />
         <h:panelGroup>
           <h:outputText styleClass="pageSectionHeading" value="#{subscribeBean.edition}" />
           <h:outputText styleClass="pageSubSectionHeading" value="#{msg.subWhatsInThisIssue}" />
