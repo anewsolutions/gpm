@@ -5,61 +5,63 @@
 <ui:composition template="/templates/site.xhtml">
   <ui:param name="sitePageTitle" value="#{msg.subPageTitle}" />
   <ui:define name="sitePageContent">
-    <h:outputStylesheet target="head" library="css" name="subscribe.css" />
-    <h:outputText styleClass="pageHeading" value="#{msg.subPageHeading}" />
-    <h:panelGrid columns="2" styleClass="subscribeGrid"
-      columnClasses="subscribeGridLeft,subscribeGridRight subscribeGridDominant">
-      <p:graphicImage library="images" name="cover13.jpg" />
-      <h:panelGroup>
-        <h:outputText styleClass="pageSectionHeading" value="#{subscribeBean.edition}" />
-        <h:outputText styleClass="pageSubSectionHeading" value="#{msg.subWhatsInThisIssue}" />
-        <ui:repeat var="inThisIssue" value="#{subscribeBean.currentIssue.inThisIssueLines}">
-          <h:outputText styleClass="pageParagraph" value="#{inThisIssue}" />
-        </ui:repeat>
-        <h:outputText styleClass="pageSectionHeading" value="#{msg.subBuySubscription}" />
-        <h:panelGrid columns="2" styleClass="subscribeGrid" columnClasses="subscribeGridLeft,subscribeGridRight">
-          <h:panelGroup>
-            <h:outputText styleClass="pageParagraph" value="#{msg.subChooseLength}" />
-            <p:selectOneRadio id="subLengthRadio" value="#{subscribeBean.length}" layout="custom">
-              <f:selectItem itemValue="1" />
-              <f:selectItem itemValue="3" />
-              <f:selectItem itemValue="6" />
-              <p:ajax process="@this" update="subPrice,subDescription" />
-            </p:selectOneRadio>
-            <h:panelGrid columns="2">
-              <p:radioButton id="subLength1" for="subLengthRadio" itemIndex="0" />
-              <h:outputLabel for="subLength1" value="#{msg.sub1Issue}" />
-              <p:radioButton id="subLength3" for="subLengthRadio" itemIndex="1" />
-              <h:outputLabel for="subLength3" value="#{msg.sub3Issues}" />
-              <p:radioButton id="subLength6" for="subLengthRadio" itemIndex="2" />
-              <h:outputLabel for="subLength6" value="#{msg.sub6Issues}" />
-            </h:panelGrid>
-          </h:panelGroup>
-          <h:panelGroup>
-            <h:outputText styleClass="pageParagraph" value="#{msg.subChooseFormat}" />
-            <p:selectOneRadio id="subFormatRadio" value="#{subscribeBean.format}" layout="custom">
-              <f:selectItem itemValue="EZINE" />
-              <f:selectItem itemValue="HCOPY" />
-              <p:ajax process="@this" update="subPrice,subDescription" />
-            </p:selectOneRadio>
-            <h:panelGrid columns="2">
-              <p:radioButton id="subFormatEzine" for="subFormatRadio" itemIndex="0"
-                rendered="#{subscribeBean.currentIssue.ezine}" />
-              <h:outputLabel for="subFormatEzine" value="#{msg.subOnlineEdition}"
-                rendered="#{subscribeBean.currentIssue.ezine}" />
-              <p:radioButton id="subFormatHcopy" for="subFormatRadio" itemIndex="1"
-                rendered="#{subscribeBean.currentIssue.stock > 0}" />
-              <h:outputLabel for="subFormatHcopy" value="#{msg.subPhysicalCopy}"
-                rendered="#{subscribeBean.currentIssue.stock > 0}" />
-            </h:panelGrid>
-          </h:panelGroup>
-        </h:panelGrid>
-        <h:outputText id="subPrice" styleClass="pageParagraph subscribePrice" value="#{subscribeBean.subscriptionPrice}" />
-        <h:outputText id="subDescription" styleClass="pageParagraph" value="#{subscribeBean.subscriptionDescription}" />
-        <span class="pageParagraph"><p:commandButton value="#{msg.subButtonsBuyNow}"
-            action="#{subscribeBean.buy}" /></span>
-      </h:panelGroup>
-    </h:panelGrid>
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+      <h:outputStylesheet target="head" library="css" name="subscribe.css" />
+      <h:outputText styleClass="pageHeading" value="#{msg.subPageHeading}" />
+      <h:panelGrid columns="2" styleClass="subscribeGrid"
+        columnClasses="subscribeGridLeft,subscribeGridRight subscribeGridDominant">
+        <p:graphicImage library="images" name="cover13.jpg" />
+        <h:panelGroup>
+          <h:outputText styleClass="pageSectionHeading" value="#{subscribeBean.edition}" />
+          <h:outputText styleClass="pageSubSectionHeading" value="#{msg.subWhatsInThisIssue}" />
+          <ui:repeat var="inThisIssue" value="#{subscribeBean.currentIssue.inThisIssueLines}">
+            <h:outputText styleClass="pageParagraph" value="#{inThisIssue}" />
+          </ui:repeat>
+          <h:outputText styleClass="pageSectionHeading" value="#{msg.subBuySubscription}" />
+          <h:panelGrid columns="2" styleClass="subscribeGrid" columnClasses="subscribeGridLeft,subscribeGridRight">
+            <h:panelGroup>
+              <h:outputText styleClass="pageParagraph" value="#{msg.subChooseLength}" />
+              <p:selectOneRadio id="subLengthRadio" value="#{subscribeBean.length}" layout="custom">
+                <f:selectItem itemValue="1" />
+                <f:selectItem itemValue="3" />
+                <f:selectItem itemValue="6" />
+                <p:ajax process="@this" update="subPrice,subDescription" />
+              </p:selectOneRadio>
+              <h:panelGrid columns="2">
+                <p:radioButton id="subLength1" for="subLengthRadio" itemIndex="0" />
+                <h:outputLabel for="subLength1" value="#{msg.sub1Issue}" />
+                <p:radioButton id="subLength3" for="subLengthRadio" itemIndex="1" />
+                <h:outputLabel for="subLength3" value="#{msg.sub3Issues}" />
+                <p:radioButton id="subLength6" for="subLengthRadio" itemIndex="2" />
+                <h:outputLabel for="subLength6" value="#{msg.sub6Issues}" />
+              </h:panelGrid>
+            </h:panelGroup>
+            <h:panelGroup>
+              <h:outputText styleClass="pageParagraph" value="#{msg.subChooseFormat}" />
+              <p:selectOneRadio id="subFormatRadio" value="#{subscribeBean.format}" layout="custom">
+                <f:selectItem itemValue="EZINE" />
+                <f:selectItem itemValue="HCOPY" />
+                <p:ajax process="@this" update="subPrice,subDescription" />
+              </p:selectOneRadio>
+              <h:panelGrid columns="2">
+                <p:radioButton id="subFormatEzine" for="subFormatRadio" itemIndex="0"
+                  rendered="#{subscribeBean.currentIssue.ezine}" />
+                <h:outputLabel for="subFormatEzine" value="#{msg.subOnlineEdition}"
+                  rendered="#{subscribeBean.currentIssue.ezine}" />
+                <p:radioButton id="subFormatHcopy" for="subFormatRadio" itemIndex="1"
+                  rendered="#{subscribeBean.currentIssue.stock > 0}" />
+                <h:outputLabel for="subFormatHcopy" value="#{msg.subPhysicalCopy}"
+                  rendered="#{subscribeBean.currentIssue.stock > 0}" />
+              </h:panelGrid>
+            </h:panelGroup>
+          </h:panelGrid>
+          <h:outputText id="subPrice" styleClass="pageParagraph subscribePrice" value="#{subscribeBean.subscriptionPrice}" />
+          <h:outputText id="subDescription" styleClass="pageParagraph" value="#{subscribeBean.subscriptionDescription}" />
+          <span class="pageParagraph"><p:commandButton value="#{msg.subButtonsBuyNow}"
+              action="#{subscribeBean.buy}" /></span>
+        </h:panelGroup>
+      </h:panelGrid>
+    </h:form>
   </ui:define>
 </ui:composition>
 </html>

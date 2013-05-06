@@ -5,61 +5,63 @@
 <ui:composition template="/templates/site.xhtml">
   <ui:param name="sitePageTitle" value="#{msg.registerPageTitle}" />
   <ui:define name="sitePageContent">
-    <h:outputText styleClass="pageHeading" value="#{msg.registerPageHeading}" />
-    <h:outputText styleClass="pageParagraph" value="#{msg.registerNewGPMAccount}" />
-    <h:panelGrid id="registerUser" styleClass="pageParagraph pageIndent" columns="3">
-      <h:panelGroup>
-        <h:outputLabel for="registerEmail" value="#{msg.registerEmail}" />
-      </h:panelGroup>
-      <h:panelGroup>
-        <p:inputText id="registerEmail" maxlength="250" size="25" required="true"
-          requiredMessage="#{msg.registerEmailRequired}" value="#{registerBean.email}">
-          <f:validator validatorId="EmailFormatValidator" />
-          <f:validator validatorId="EmailUniquenessValidator" />
-        </p:inputText>
-        <p:watermark for="registerEmail" value="#{msg.registerEmailWatermark}" />
-      </h:panelGroup>
-      <h:panelGroup>
-        <h:message for="registerEmail" />
-      </h:panelGroup>
-      <h:panelGroup>
-        <h:outputLabel for="registerName" value="#{msg.registerName}" />
-      </h:panelGroup>
-      <h:panelGroup>
-        <p:inputText id="registerName" maxlength="250" size="25" required="true"
-          requiredMessage="#{msg.registerNameRequired}" value="#{registerBean.name}" />
-        <p:watermark for="registerName" value="#{msg.registerNameWatermark}" />
-      </h:panelGroup>
-      <h:panelGroup>
-        <h:message for="registerName" />
-      </h:panelGroup>
-      <h:panelGroup>
-        <h:outputLabel for="registerPassword" value="#{msg.registerPassword}" />
-      </h:panelGroup>
-      <h:panelGroup>
-        <p:password id="registerPassword" size="25" required="true" binding="#{passwordComponent}"
-          requiredMessage="#{msg.registerPasswordRequired}" />
-        <p:watermark for="registerPassword" value="#{msg.registerPasswordWatermark}" />
-      </h:panelGroup>
-      <h:panelGroup>
-        <h:message for="registerPassword" />
-      </h:panelGroup>
-      <h:panelGroup>
-        <h:outputLabel for="registerPasswordConfirm" value="#{msg.registerPasswordConfirm}" />
-      </h:panelGroup>
-      <h:panelGroup>
-        <p:password id="registerPasswordConfirm" size="25" required="true"
-          requiredMessage="#{msg.registerPasswordConfirmRequired}" value="#{registerBean.password}">
-          <f:validator validatorId="ConfirmPasswordValidator" />
-          <f:attribute name="passwordComponent" value="#{passwordComponent}" />
-        </p:password>
-        <p:watermark for="registerPasswordConfirm" value="#{msg.registerPasswordConfirmWatermark}" />
-      </h:panelGroup>
-      <h:panelGroup>
-        <h:message for="registerPasswordConfirm" />
-      </h:panelGroup>
-      <p:commandButton value="#{msg.registerButton}" action="#{registerBean.register}" update="registerUser" />
-    </h:panelGrid>
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+      <h:outputText styleClass="pageHeading" value="#{msg.registerPageHeading}" />
+      <h:outputText styleClass="pageParagraph" value="#{msg.registerNewGPMAccount}" />
+      <h:panelGrid id="registerUser" styleClass="pageParagraph pageIndent" columns="3">
+        <h:panelGroup>
+          <h:outputLabel for="registerEmail" value="#{msg.registerEmail}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:inputText id="registerEmail" maxlength="250" size="25" required="true"
+            requiredMessage="#{msg.registerEmailRequired}" value="#{registerBean.email}">
+            <f:validator validatorId="EmailFormatValidator" />
+            <f:validator validatorId="EmailUniquenessValidator" />
+          </p:inputText>
+          <p:watermark for="registerEmail" value="#{msg.registerEmailWatermark}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:message for="registerEmail" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:outputLabel for="registerName" value="#{msg.registerName}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:inputText id="registerName" maxlength="250" size="25" required="true"
+            requiredMessage="#{msg.registerNameRequired}" value="#{registerBean.name}" />
+          <p:watermark for="registerName" value="#{msg.registerNameWatermark}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:message for="registerName" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:outputLabel for="registerPassword" value="#{msg.registerPassword}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:password id="registerPassword" size="25" required="true" binding="#{passwordComponent}"
+            requiredMessage="#{msg.registerPasswordRequired}" />
+          <p:watermark for="registerPassword" value="#{msg.registerPasswordWatermark}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:message for="registerPassword" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:outputLabel for="registerPasswordConfirm" value="#{msg.registerPasswordConfirm}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:password id="registerPasswordConfirm" size="25" required="true"
+            requiredMessage="#{msg.registerPasswordConfirmRequired}" value="#{registerBean.password}">
+            <f:validator validatorId="ConfirmPasswordValidator" />
+            <f:attribute name="passwordComponent" value="#{passwordComponent}" />
+          </p:password>
+          <p:watermark for="registerPasswordConfirm" value="#{msg.registerPasswordConfirmWatermark}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:message for="registerPasswordConfirm" />
+        </h:panelGroup>
+        <p:commandButton value="#{msg.registerButton}" action="#{registerBean.register}" update="registerUser" />
+      </h:panelGrid>
+    </h:form>
   </ui:define>
 </ui:composition>
 </html>

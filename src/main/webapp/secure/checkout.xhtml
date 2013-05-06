@@ -5,7 +5,32 @@
 <ui:composition template="/templates/site.xhtml">
   <ui:param name="sitePageTitle" value="#{msg.checkoutPageTitle}" />
   <ui:define name="sitePageContent">
-    <h:outputText styleClass="pageHeading" value="#{msg.checkoutPageHeading}" />
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+      <h:outputText styleClass="pageHeading" value="#{msg.checkoutPageHeading}" />
+      <h:outputText styleClass="pageParagraph pageCentred" value="#{msg.checkoutPleaseWait}" />
+      <span class="pageParagraph pageCentred"><p:graphicImage library="images" name="wait.gif" /></span>
+    </h:form>
+    <h:form id="paypointForm" prependId="false" acceptcharset="UTF-8">
+      <h:inputHidden id="merchant" value="#{checkoutBean.paypointMerchant}" />
+      <h:inputHidden id="trans_id" value="102" />
+      <h:inputHidden id="amount" value="5" />
+      <h:inputHidden id="usage_type" value="E" />
+      <h:inputHidden id="callback" value="#{checkoutBean.paypointCallback}" />
+      <h:inputHidden id="backcallback" value="#{checkoutBean.paypointBackCallback}" />
+      <h:inputHidden id="show_back" value="submit" />
+      <h:inputHidden id="digest" value="e795225a1d9876b110a9bd1ee6e309ef" />
+    </h:form>
+    <script type="text/javascript" charset="utf-8">
+      //<![CDATA[
+      jQuery(document).ready(function() {
+        setTimeout(submitPaypointForm, 5000);
+      });
+      function submitPaypointForm() {
+        jQuery('#paypointForm').attr('action', 'https://www.secpay.com/java-bin/ValCard');
+        jQuery('#paypointForm').submit();
+      }
+      //]]>
+    </script>
   </ui:define>
 </ui:composition>
 </html>

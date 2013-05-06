@@ -5,31 +5,33 @@
 <ui:composition template="/templates/site.xhtml">
   <ui:param name="sitePageTitle" value="#{msg.backPageTitle}" />
   <ui:define name="sitePageContent">
-    <h:outputStylesheet target="head" library="css" name="backissues.css" />
-    <h:outputText styleClass="pageHeading" value="#{msg.backPageHeading}" />
-    <p:dataGrid id="backIssuesTable" var="issue" value="#{backIssueBean.issues}" columns="4" paginator="false"
-      emptyMessage="#{msg.shopNoProducts}">
-      <h:panelGrid styleClass="backIssueDetailsTable" columns="1">
-        <h:panelGroup>
-          <h:outputText styleClass="pageSubSectionHeading" value="#{backIssueBean.edition}" />
-          <span class="pageParagraph"><p:graphicImage styleClass="backIssueCover" library="images"
-              name="cover13.jpg" /></span>
-          <h:outputText styleClass="pageParagraph" value="#{msg.backChooseFormat}" />
-          <p:selectOneRadio id="backFormatRadio" value="#{backIssueBean.format}" layout="custom">
-            <f:selectItem itemValue="EZINE" />
-            <f:selectItem itemValue="HCOPY" />
-          </p:selectOneRadio>
-          <h:panelGrid columns="2">
-            <p:radioButton id="backFormatEzine" for="backFormatRadio" itemIndex="0" rendered="#{issue.ezine}" />
-            <h:outputLabel for="backFormatEzine" value="#{msg.backOnlineEdition}" rendered="#{issue.ezine}" />
-            <p:radioButton id="backFormatHcopy" for="backFormatRadio" itemIndex="1" rendered="#{issue.stock > 0}" />
-            <h:outputLabel for="backFormatHcopy" value="#{msg.backPhysicalCopy}" rendered="#{issue.stock > 0}" />
-          </h:panelGrid>
-          <span class="pageParagraph"><p:commandButton value="#{msg.backButtonsAddToBasket}"
-              action="#{backIssueBean.buy(issue)}" update=":siteHeaderBasketForm" /></span>
-        </h:panelGroup>
-      </h:panelGrid>
-    </p:dataGrid>
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+      <h:outputStylesheet target="head" library="css" name="backissues.css" />
+      <h:outputText styleClass="pageHeading" value="#{msg.backPageHeading}" />
+      <p:dataGrid id="backIssuesTable" var="issue" value="#{backIssueBean.issues}" columns="4" paginator="false"
+        emptyMessage="#{msg.shopNoProducts}">
+        <h:panelGrid styleClass="backIssueDetailsTable" columns="1">
+          <h:panelGroup>
+            <h:outputText styleClass="pageSubSectionHeading" value="#{backIssueBean.edition}" />
+            <span class="pageParagraph"><p:graphicImage styleClass="backIssueCover" library="images"
+                name="cover13.jpg" /></span>
+            <h:outputText styleClass="pageParagraph" value="#{msg.backChooseFormat}" />
+            <p:selectOneRadio id="backFormatRadio" value="#{backIssueBean.format}" layout="custom">
+              <f:selectItem itemValue="EZINE" />
+              <f:selectItem itemValue="HCOPY" />
+            </p:selectOneRadio>
+            <h:panelGrid columns="2">
+              <p:radioButton id="backFormatEzine" for="backFormatRadio" itemIndex="0" rendered="#{issue.ezine}" />
+              <h:outputLabel for="backFormatEzine" value="#{msg.backOnlineEdition}" rendered="#{issue.ezine}" />
+              <p:radioButton id="backFormatHcopy" for="backFormatRadio" itemIndex="1" rendered="#{issue.stock > 0}" />
+              <h:outputLabel for="backFormatHcopy" value="#{msg.backPhysicalCopy}" rendered="#{issue.stock > 0}" />
+            </h:panelGrid>
+            <span class="pageParagraph"><p:commandButton value="#{msg.backButtonsAddToBasket}"
+                action="#{backIssueBean.buy(issue)}" update=":siteHeaderBasketForm" /></span>
+          </h:panelGroup>
+        </h:panelGrid>
+      </p:dataGrid>
+    </h:form>
   </ui:define>
 </ui:composition>
 </html>

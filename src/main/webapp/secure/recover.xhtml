@@ -5,7 +5,9 @@
 <ui:composition template="/templates/site.xhtml">
   <ui:param name="sitePageTitle" value="#{msg.recoverPageTitle}" />
   <ui:define name="sitePageContent">
-    <h:outputText styleClass="pageHeading" value="#{msg.recoverPageHeading}" />
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+      <h:outputText styleClass="pageHeading" value="#{msg.recoverPageHeading}" />
+    </h:form>
   </ui:define>
 </ui:composition>
 </html>

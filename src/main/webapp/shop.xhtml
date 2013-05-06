@@ -5,39 +5,41 @@
 <ui:composition template="/templates/site.xhtml">
   <ui:param name="sitePageTitle" value="#{msg.shopPageTitle}" />
   <ui:define name="sitePageContent">
-    <h:outputStylesheet target="head" library="css" name="shop.css" />
-    <h:outputText styleClass="pageHeading" value="#{msg.shopPageHeading}" />
-    <p:dataGrid id="shopFrontProductTable" var="product" value="#{shopFrontBean.products}" columns="3" paginator="false"
-      emptyMessage="#{msg.shopNoProducts}">
-      <h:panelGrid styleClass="shopFrontProductDetailsTable" columns="1">
-        <h:outputText styleClass="shopFrontName" value="#{product.name}" />
-        <h:panelGroup id="shopFrontImagePanel">
-          <p:graphicImage styleClass="shopFrontImage" value="#{shopFrontBean.getVariantImage(product)}" />
-        </h:panelGroup>
-        <h:outputText styleClass="shopFrontDescription" value="#{product.description}" />
-        <h:panelGroup rendered="#{product.numVariants > 1}">
-          <p:selectOneMenu value="#{shopFrontBean.selectedVariant}" effect="none" converter="VariantConverter">
-            <f:selectItems value="#{product.variantsAsList}" var="variant" itemLabel="#{variant.name}"
-              itemValue="#{variant}" />
-            <p:ajax event="change"
-              update="shopFrontImagePanel shopFrontPricePanel shopFrontStockPanel shopFrontBuyPanel" />
-          </p:selectOneMenu>
-        </h:panelGroup>
-        <h:panelGroup id="shopFrontPricePanel">
-          <h:outputText styleClass="shopFrontPrice" value="#{shopFrontBean.getVariantPrice(product)}" />
-        </h:panelGroup>
-        <h:panelGroup id="shopFrontStockPanel">
-          <h:outputText styleClass="shopFrontStock" value="#{shopFrontBean.getVariantStockText(product)}" />
-        </h:panelGroup>
-        <h:panelGroup id="shopFrontBuyPanel">
-          <p:commandButton value="#{msg.shopButtonsAddToBasket}" disabled="true"
-            rendered="#{shopFrontBean.getVariantStock(product) == 0}" />
-          <p:commandButton value="#{msg.shopButtonsAddToBasket}"
-            action="#{basketBean.addItemToBasket(product, shopFrontBean.selectedVariant)}"
-            rendered="#{shopFrontBean.getVariantStock(product) > 0}" update=":siteHeaderBasketForm" />
-        </h:panelGroup>
-      </h:panelGrid>
-    </p:dataGrid>
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+      <h:outputStylesheet target="head" library="css" name="shop.css" />
+      <h:outputText styleClass="pageHeading" value="#{msg.shopPageHeading}" />
+      <p:dataGrid id="shopFrontProductTable" var="product" value="#{shopFrontBean.products}" columns="3" paginator="false"
+        emptyMessage="#{msg.shopNoProducts}">
+        <h:panelGrid styleClass="shopFrontProductDetailsTable" columns="1">
+          <h:outputText styleClass="shopFrontName" value="#{product.name}" />
+          <h:panelGroup id="shopFrontImagePanel">
+            <p:graphicImage styleClass="shopFrontImage" value="#{shopFrontBean.getVariantImage(product)}" />
+          </h:panelGroup>
+          <h:outputText styleClass="shopFrontDescription" value="#{product.description}" />
+          <h:panelGroup rendered="#{product.numVariants > 1}">
+            <p:selectOneMenu value="#{shopFrontBean.selectedVariant}" effect="none" converter="VariantConverter">
+              <f:selectItems value="#{product.variantsAsList}" var="variant" itemLabel="#{variant.name}"
+                itemValue="#{variant}" />
+              <p:ajax event="change"
+                update="shopFrontImagePanel shopFrontPricePanel shopFrontStockPanel shopFrontBuyPanel" />
+            </p:selectOneMenu>
+          </h:panelGroup>
+          <h:panelGroup id="shopFrontPricePanel">
+            <h:outputText styleClass="shopFrontPrice" value="#{shopFrontBean.getVariantPrice(product)}" />
+          </h:panelGroup>
+          <h:panelGroup id="shopFrontStockPanel">
+            <h:outputText styleClass="shopFrontStock" value="#{shopFrontBean.getVariantStockText(product)}" />
+          </h:panelGroup>
+          <h:panelGroup id="shopFrontBuyPanel">
+            <p:commandButton value="#{msg.shopButtonsAddToBasket}" disabled="true"
+              rendered="#{shopFrontBean.getVariantStock(product) == 0}" />
+            <p:commandButton value="#{msg.shopButtonsAddToBasket}"
+              action="#{basketBean.addItemToBasket(product, shopFrontBean.selectedVariant)}"
+              rendered="#{shopFrontBean.getVariantStock(product) > 0}" update=":siteHeaderBasketForm" />
+          </h:panelGroup>
+        </h:panelGrid>
+      </p:dataGrid>
+    </h:form>
   </ui:define>
 </ui:composition>
 </html>
