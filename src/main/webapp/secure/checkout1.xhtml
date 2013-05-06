@@ -3,11 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/site.xhtml">
-  <ui:param name="sitePageTitle" value="#{msg.shippingPageTitle}" />
+  <ui:param name="sitePageTitle" value="#{msg.checkout1PageTitle}" />
   <ui:define name="sitePageContent">
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
-      <h:outputStylesheet target="head" library="css" name="shipping.css" />
-      <h:outputText styleClass="pageHeading" value="#{msg.shippingPageHeading}" />
+      <h:outputStylesheet target="head" library="css" name="checkout.css" />
+      <h:outputText styleClass="pageHeading" value="#{msg.checkout1PageHeading}" />
       <h:panelGrid styleClass="shippingGrid" columns="2" columnClasses="shippingGridLeft,shippingGridRight">
         <h:panelGroup>
           <h:outputText styleClass="pageSectionHeading" value="#{msg.shippingBillingAddress}" />
@@ -63,7 +63,7 @@
           <p:commandButton value="#{msg.shippingButtonsProceed}" disabled="true"
             rendered="#{basketBean.totalBasketItems == 0}" />
           <p:commandButton value="#{msg.shippingButtonsProceed}" rendered="#{basketBean.totalBasketItems > 0}"
-            update="deliveryAddress billingAddress" action="/secure/checkout.xhtml?faces-redirect=true" />
+            update="deliveryAddress billingAddress" action="/secure/checkout2.xhtml?faces-redirect=true" />
         </h:panelGroup>
       </h:panelGrid>
     </h:form>

@@ -3,11 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/site.xhtml">
-  <ui:param name="sitePageTitle" value="#{msg.checkoutPageTitle}" />
+  <ui:param name="sitePageTitle" value="#{msg.checkout2PageTitle}" />
   <ui:define name="sitePageContent">
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
-      <h:outputText styleClass="pageHeading" value="#{msg.checkoutPageHeading}" />
-      <h:outputText styleClass="pageParagraph pageCentred" value="#{msg.checkoutPleaseWait}" />
+      <h:outputStylesheet target="head" library="css" name="checkout.css" />
+      <h:outputText styleClass="pageHeading" value="#{msg.checkout2PageHeading}" />
+      <h:outputText styleClass="pageParagraph pageCentred" value="#{msg.checkout2PleaseWait}" />
       <span class="pageParagraph pageCentred"><p:graphicImage library="images" name="wait.gif" /></span>
     </h:form>
     <h:form id="paypointForm" prependId="false" acceptcharset="UTF-8">
