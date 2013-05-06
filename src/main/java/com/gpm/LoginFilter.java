@@ -52,7 +52,11 @@ public class LoginFilter implements Filter {
     String uri = req.getRequestURI();
     if (uri.startsWith(SECURE_PATH)) {
       LoginBean logIn = (LoginBean) req.getSession().getAttribute("loginBean");
-      if (logIn != null && logIn.isLoggedIn()) {
+      if (logIn == null) {
+        logIn = new LoginBean();
+        req.getSession().setAttribute("loginBean", logIn);
+      }
+      if (logIn.isLoggedIn()) {
         // We are logged in already
         if (uri.startsWith(LOGIN) || uri.startsWith(REGISTER) || uri.startsWith(RECOVER)) {
           // Do not permit log into, register or recover accounts
