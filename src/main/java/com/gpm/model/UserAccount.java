@@ -5,6 +5,8 @@ package com.gpm.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 /**
@@ -22,6 +24,8 @@ public class UserAccount extends Base {
   private String passwordHash;
   private String facebookIdent;
   private String facebookToken;
+  private UserAddress billingAddress;
+  private UserAddress shippingAddress;
 
   public UserAccount() {
     super();
@@ -89,5 +93,23 @@ public class UserAccount extends Base {
 
   public void setFacebookToken(final String facebookToken) {
     this.facebookToken = facebookToken;
+  }
+
+  @OneToOne(fetch = FetchType.EAGER)
+  public UserAddress getBillingAddress() {
+    return billingAddress;
+  }
+
+  public void setBillingAddress(UserAddress billingAddress) {
+    this.billingAddress = billingAddress;
+  }
+
+  @OneToOne(fetch = FetchType.EAGER)
+  public UserAddress getShippingAddress() {
+    return shippingAddress;
+  }
+
+  public void setShippingAddress(UserAddress shippingAddress) {
+    this.shippingAddress = shippingAddress;
   }
 }
