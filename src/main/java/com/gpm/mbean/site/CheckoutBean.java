@@ -37,6 +37,7 @@ public class CheckoutBean implements Serializable {
     if (address == null) {
       address = new UserAddress();
       address.setName(user.getName());
+      address.setCountry("UNITED KINGDOM");
       user.setBillingAddress(address);
     }
     return address;
@@ -47,9 +48,14 @@ public class CheckoutBean implements Serializable {
     if (address == null) {
       address = new UserAddress();
       address.setName(user.getName());
+      address.setCountry("UNITED KINGDOM");
       user.setDeliveryAddress(address);
     }
     return address;
+  }
+
+  public String[] getCountries() {
+    return BeanUtils.generateCountriesList();
   }
 
   public String finishCheckout1() {

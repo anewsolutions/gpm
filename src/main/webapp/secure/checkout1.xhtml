@@ -8,10 +8,10 @@
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
       <h:outputStylesheet target="head" library="css" name="checkout.css" />
       <h:outputText styleClass="pageHeading" value="#{msg.checkout1PageHeading}" />
-      <h:outputText styleClass="pageParagraph" value="#{msg.shippingAddressConfirm}" />
+      <h:outputText styleClass="pageParagraph" value="#{msg.checkout1AddressConfirm}" />
       <h:panelGrid styleClass="shippingGrid" columns="2" columnClasses="shippingGridLeft,shippingGridRight">
         <h:panelGroup>
-          <h:outputText styleClass="pageSectionHeading" value="#{msg.shippingBillingAddress}" />
+          <h:outputText styleClass="pageSectionHeading" value="#{msg.checkout1BillingAddress}" />
           <h:panelGrid id="billingAddress" styleClass="pageParagraph pageIndent" columns="2">
             <h:outputLabel for="billingName" value="#{msg.shippingName}" />
             <p:inputText id="billingName" value="#{checkoutBean.billingAddress.name}" maxlength="250" required="true" />
@@ -26,13 +26,15 @@
             <h:outputLabel for="billingState" value="#{msg.shippingState}" />
             <p:inputText id="billingState" value="#{checkoutBean.billingAddress.state}" maxlength="250" required="true" />
             <h:outputLabel for="billingCountry" value="#{msg.shippingCountry}" />
-            <p:inputText id="billingCountry" value="#{checkoutBean.billingAddress.country}" maxlength="250" required="true" />
+            <p:selectOneMenu id="billingCountry" value="#{checkoutBean.billingAddress.country}" style="width:200px;">
+              <f:selectItems value="#{checkoutBean.countries}" />
+            </p:selectOneMenu>
             <h:outputLabel for="billingPostcode" value="#{msg.shippingPostcode}" />
             <p:inputText id="billingPostcode" value="#{checkoutBean.billingAddress.postcode}" maxlength="250" required="true" />
           </h:panelGrid>
         </h:panelGroup>
         <h:panelGroup>
-          <h:outputText styleClass="pageSectionHeading" value="#{msg.shippingDeliveryAddress}" />
+          <h:outputText styleClass="pageSectionHeading" value="#{msg.checkout1DeliveryAddress}" />
           <h:panelGrid id="deliveryAddress" styleClass="pageParagraph pageIndent" columns="2">
             <h:outputLabel for="deliveryName" value="#{msg.shippingName}" />
             <p:inputText id="deliveryName" value="#{checkoutBean.deliveryAddress.name}" maxlength="250" required="true" />
@@ -47,7 +49,9 @@
             <h:outputLabel for="deliveryState" value="#{msg.shippingState}" />
             <p:inputText id="deliveryState" value="#{checkoutBean.deliveryAddress.state}" maxlength="250" required="true" />
             <h:outputLabel for="deliveryCountry" value="#{msg.shippingCountry}" />
-            <p:inputText id="deliveryCountry" value="#{checkoutBean.deliveryAddress.country}" maxlength="250" required="true" />
+            <p:selectOneMenu id="deliveryCountry" value="#{checkoutBean.deliveryAddress.country}" style="width:200px;">
+              <f:selectItems value="#{checkoutBean.countries}" />
+            </p:selectOneMenu>
             <h:outputLabel for="deliveryPostcode" value="#{msg.shippingPostcode}" />
             <p:inputText id="deliveryPostcode" value="#{checkoutBean.deliveryAddress.postcode}" maxlength="250" required="true" />
           </h:panelGrid>
