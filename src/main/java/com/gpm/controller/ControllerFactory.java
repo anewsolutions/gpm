@@ -39,7 +39,7 @@ public class ControllerFactory {
     }
     return (Controller<Issue>) controllers.get(Issue.class);
   }
-  
+
   @SuppressWarnings("unchecked")
   public static Controller<UserAccount> getUserAccountController() {
     if (!controllers.containsKey(UserAccount.class)) {
@@ -55,7 +55,7 @@ public class ControllerFactory {
     }
     return (Controller<UserAddress>) controllers.get(UserAddress.class);
   }
-  
+
   @SuppressWarnings("unchecked")
   public static Controller<Product> getProductController() {
     if (!controllers.containsKey(Product.class)) {

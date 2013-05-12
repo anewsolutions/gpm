@@ -44,7 +44,7 @@ public class IssueManager {
    */
   public static List<Issue> findAllIssues() throws IssueException {
     try {
-      return ControllerFactory.getIssueController().getAll("published", false);
+      return ControllerFactory.getIssueController().getAll("publishedDate", false);
     } catch (ControllerException e) {
       throw new IssueException(e);
     }
@@ -60,8 +60,8 @@ public class IssueManager {
   public static Issue findCurrentIssue() throws IssueException {
     try {
       List<ControllerFilter> filters = new ArrayList<ControllerFilter>();
-      filters.add(new ControllerFilter("published", "<=", new Date()));
-      List<Issue> issues = ControllerFactory.getIssueController().getAll("published", false, filters);
+      filters.add(new ControllerFilter("publishedDate", "<=", new Date()));
+      List<Issue> issues = ControllerFactory.getIssueController().getAll("publishedDate", false, filters);
       // Only interested in the latest published issue, so return only first one
       if (!issues.isEmpty()) {
         return issues.get(0);
@@ -85,8 +85,8 @@ public class IssueManager {
   public static List<Issue> findBackIssues() throws IssueException {
     try {
       List<ControllerFilter> filters = new ArrayList<ControllerFilter>();
-      filters.add(new ControllerFilter("published", "<=", new Date()));
-      List<Issue> issues = ControllerFactory.getIssueController().getAll("published", false, filters);
+      filters.add(new ControllerFilter("publishedDate", "<=", new Date()));
+      List<Issue> issues = ControllerFactory.getIssueController().getAll("publishedDate", false, filters);
       // Not interested in the latest published issue, so truncate the first in the list
       if (!issues.isEmpty()) {
         issues.remove(0);

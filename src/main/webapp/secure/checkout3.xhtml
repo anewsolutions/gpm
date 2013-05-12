@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/site.xhtml">
+  <ui:param name="sitePageTitle" value="#{msg.checkout3PageTitle}" />
+  <ui:define name="sitePageContent">
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+      <h:outputStylesheet target="head" library="css" name="checkout.css" />
+      <h:outputText styleClass="pageHeading" value="#{msg.checkout3PageHeading}" />
+      <h:outputText styleClass="pageParagraph pageCentred" value="#{msg.checkout3PleaseWait}" />
+      <span class="pageParagraph pageCentred"><p:graphicImage library="images" name="wait.gif" /></span>
+    </h:form>
+    <h:form id="paypointForm" prependId="false" acceptcharset="UTF-8">
+      <h:inputHidden id="merchant" value="#{checkoutBean.paypointMerchant}" />
+      <h:inputHidden id="trans_id" value="102" />
+      <h:inputHidden id="amount" value="5" />
+      <h:inputHidden id="usage_type" value="E" />
+      <h:inputHidden id="callback" value="#{checkoutBean.paypointCallback}" />
+      <h:inputHidden id="backcallback" value="#{checkoutBean.paypointBackCallback}" />
+      <h:inputHidden id="show_back" value="submit" />
+      <h:inputHidden id="digest" value="e795225a1d9876b110a9bd1ee6e309ef" />
+      <h:inputHidden id="bill_name" value="#{checkoutBean.billingAddress.name}"/>
+      <h:inputHidden id="bill_company" value="#{checkoutBean.billingAddress.company}"/>
+      <h:inputHidden id="bill_addr_1" value="#{checkoutBean.billingAddress.address1}"/>
+      <h:inputHidden id="bill_addr_2" value="#{checkoutBean.billingAddress.address2}"/>
+      <h:inputHidden id="bill_city" value="#{checkoutBean.billingAddress.city}"/>
+      <h:inputHidden id="bill_state" value="#{checkoutBean.billingAddress.state}"/>
+      <h:inputHidden id="bill_country" value="#{checkoutBean.billingAddress.country}"/>
+      <h:inputHidden id="bill_post_code" value="#{checkoutBean.billingAddress.postcode}"/>
+      <h:inputHidden id="ship_name" value="#{checkoutBean.deliveryAddress.name}"/>
+      <h:inputHidden id="ship_company" value="#{checkoutBean.deliveryAddress.company}"/>
+      <h:inputHidden id="ship_addr_1" value="#{checkoutBean.deliveryAddress.address1}"/>
+      <h:inputHidden id="ship_addr_2" value="#{checkoutBean.deliveryAddress.address2}"/>
+      <h:inputHidden id="ship_city" value="#{checkoutBean.deliveryAddress.city}"/>
+      <h:inputHidden id="ship_state" value="#{checkoutBean.deliveryAddress.state}"/>
+      <h:inputHidden id="ship_country" value="#{checkoutBean.deliveryAddress.country}"/>
+      <h:inputHidden id="ship_post_code" value="#{checkoutBean.deliveryAddress.postcode}"/>
+    </h:form>
+    <script type="text/javascript" charset="utf-8">
+      //<![CDATA[
+      jQuery(document).ready(function() {
+        setTimeout(submitPaypointForm, 5000);
+      });
+      function submitPaypointForm() {
+        jQuery('#paypointForm').attr('action', 'https://www.secpay.com/java-bin/ValCard');
+        jQuery('#paypointForm').submit();
+      }
+      //]]>
+    </script>
+  </ui:define>
+</ui:composition>
+</html>

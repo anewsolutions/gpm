@@ -45,17 +45,18 @@
               </p:selectOneRadio>
               <h:panelGrid columns="2">
                 <p:radioButton id="subFormatEzine" for="subFormatRadio" itemIndex="0"
-                  rendered="#{subscribeBean.currentIssue.ezine}" />
+                  rendered="#{subscribeBean.currentIssue.ezineAvailable}" />
                 <h:outputLabel for="subFormatEzine" value="#{msg.subOnlineEdition}"
-                  rendered="#{subscribeBean.currentIssue.ezine}" />
+                  rendered="#{subscribeBean.currentIssue.ezineAvailable}" />
                 <p:radioButton id="subFormatHcopy" for="subFormatRadio" itemIndex="1"
-                  rendered="#{subscribeBean.currentIssue.stock > 0}" />
+                  rendered="#{subscribeBean.currentIssue.stockAvailable}" />
                 <h:outputLabel for="subFormatHcopy" value="#{msg.subPhysicalCopy}"
-                  rendered="#{subscribeBean.currentIssue.stock > 0}" />
+                  rendered="#{subscribeBean.currentIssue.stockAvailable}" />
               </h:panelGrid>
             </h:panelGroup>
           </h:panelGrid>
-          <h:outputText id="subPrice" styleClass="pageParagraph subscribePrice" value="#{subscribeBean.subscriptionPrice}" />
+          <h:outputText id="subPrice" styleClass="pageParagraph subscribePrice"
+            value="#{subscribeBean.subscriptionPrice}" />
           <h:outputText id="subDescription" styleClass="pageParagraph" value="#{subscribeBean.subscriptionDescription}" />
           <span class="pageParagraph"><p:commandButton value="#{msg.subButtonsBuyNow}"
               action="#{subscribeBean.buy}" /></span>

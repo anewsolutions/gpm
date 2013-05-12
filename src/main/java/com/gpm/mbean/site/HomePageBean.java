@@ -4,13 +4,10 @@
 package com.gpm.mbean.site;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.ConfigurationManager;
@@ -41,7 +38,7 @@ public class HomePageBean implements Serializable {
     String key = "";
     try {
       Configuration config = ConfigurationManager.findByKey("facebook.key");
-      key = config.getValue();
+      key = config.getConfigValue();
     } catch (ConfigurationException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -60,10 +57,8 @@ public class HomePageBean implements Serializable {
   public String getCurrentIssueEdition() {
     String edition = "";
     if (issue != null) {
-      Locale locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
-      SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", locale);
-      String published = sdf.format(issue.getPublished());
-      edition = MessageProvider.getMessage("indexEdition", issue.getNumber(), published);
+      String published = BeanUtils.formatPublished(issue.getPublishedDate());
+      edition = MessageProvider.getMessage("indexEdition", issue.getIssueNumber(), published);
     }
     return edition;
   }

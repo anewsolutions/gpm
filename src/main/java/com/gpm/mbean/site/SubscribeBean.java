@@ -8,14 +8,12 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.IssueManager;
 import com.gpm.manager.exception.IssueException;
 import com.gpm.model.Issue;
-import com.gpm.model.SubscriptionItem;
+import com.gpm.model.IssueOrderItem;
 import com.gpm.model.enums.Format;
 
 @ManagedBean
@@ -33,7 +31,7 @@ public class SubscribeBean implements Serializable {
   public void init() {
     try {
       issue = IssueManager.findCurrentIssue();
-      if (!issue.isEzine()) {
+      if (!issue.isEzineAvailable()) {
         format = Format.HCOPY;
       }
     } catch (IssueException e) {
@@ -49,8 +47,8 @@ public class SubscribeBean implements Serializable {
   public String getEdition() {
     String edition = "";
     if (issue != null) {
-      String published = BeanUtils.formatPublished(issue.getPublished());
-      edition = MessageProvider.getMessage("subThisIssueEdition", issue.getNumber(), published);
+      String published = BeanUtils.formatPublished(issue.getPublishedDate());
+      edition = MessageProvider.getMessage("subThisIssueEdition", issue.getIssueNumber(), published);
     }
     return edition;
   }
@@ -73,14 +71,7 @@ public class SubscribeBean implements Serializable {
 
   public String getSubscriptionDescription() {
     if (issue != null) {
-      StringBuilder next = new StringBuilder();
-      for (int i = issue.getNumber() + 1; i < issue.getNumber() + getLength(); i++) {
-        if (next.length() != 0) {
-          next.append(", ");
-        }
-        next.append(i);
-      }
-      return MessageProvider.getMessage("subDesc" + getFormat() + getLength(), issue.getNumber(), next.toString());
+      return MessageProvider.getMessage("subDesc" + getFormat() + getLength(), issue.getIssueNumber());
     } else {
       return "";
     }
@@ -92,19 +83,20 @@ public class SubscribeBean implements Serializable {
   }
 
   public String buy() {
-    // Build order
-    SubscriptionItem order = new SubscriptionItem();
-    String published = BeanUtils.formatPublished(issue.getPublished());
-    order.setName(MessageProvider.getMessage("subShortDesc" + getFormat() + getLength(), issue.getNumber(), published));
+    // Build order item
+    IssueOrderItem order = new IssueOrderItem();
+    String published = BeanUtils.formatPublished(issue.getPublishedDate());
+    order.setName(MessageProvider.getMessage("subShortDesc" + getFormat() + getLength(), issue.getIssueNumber(),
+        published));
     order.setPrice(Issue.currentPrice * getLength());
     order.setQuantity(1);
-    // Subscription details
-    order.setFirst(issue.getUuid());
-    order.setLength(length);
+    // Issue details
+    order.setStartIssue(issue.getIssueNumber());
+    order.setNumIssues(length);
     order.setFormat(format);
+    order.setBackIssue(false);
     // Add to basket
-    HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-    BasketBean basket = (BasketBean) session.getAttribute("basketBean");
+    BasketBean basket = BeanUtils.fetchBasketBean();
     basket.addItemToBasket(order);
     return "/basket.xhtml?faces-redirect=true";
   }

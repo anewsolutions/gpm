@@ -72,7 +72,7 @@ public class CheckoutBean implements Serializable {
     String merchant = "";
     try {
       Configuration config = ConfigurationManager.findByKey("paypoint.merchant");
-      merchant = config.getValue();
+      merchant = config.getConfigValue();
     } catch (ConfigurationException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

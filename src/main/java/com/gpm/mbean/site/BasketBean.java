@@ -11,26 +11,26 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import com.gpm.model.Item;
+import com.gpm.model.OrderItem;
 
 @ManagedBean
 @SessionScoped
 public class BasketBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  private List<Item> items = new ArrayList<Item>();
+  private List<OrderItem> items = new ArrayList<OrderItem>();
 
-  public List<Item> getAllBasketItems() {
+  public List<OrderItem> getAllBasketItems() {
     return items;
   }
 
-  public void addItemToBasket(Item item) {
+  public void addItemToBasket(OrderItem item) {
     if (item != null) {
       items.add(item);
     }
   }
 
-  public void removeItemFromBasket(Item item) {
+  public void removeItemFromBasket(OrderItem item) {
     if (item != null) {
       items.remove(item);
     }
@@ -42,9 +42,9 @@ public class BasketBean implements Serializable {
 
   public int getTotalBasketItems() {
     int num = 0;
-    Iterator<Item> i = items.iterator();
+    Iterator<OrderItem> i = items.iterator();
     while (i.hasNext()) {
-      Item item = i.next();
+      OrderItem item = i.next();
       num += item.getQuantity();
     }
     return num;
@@ -52,15 +52,15 @@ public class BasketBean implements Serializable {
 
   public String getTotalBasketPrice() {
     int price = 0;
-    Iterator<Item> i = items.iterator();
+    Iterator<OrderItem> i = items.iterator();
     while (i.hasNext()) {
-      Item item = i.next();
+      OrderItem item = i.next();
       price += item.getPrice() * item.getQuantity();
     }
     return BeanUtils.formatPrice(price);
   }
 
-  public String getItemPrice(Item item) {
+  public String getItemPrice(OrderItem item) {
     return BeanUtils.formatPrice(item.getPrice());
   }
 }

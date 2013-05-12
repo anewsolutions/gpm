@@ -25,14 +25,15 @@ import com.gpm.UploadsServlet;
 public class Issue extends Base {
   private static final long serialVersionUID = 1L;
 
-  private Integer number;
-  private Date published;
+  private Integer issueNumber;
+  private Date publishedDate;
   private String inThisIssue;
   private String coverImage;
-  private Integer stock;
-  private boolean ezine;
+  private String ezineLink;
+  private Integer stockLevel;
 
   // TODO have a magazine object to keep this stuff in
+  public static final int weight = 185;
   public static final int currentPrice = 395;
   public static final int backIssuePrice = 330;
 
@@ -41,22 +42,22 @@ public class Issue extends Base {
   }
 
   @Column(nullable = false, unique = true)
-  public Integer getNumber() {
-    return number;
+  public Integer getIssueNumber() {
+    return issueNumber;
   }
 
-  public void setNumber(final Integer number) {
-    this.number = number;
+  public void setIssueNumber(final Integer issueNumber) {
+    this.issueNumber = issueNumber;
   }
 
   @Column(nullable = false)
   @Temporal(TemporalType.DATE)
-  public Date getPublished() {
-    return published;
+  public Date getPublishedDate() {
+    return publishedDate;
   }
 
-  public void setPublished(final Date published) {
-    this.published = published;
+  public void setPublishedDate(final Date publishedDate) {
+    this.publishedDate = publishedDate;
   }
 
   @Column(nullable = false)
@@ -67,7 +68,7 @@ public class Issue extends Base {
 
   @Transient
   public List<String> getInThisIssueLines() {
-    String inThisIssueLines[] = getInThisIssue().split("\\r?\\n");
+    final String inThisIssueLines[] = getInThisIssue().split("\\r?\\n");
     List<String> lines = new ArrayList<String>(inThisIssueLines.length);
     for (String line : inThisIssueLines) {
       if (!line.isEmpty()) {
@@ -101,19 +102,50 @@ public class Issue extends Base {
   }
 
   @Column(nullable = false)
-  public Integer getStock() {
-    return stock;
+  public String getEzineLink() {
+    return ezineLink;
   }
 
-  public void setStock(final Integer stock) {
-    this.stock = stock;
+  public void setEzineLink(final String ezineLink) {
+    this.ezineLink = ezineLink;
   }
 
-  public boolean isEzine() {
-    return ezine;
+  /**
+   * Utility to determine if there is an online edition of this issue.
+   * 
+   * @return true if an online edition exists
+   */
+  @Transient
+  public boolean isEzineAvailable() {
+    String link = getEzineLink();
+    if (link != null && !link.isEmpty()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  public void setEzine(final boolean ezine) {
-    this.ezine = ezine;
+  @Column(nullable = false)
+  public Integer getStockLevel() {
+    return stockLevel;
+  }
+
+  public void setStockLevel(final Integer stockLevel) {
+    this.stockLevel = stockLevel;
+  }
+
+  /**
+   * Utility to determine if physical copies of this issue are available.
+   * 
+   * @return true if there is a stock available of physical copies
+   */
+  @Transient
+  public boolean isStockAvailable() {
+    Integer stock = getStockLevel();
+    if (stock != null && stock > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

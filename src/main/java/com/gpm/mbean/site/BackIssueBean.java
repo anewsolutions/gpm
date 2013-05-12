@@ -13,13 +13,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.IssueManager;
 import com.gpm.manager.exception.IssueException;
-import com.gpm.model.BackIssueItem;
 import com.gpm.model.Issue;
+import com.gpm.model.IssueOrderItem;
 import com.gpm.model.enums.Format;
 
 @ManagedBean
@@ -47,15 +46,15 @@ public class BackIssueBean implements Serializable {
   public String getEdition() {
     FacesContext context = FacesContext.getCurrentInstance();
     Issue issue = context.getApplication().evaluateExpressionGet(context, "#{issue}", Issue.class);
-    String published = BeanUtils.formatPublished(issue.getPublished());
-    return MessageProvider.getMessage("backIssueEdition", issue.getNumber(), published);
+    String published = BeanUtils.formatPublished(issue.getPublishedDate());
+    return MessageProvider.getMessage("backIssueEdition", issue.getIssueNumber(), published);
   }
 
   private Format getFormat(final Issue issue) {
     Format format = formats.get(issue);
     if (format == null) {
       // Use ezine as the default, if available
-      if (issue.isEzine()) {
+      if (issue.isEzineAvailable()) {
         format = Format.EZINE;
       } else {
         format = Format.HCOPY;
@@ -78,18 +77,19 @@ public class BackIssueBean implements Serializable {
   }
 
   public void buy(final Issue issue) {
-    // Build order
-    BackIssueItem order = new BackIssueItem();
-    String published = BeanUtils.formatPublished(issue.getPublished());
-    order.setName(MessageProvider.getMessage("backShortDesc" + getFormat(issue), issue.getNumber(), published));
+    // Build order item
+    IssueOrderItem order = new IssueOrderItem();
+    String published = BeanUtils.formatPublished(issue.getPublishedDate());
+    order.setName(MessageProvider.getMessage("backShortDesc" + getFormat(issue), issue.getIssueNumber(), published));
     order.setPrice(Issue.backIssuePrice);
     order.setQuantity(1);
-    // Back issue details
-    order.setIssue(issue.getUuid());
+    // Issue details
+    order.setStartIssue(issue.getIssueNumber());
+    order.setNumIssues(1);
     order.setFormat(getFormat(issue));
+    order.setBackIssue(true);
     // Add to basket
-    HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-    BasketBean basket = (BasketBean) session.getAttribute("basketBean");
+    BasketBean basket = BeanUtils.fetchBasketBean();
     basket.addItemToBasket(order);
   }
 }

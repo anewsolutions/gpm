@@ -28,9 +28,25 @@ public class BeanUtils {
     return sdf.format(published);
   }
 
+  /**
+   * Utility to get the login bean from the session.
+   * 
+   * @return the login bean
+   */
   public static LoginBean fetchLoginBean() {
     HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     LoginBean bean = (LoginBean) req.getSession().getAttribute("loginBean");
+    return bean;
+  }
+
+  /**
+   * Utility to get the basket bean from the session.
+   * 
+   * @return the basket bean
+   */
+  public static BasketBean fetchBasketBean() {
+    HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+    BasketBean bean = (BasketBean) req.getSession().getAttribute("basketBean");
     return bean;
   }
 

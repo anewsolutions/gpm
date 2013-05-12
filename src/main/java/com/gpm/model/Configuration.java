@@ -15,28 +15,28 @@ import javax.persistence.Entity;
 public class Configuration extends Base {
   private static final long serialVersionUID = 1L;
 
-  private String key;
-  private String value;
+  private String configKey;
+  private String configValue;
 
   public Configuration() {
     super();
   }
 
-  @Column(name = "configKey", unique = true, nullable = false)
-  public String getKey() {
-    return key;
+  @Column(unique = true, nullable = false)
+  public String getConfigKey() {
+    return configKey;
   }
 
-  public void setKey(final String key) {
-    this.key = key;
+  public void setConfigKey(final String configKey) {
+    this.configKey = configKey;
   }
 
-  @Column(name = "configValue", nullable = false)
-  public String getValue() {
-    return value;
+  @Column(nullable = false)
+  public String getConfigValue() {
+    return configValue;
   }
 
-  public void setValue(final String value) {
-    this.value = value;
+  public void setConfigValue(final String configValue) {
+    this.configValue = configValue;
   }
 }

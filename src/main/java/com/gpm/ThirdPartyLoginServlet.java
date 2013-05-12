@@ -98,7 +98,7 @@ public class ThirdPartyLoginServlet extends HttpServlet {
     String key = "";
     try {
       Configuration config = ConfigurationManager.findByKey("facebook.key");
-      key = config.getValue();
+      key = config.getConfigValue();
     } catch (ConfigurationException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -114,7 +114,7 @@ public class ThirdPartyLoginServlet extends HttpServlet {
     String key = "";
     try {
       Configuration config = ConfigurationManager.findByKey("facebook.key");
-      key = config.getValue();
+      key = config.getConfigValue();
     } catch (ConfigurationException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -122,7 +122,7 @@ public class ThirdPartyLoginServlet extends HttpServlet {
     String secret = "";
     try {
       Configuration config = ConfigurationManager.findByKey("facebook.secret");
-      secret = config.getValue();
+      secret = config.getConfigValue();
     } catch (ConfigurationException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

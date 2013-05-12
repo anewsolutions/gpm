@@ -16,7 +16,7 @@ public class ConfigurationManager {
   public static Configuration findByKey(final String key) throws ConfigurationException {
     try {
       List<ControllerFilter> filters = new ArrayList<ControllerFilter>();
-      filters.add(new ControllerFilter("key", "=", key));
+      filters.add(new ControllerFilter("configKey", "=", key));
       List<Configuration> configs = ControllerFactory.getConfigurationController().getAll(filters);
       // Configuration keys are unique, so should be safe to return first result only
       if (!configs.isEmpty()) {
@@ -35,8 +35,8 @@ public class ConfigurationManager {
     if (config == null) {
       config = new Configuration();
     }
-    config.setKey(key);
-    config.setValue(value);
+    config.setConfigKey(key);
+    config.setConfigValue(value);
     try {
       ControllerFactory.getConfigurationController().save(config);
     } catch (ControllerException e) {

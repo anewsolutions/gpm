@@ -9,7 +9,7 @@
       <h:outputStylesheet target="head" library="css" name="backissues.css" />
       <h:outputText styleClass="pageHeading" value="#{msg.backPageHeading}" />
       <p:dataGrid id="backIssuesTable" var="issue" value="#{backIssueBean.issues}" columns="4" paginator="false"
-        emptyMessage="#{msg.shopNoProducts}">
+        emptyMessage="#{msg.backNoIssues}">
         <h:panelGrid styleClass="backIssueDetailsTable" columns="1">
           <h:panelGroup>
             <h:outputText styleClass="pageSubSectionHeading" value="#{backIssueBean.edition}" />
@@ -21,10 +21,10 @@
               <f:selectItem itemValue="HCOPY" />
             </p:selectOneRadio>
             <h:panelGrid columns="2">
-              <p:radioButton id="backFormatEzine" for="backFormatRadio" itemIndex="0" rendered="#{issue.ezine}" />
-              <h:outputLabel for="backFormatEzine" value="#{msg.backOnlineEdition}" rendered="#{issue.ezine}" />
-              <p:radioButton id="backFormatHcopy" for="backFormatRadio" itemIndex="1" rendered="#{issue.stock > 0}" />
-              <h:outputLabel for="backFormatHcopy" value="#{msg.backPhysicalCopy}" rendered="#{issue.stock > 0}" />
+              <p:radioButton id="backFormatEzine" for="backFormatRadio" itemIndex="0" rendered="#{issue.ezineAvailable}" />
+              <h:outputLabel for="backFormatEzine" value="#{msg.backOnlineEdition}" rendered="#{issue.ezineAvailable}" />
+              <p:radioButton id="backFormatHcopy" for="backFormatRadio" itemIndex="1" rendered="#{issue.stockAvailable}" />
+              <h:outputLabel for="backFormatHcopy" value="#{msg.backPhysicalCopy}" rendered="#{issue.stockAvailable}" />
             </h:panelGrid>
             <span class="pageParagraph"><p:commandButton value="#{msg.backButtonsAddToBasket}"
                 action="#{backIssueBean.buy(issue)}" update=":siteHeaderBasketForm" /></span>
