@@ -4,6 +4,7 @@
 package com.gpm.mbean.site;
 
 import java.io.Serializable;
+import java.net.URI;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -21,12 +22,18 @@ public class RegisterBean implements Serializable {
   private String name;
   private String password;
 
-  public void register() {
+  public String register() {
     try {
       UserAccountManager.createNew(email, name, password);
     } catch (UserAccountException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
+    }
+    URI redirect = BeanUtils.fetchLoginBean().getRedirect();
+    if (redirect != null) {
+      return redirect.getPath() + "?faces-redirect=true";
+    } else {
+      return "/index.xhtml?faces-redirect=true";
     }
   }
 
