@@ -12,8 +12,8 @@ import javax.faces.bean.ViewScoped;
 import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.IssueManager;
 import com.gpm.manager.exception.IssueException;
+import com.gpm.model.CustomerOrderItem;
 import com.gpm.model.Issue;
-import com.gpm.model.IssueOrderItem;
 import com.gpm.model.enums.Format;
 
 @ManagedBean
@@ -84,11 +84,16 @@ public class SubscribeBean implements Serializable {
 
   public String buy() {
     // Build order item
-    IssueOrderItem order = new IssueOrderItem();
+    CustomerOrderItem order = new CustomerOrderItem();
     String published = BeanUtils.formatPublished(issue.getPublishedDate());
     order.setName(MessageProvider.getMessage("subShortDesc" + getFormat() + getLength(), issue.getIssueNumber(),
         published));
     order.setPrice(Issue.currentPrice * getLength());
+    if (format == Format.EZINE) {
+      order.setWeight(0);
+    } else {
+      order.setWeight(Issue.weight);
+    }
     order.setQuantity(1);
     // Issue details
     order.setStartIssue(issue.getIssueNumber());
