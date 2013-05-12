@@ -68,6 +68,10 @@ public class CheckoutBean implements Serializable {
     return "/secure/checkout2.xhtml?faces-redirect=true";
   }
 
+  public String finishCheckout2() {
+    return "";
+  }
+
   public String getPaypointMerchant() {
     String merchant = "";
     try {

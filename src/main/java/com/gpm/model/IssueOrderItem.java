@@ -17,7 +17,6 @@ import com.gpm.model.enums.Format;
 public class IssueOrderItem extends OrderItem {
   private static final long serialVersionUID = 1L;
 
-  private String name;
   private Integer startIssue;
   private Integer numIssues;
   private Format format;
@@ -25,15 +24,6 @@ public class IssueOrderItem extends OrderItem {
 
   public IssueOrderItem() {
     super();
-  }
-
-  @Column(nullable = false)
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   @Column(nullable = false)

@@ -8,6 +8,30 @@
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
       <h:outputStylesheet target="head" library="css" name="checkout.css" />
       <h:outputText styleClass="pageHeading" value="#{msg.checkout2PageHeading}" />
+      <h:outputText styleClass="pageParagraph" value="#{msg.checkout2OrderConfirm}" />
+      <p:dataTable id="basketTable" var="basketItem" value="#{basketBean.allBasketItems}" paginator="false">
+        <p:column styleClass="basketItemsColumn" headerText="#{msg.basketTableItemsColumn}">
+          <h:outputText styleClass="basketItemName" value="#{basketItem.name}" />
+        </p:column>
+        <p:column styleClass="basketPriceColumn" headerText="#{msg.basketTablePriceColumn}">
+          <h:outputText styleClass="basketPrice" value="#{basketBean.getItemPrice(basketItem)}" />
+        </p:column>
+        <p:column styleClass="basketQuantityColumn" headerText="#{msg.basketTableQuantityColumn}">
+          <h:outputText styleClass="basketQuantity" value="#{basketItem.quantity}" />
+        </p:column>
+      </p:dataTable>
+      <h:panelGrid styleClass="pageParagraph pageIndent" columns="2">
+        <h:panelGroup>
+          <p:commandButton value="#{msg.checkoutButtonsBackToBasket}" ajax="false" immediate="true"
+            action="/basket.xhtml?faces-redirect=true" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:commandButton value="#{msg.checkoutButtonsProceed}" disabled="true"
+            rendered="#{basketBean.totalBasketItems == 0}" />
+          <p:commandButton value="#{msg.checkoutButtonsProceed}" rendered="#{basketBean.totalBasketItems > 0}"
+            action="#{checkoutBean.finishCheckout2}" />
+        </h:panelGroup>
+      </h:panelGrid>
     </h:form>
   </ui:define>
 </ui:composition>

@@ -10,11 +10,21 @@ import javax.persistence.MappedSuperclass;
 public abstract class OrderItem extends Base {
   private static final long serialVersionUID = 1L;
 
+  private String name;
   private Integer quantity;
   private Integer price;
 
   public OrderItem() {
     super();
+  }
+
+  @Column(nullable = false)
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   @Column(nullable = false)

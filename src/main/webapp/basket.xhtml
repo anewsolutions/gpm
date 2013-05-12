@@ -6,7 +6,7 @@
   <ui:param name="sitePageTitle" value="#{msg.basketPageTitle}" />
   <ui:define name="sitePageContent">
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
-      <h:outputStylesheet target="head" library="css" name="basket.css" />
+      <h:outputStylesheet target="head" library="css" name="checkout.css" />
       <h:outputText styleClass="pageHeading" value="#{msg.basketPageHeading}" />
       <p:dataTable id="basketTable" var="basketItem" value="#{basketBean.allBasketItems}" paginator="false"
         emptyMessage="#{msg.basketNoItems}">

@@ -2,16 +2,94 @@
  * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
 
-.shippingGrid {
+#basketTable.ui-datatable .ui-datatable-data td, #basketTable.ui-datatable .ui-datatable-data-empty td {
+  border: none;
+}
+
+#basketTable.ui-datatable .ui-datatable-empty-message {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+#basketTable.ui-datatable th.basketItemsColumn {
+  text-align: left;
+}
+
+#basketTable.ui-datatable .ui-datatable-data td.basketItemsColumn {
+  text-align: left;
+}
+
+#basketTable.ui-datatable th.basketPriceColumn {
+  text-align: center;
+  width: 10%;
+}
+
+#basketTable.ui-datatable .ui-datatable-data td.basketPriceColumn {
+  text-align: center;
+  width: 10%;
+  vertical-align: top;
+}
+
+#basketTable.ui-datatable th.basketQuantityColumn {
+  text-align: center;
+  width: 10%;
+}
+
+#basketTable.ui-datatable .ui-datatable-data td.basketQuantityColumn {
+  text-align: center;
+  width: 10%;
+  vertical-align: top;
+}
+
+.basketItemPanel td.basketItemPanelImageColumn {
+  width: 98px;
+  vertical-align: top;
+}
+
+.basketItemPanel td.basketItemPanelDescColumn {
+  padding-left: 0.5em;
+  vertical-align: top;
+}
+
+.basketItemName {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.basketPrice {
+  color: #ff0000;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.subtotalPanel {
+  margin-left: auto;
+  margin-right: 0;
+  border-spacing: 0;
+}
+
+.subtotalItems {
+  font-size: 1.25em;
+  font-weight: bold;
+  text-align: right;
+}
+
+.subtotalPrices {
+  color: #ff0000;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.addressGrid {
   border-spacing: 0;
   width: 100%;
 }
 
-.shippingGrid td span:first-child {
+.addressGrid td span:first-child {
   margin-top: 0;
 }
 
-.shippingGridLeft, .shippingGridRight {
+.addressGridLeft, .addressGridRight {
   text-align: left;
   width: 50%;
 }
