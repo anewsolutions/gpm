@@ -13,6 +13,7 @@ import com.gpm.model.Issue;
 import com.gpm.model.Product;
 import com.gpm.model.UserAccount;
 import com.gpm.model.UserAddress;
+import com.gpm.model.UserIssue;
 import com.gpm.model.Variant;
 
 /**
@@ -63,6 +64,14 @@ public class ControllerFactory {
       controllers.put(UserAddress.class, new Controller<UserAddress>(UserAddress.class));
     }
     return (Controller<UserAddress>) controllers.get(UserAddress.class);
+  }
+
+  @SuppressWarnings("unchecked")
+  public static Controller<UserIssue> getUserIssueController() {
+    if (!controllers.containsKey(UserIssue.class)) {
+      controllers.put(UserIssue.class, new Controller<UserIssue>(UserIssue.class));
+    }
+    return (Controller<UserIssue>) controllers.get(UserIssue.class);
   }
 
   @SuppressWarnings("unchecked")

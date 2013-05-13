@@ -32,7 +32,7 @@ public class CustomerOrderItem extends Base {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
@@ -41,7 +41,7 @@ public class CustomerOrderItem extends Base {
     return quantity;
   }
 
-  public void setQuantity(Integer quantity) {
+  public void setQuantity(final Integer quantity) {
     this.quantity = quantity;
   }
 
@@ -50,16 +50,16 @@ public class CustomerOrderItem extends Base {
     return price;
   }
 
-  public void setPrice(Integer price) {
+  public void setPrice(final Integer price) {
     this.price = price;
   }
 
+  @Column(nullable = false)
   public Integer getWeight() {
     return weight;
   }
 
-  @Column(nullable = false)
-  public void setWeight(Integer weight) {
+  public void setWeight(final Integer weight) {
     this.weight = weight;
   }
 

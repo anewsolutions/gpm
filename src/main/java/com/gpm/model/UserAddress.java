@@ -33,7 +33,7 @@ public class UserAddress extends Base {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
@@ -42,7 +42,7 @@ public class UserAddress extends Base {
     return company;
   }
 
-  public void setCompany(String company) {
+  public void setCompany(final String company) {
     this.company = company;
   }
 
@@ -51,7 +51,7 @@ public class UserAddress extends Base {
     return address1;
   }
 
-  public void setAddress1(String address1) {
+  public void setAddress1(final String address1) {
     this.address1 = address1;
   }
 
@@ -60,7 +60,7 @@ public class UserAddress extends Base {
     return address2;
   }
 
-  public void setAddress2(String address2) {
+  public void setAddress2(final String address2) {
     this.address2 = address2;
   }
 
@@ -69,7 +69,7 @@ public class UserAddress extends Base {
     return city;
   }
 
-  public void setCity(String city) {
+  public void setCity(final String city) {
     this.city = city;
   }
 
@@ -78,7 +78,7 @@ public class UserAddress extends Base {
     return state;
   }
 
-  public void setState(String state) {
+  public void setState(final String state) {
     this.state = state;
   }
 
@@ -87,7 +87,7 @@ public class UserAddress extends Base {
     return country;
   }
 
-  public void setCountry(String country) {
+  public void setCountry(final String country) {
     this.country = country;
   }
 
@@ -96,7 +96,7 @@ public class UserAddress extends Base {
     return postcode;
   }
 
-  public void setPostcode(String postcode) {
+  public void setPostcode(final String postcode) {
     this.postcode = postcode;
   }
 }

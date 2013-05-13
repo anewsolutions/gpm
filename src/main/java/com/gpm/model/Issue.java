@@ -66,6 +66,17 @@ public class Issue extends Base {
     return inThisIssue;
   }
 
+  public void setInThisIssue(final String inThisIssue) {
+    this.inThisIssue = inThisIssue;
+  }
+
+  /**
+   * Utility to get the description of what's in the issue as a list of paragraphs for
+   * ease of formatting. Paragraphs are defined as the text that is delimited by newline
+   * characters.
+   * 
+   * @return a list of paragraphs of text
+   */
   @Transient
   public List<String> getInThisIssueLines() {
     final String inThisIssueLines[] = getInThisIssue().split("\\r?\\n");
@@ -78,15 +89,21 @@ public class Issue extends Base {
     return lines;
   }
 
-  public void setInThisIssue(final String inThisIssue) {
-    this.inThisIssue = inThisIssue;
-  }
-
   @Column(nullable = false)
   public String getCoverImage() {
     return coverImage;
   }
 
+  public void setCoverImage(final String coverImage) {
+    this.coverImage = coverImage;
+  }
+
+  /**
+   * Utility to get the URI of the cover image or a place holder image if no cover image
+   * is set.
+   * 
+   * @return a link to an image
+   */
   @Transient
   public String getCoverImageUri() {
     String ci = getCoverImage();
@@ -95,10 +112,6 @@ public class Issue extends Base {
     } else {
       return "http://placehold.it/300x419&text=No%20Image";
     }
-  }
-
-  public void setCoverImage(final String coverImage) {
-    this.coverImage = coverImage;
   }
 
   @Column(nullable = false)

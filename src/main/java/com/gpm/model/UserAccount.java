@@ -3,9 +3,14 @@
  */
 package com.gpm.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -26,6 +31,7 @@ public class UserAccount extends Base {
   private String facebookToken;
   private UserAddress billingAddress;
   private UserAddress deliveryAddress;
+  private List<UserIssue> magazines = new ArrayList<UserIssue>(0);
 
   public UserAccount() {
     super();
@@ -111,5 +117,14 @@ public class UserAccount extends Base {
 
   public void setDeliveryAddress(final UserAddress deliveryAddress) {
     this.deliveryAddress = deliveryAddress;
+  }
+
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  public List<UserIssue> getMagazines() {
+    return magazines;
+  }
+
+  public void setMagazines(final List<UserIssue> magazines) {
+    this.magazines = magazines;
   }
 }
