@@ -13,6 +13,8 @@ import java.util.Locale;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import com.gpm.model.enums.Shipping;
+
 public class BeanUtils {
   public static String formatPrice(final int price) {
     Locale locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
@@ -50,6 +52,23 @@ public class BeanUtils {
     return bean;
   }
 
+  private static String[] uk = { "UNITED KINGDOM", "ISLE OF MAN" };
+  private static String[] europe = { "ÅLAND ISLANDS", "ALBANIA", "ANDORRA", "ARMENIA", "AUSTRIA", "AZERBAIJAN",
+      "BELARUS", "BELGIUM", "BOSNIA AND HERZEGOVINA", "BULGARIA", "CROATIA", "CYPRUS", "CZECH REPUBLIC", "DENMARK",
+      "ESTONIA", "FAROE ISLANDS", "FINLAND", "FRANCE", "GEORGIA", "GERMANY", "GIBRALTAR", "GREECE", "GREENLAND",
+      "GUERNSEY", "HOLY SEE (VATICAN CITY STATE)", "HUNGARY", "ICELAND", "IRELAND", "ITALY", "JERSEY", "KAZAKHSTAN",
+      "KOSOVO", "KYRGYZSTAN", "LATVIA", "LIECHTENSTEIN", "LITHUANIA", "LUXEMBOURG",
+      "MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF", "MALTA", "MOLDOVA, REPUBLIC OF", "MONACO", "MONTENEGRO",
+      "NETHERLANDS", "NORWAY", "POLAND", "PORTUGAL", "ROMANIA", "RUSSIAN FEDERATION", "SAN MARINO", "SERBIA",
+      "SLOVAKIA", "SLOVENIA", "SPAIN", "SVALBARD AND JAN MAYEN", "SWEDEN", "SWITZERLAND", "TAJIKISTAN", "TURKEY",
+      "TURKMENISTAN", "UKRAINE", "UZBEKISTAN", };
+  private static String[] world2 = { "AMERICAN SAMOA", "AUSTRALIA", "PALAU", "CHINA", "FIJI", "FRENCH POLYNESIA",
+      "FRENCH SOUTHERN TERRITORIES", "GUAM", "JAPAN", "KIRIBATI", "KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF",
+      "KOREA, REPUBLIC OF", "MARSHALL ISLANDS", "MICRONESIA, FEDERATED STATES OF", "MONGOLIA", "NAURU",
+      "NEW CALEDONIA", "NEW ZEALAND", "NORFOLK ISLAND", "NORTHERN MARIANA ISLANDS", "PAPUA NEW GUINEA", "PHILIPPINES",
+      "PITCAIRN", "SAMOA", "SOLOMON ISLANDS", "TAIWAN, PROVINCE OF CHINA", "TIMOR-LESTE", "TOKELAU", "TONGA", "TUVALU",
+      "VANUATU", "VIRGIN ISLANDS, BRITISH", "VIRGIN ISLANDS, U.S.", "WALLIS AND FUTUNA", };
+
   /**
    * This is the ISO 3166 list of countries.
    * 
@@ -74,16 +93,16 @@ public class BeanUtils {
         "HOLY SEE (VATICAN CITY STATE)", "HONDURAS", "HONG KONG", "HUNGARY", "ICELAND", "INDIA", "INDONESIA",
         "IRAN, ISLAMIC REPUBLIC OF", "IRAQ", "IRELAND", "ISLE OF MAN", "ISRAEL", "ITALY", "JAMAICA", "JAPAN", "JERSEY",
         "JORDAN", "KAZAKHSTAN", "KENYA", "KIRIBATI", "KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF", "KOREA, REPUBLIC OF",
-        "KUWAIT", "KYRGYZSTAN", "LAO PEOPLE'S DEMOCRATIC REPUBLIC", "LATVIA", "LEBANON", "LESOTHO", "LIBERIA", "LIBYA",
-        "LIECHTENSTEIN", "LITHUANIA", "LUXEMBOURG", "MACAO", "MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF",
-        "MADAGASCAR", "MALAWI", "MALAYSIA", "MALDIVES", "MALI", "MALTA", "MARSHALL ISLANDS", "MARTINIQUE",
-        "MAURITANIA", "MAURITIUS", "MAYOTTE", "MEXICO", "MICRONESIA, FEDERATED STATES OF", "MOLDOVA, REPUBLIC OF",
-        "MONACO", "MONGOLIA", "MONTENEGRO", "MONTSERRAT", "MOROCCO", "MOZAMBIQUE", "MYANMAR", "NAMIBIA", "NAURU",
-        "NEPAL", "NETHERLANDS", "NEW CALEDONIA", "NEW ZEALAND", "NICARAGUA", "NIGER", "NIGERIA", "NIUE",
-        "NORFOLK ISLAND", "NORTHERN MARIANA ISLANDS", "NORWAY", "OMAN", "PAKISTAN", "PALAU", "PALESTINE, STATE OF",
-        "PANAMA", "PAPUA NEW GUINEA", "PARAGUAY", "PERU", "PHILIPPINES", "PITCAIRN", "POLAND", "PORTUGAL",
-        "PUERTO RICO", "QATAR", "RÉUNION", "ROMANIA", "RUSSIAN FEDERATION", "RWANDA", "SAINT BARTHÉLEMY",
-        "SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA", "SAINT KITTS AND NEVIS", "SAINT LUCIA",
+        "KOSOVO", "KUWAIT", "KYRGYZSTAN", "LAO PEOPLE'S DEMOCRATIC REPUBLIC", "LATVIA", "LEBANON", "LESOTHO",
+        "LIBERIA", "LIBYA", "LIECHTENSTEIN", "LITHUANIA", "LUXEMBOURG", "MACAO",
+        "MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF", "MADAGASCAR", "MALAWI", "MALAYSIA", "MALDIVES", "MALI", "MALTA",
+        "MARSHALL ISLANDS", "MARTINIQUE", "MAURITANIA", "MAURITIUS", "MAYOTTE", "MEXICO",
+        "MICRONESIA, FEDERATED STATES OF", "MOLDOVA, REPUBLIC OF", "MONACO", "MONGOLIA", "MONTENEGRO", "MONTSERRAT",
+        "MOROCCO", "MOZAMBIQUE", "MYANMAR", "NAMIBIA", "NAURU", "NEPAL", "NETHERLANDS", "NEW CALEDONIA", "NEW ZEALAND",
+        "NICARAGUA", "NIGER", "NIGERIA", "NIUE", "NORFOLK ISLAND", "NORTHERN MARIANA ISLANDS", "NORWAY", "OMAN",
+        "PAKISTAN", "PALAU", "PALESTINE, STATE OF", "PANAMA", "PAPUA NEW GUINEA", "PARAGUAY", "PERU", "PHILIPPINES",
+        "PITCAIRN", "POLAND", "PORTUGAL", "PUERTO RICO", "QATAR", "RÉUNION", "ROMANIA", "RUSSIAN FEDERATION", "RWANDA",
+        "SAINT BARTHÉLEMY", "SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA", "SAINT KITTS AND NEVIS", "SAINT LUCIA",
         "SAINT MARTIN (FRENCH PART)", "SAINT PIERRE AND MIQUELON", "SAINT VINCENT AND THE GRENADINES", "SAMOA",
         "SAN MARINO", "SAO TOME AND PRINCIPE", "SAUDI ARABIA", "SENEGAL", "SERBIA", "SEYCHELLES", "SIERRA LEONE",
         "SINGAPORE", "SINT MAARTEN (DUTCH PART)", "SLOVAKIA", "SLOVENIA", "SOLOMON ISLANDS", "SOMALIA", "SOUTH AFRICA",
@@ -96,5 +115,117 @@ public class BeanUtils {
         "VENEZUELA, BOLIVARIAN REPUBLIC OF", "VIET NAM", "VIRGIN ISLANDS, BRITISH", "VIRGIN ISLANDS, U.S.",
         "WALLIS AND FUTUNA", "WESTERN SAHARA", "YEMEN", "ZAMBIA", "ZIMBABWE", };
     return countries;
+  }
+
+  /**
+   * Calculate which Royal Mail shipping category a country is.
+   * 
+   * @param country
+   *          a country from the ISO 3166 list of countries
+   * @return a shipping category
+   */
+  public static Shipping calculateShippingCategory(final String country) {
+    for (String match : BeanUtils.uk) {
+      if (match.equals(country)) {
+        return Shipping.FIRST_UK;
+      }
+    }
+    for (String match : BeanUtils.europe) {
+      if (match.equals(country)) {
+        return Shipping.AIR_EUROPE;
+      }
+    }
+    for (String match : BeanUtils.world2) {
+      if (match.equals(country)) {
+        return Shipping.AIR_WORLD_2;
+      }
+    }
+    return Shipping.AIR_WORLD_1;
+  }
+
+  public static int calculateShippingCost(final Shipping category, final int weight) {
+    int cost = -1;
+    switch (category) {
+    case FIRST_UK:
+      if (weight <= 250) {
+        cost = 120;
+      } else if (weight <= 500) {
+        cost = 160;
+      } else if (weight <= 750) {
+        cost = 230;
+      } else if (weight <= 1000) {
+        cost = 300;
+      } else if (weight <= 1250) {
+        cost = 685;
+      } else if (weight <= 1500) {
+        cost = 685;
+      } else if (weight <= 1750) {
+        cost = 685;
+      } else if (weight <= 2000) {
+        cost = 685;
+      }
+      break;
+    case AIR_EUROPE:
+      if (weight <= 250) {
+        cost = 350;
+      } else if (weight <= 500) {
+        cost = 495;
+      } else if (weight <= 750) {
+        cost = 640;
+      } else if (weight <= 1000) {
+        cost = 785;
+      } else if (weight <= 1250) {
+        cost = 930;
+      } else if (weight <= 1500) {
+        cost = 1075;
+      } else if (weight <= 1750) {
+        cost = 1220;
+      } else if (weight <= 2000) {
+        cost = 1365;
+      }
+      break;
+    case AIR_WORLD_1:
+      if (weight <= 250) {
+        cost = 450;
+      } else if (weight <= 500) {
+        cost = 720;
+      } else if (weight <= 750) {
+        cost = 990;
+      } else if (weight <= 1000) {
+        cost = 1260;
+      } else if (weight <= 1250) {
+        cost = 1530;
+      } else if (weight <= 1500) {
+        cost = 1800;
+      } else if (weight <= 1750) {
+        cost = 2070;
+      } else if (weight <= 2000) {
+        cost = 2340;
+      }
+      break;
+    case AIR_WORLD_2:
+      if (weight <= 250) {
+        cost = 470;
+      } else if (weight <= 500) {
+        cost = 755;
+      } else if (weight <= 750) {
+        cost = 1040;
+      } else if (weight <= 1000) {
+        cost = 1325;
+      } else if (weight <= 1250) {
+        cost = 1610;
+      } else if (weight <= 1500) {
+        cost = 1895;
+      } else if (weight <= 1750) {
+        cost = 2180;
+      } else if (weight <= 2000) {
+        cost = 2465;
+      }
+      break;
+    default:
+      cost = 0;
+      break;
+    }
+    return cost;
   }
 }

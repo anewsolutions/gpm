@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.gpm.model.Base;
 import com.gpm.model.Configuration;
+import com.gpm.model.CustomerOrder;
 import com.gpm.model.Issue;
 import com.gpm.model.Product;
 import com.gpm.model.UserAccount;
@@ -30,6 +31,14 @@ public class ControllerFactory {
       controllers.put(Configuration.class, new Controller<Configuration>(Configuration.class));
     }
     return (Controller<Configuration>) controllers.get(Configuration.class);
+  }
+
+  @SuppressWarnings("unchecked")
+  public static Controller<CustomerOrder> getCustomerOrderController() {
+    if (!controllers.containsKey(CustomerOrder.class)) {
+      controllers.put(CustomerOrder.class, new Controller<CustomerOrder>(CustomerOrder.class));
+    }
+    return (Controller<CustomerOrder>) controllers.get(CustomerOrder.class);
   }
 
   @SuppressWarnings("unchecked")

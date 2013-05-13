@@ -9,5 +9,5 @@ package com.gpm.model.enums;
  * @author mbooth
  */
 public enum Shipping {
-  FIRST_UK, AIR_EUROPE, AIR_WORLD_1, AIR_WORLD_2
+  NONE, FIRST_UK, AIR_EUROPE, AIR_WORLD_1, AIR_WORLD_2
 }

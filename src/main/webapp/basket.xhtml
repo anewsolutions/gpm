@@ -13,7 +13,6 @@
         <p:column styleClass="basketItemsColumn" headerText="#{msg.basketTableItemsColumn}">
           <h:panelGrid styleClass="basketItemPanel" columns="2"
             columnClasses="basketItemPanelImageColumn,basketItemPanelDescColumn">
-            <p:graphicImage value="http://placehold.it/98x98" />
             <h:panelGrid columns="1">
               <h:panelGroup>
                 <h:outputText styleClass="basketItemName" value="#{basketItem.name}" />
@@ -27,7 +26,7 @@
           </h:panelGrid>
         </p:column>
         <p:column styleClass="basketPriceColumn" headerText="#{msg.basketTablePriceColumn}">
-          <h:outputText styleClass="basketPrice" value="#{basketBean.getItemPrice(basketItem)}" />
+          <h:outputText styleClass="basketPrice" value="#{basketBean.getBasketItemPrice(basketItem)}" />
         </p:column>
         <p:column styleClass="basketQuantityColumn" headerText="#{msg.basketTableQuantityColumn}">
           <p:spinner value="#{basketItem.quantity}" size="1" min="0">

@@ -8,22 +8,59 @@ import javax.persistence.Entity;
 
 import com.gpm.model.enums.Format;
 
-/**
- * JPA entity for a purchase of magazine back issues or subscriptions.
- * 
- * @author mbooth
- */
 @Entity
-public class IssueOrderItem extends OrderItem {
+public class CustomerOrderItem extends Base {
   private static final long serialVersionUID = 1L;
 
+  private String name;
+  private Integer quantity;
+  private Integer price;
+  private Integer weight;
+
+  // TODO: Refactor these out into a generic key/value pairs associated with an item
   private Integer startIssue;
   private Integer numIssues;
   private Format format;
   private boolean backIssue;
 
-  public IssueOrderItem() {
+  public CustomerOrderItem() {
     super();
+  }
+
+  @Column(nullable = false)
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  @Column(nullable = false)
+  public Integer getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Integer quantity) {
+    this.quantity = quantity;
+  }
+
+  @Column(nullable = false)
+  public Integer getPrice() {
+    return price;
+  }
+
+  public void setPrice(Integer price) {
+    this.price = price;
+  }
+
+  public Integer getWeight() {
+    return weight;
+  }
+
+  @Column(nullable = false)
+  public void setWeight(Integer weight) {
+    this.weight = weight;
   }
 
   @Column(nullable = false)

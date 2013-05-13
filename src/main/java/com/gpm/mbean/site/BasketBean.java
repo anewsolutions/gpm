@@ -4,63 +4,50 @@
 package com.gpm.mbean.site;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import com.gpm.model.OrderItem;
+import com.gpm.model.CustomerOrder;
+import com.gpm.model.CustomerOrderItem;
 
 @ManagedBean
 @SessionScoped
 public class BasketBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  private List<OrderItem> items = new ArrayList<OrderItem>();
+  private CustomerOrder order = new CustomerOrder();
 
-  public List<OrderItem> getAllBasketItems() {
-    return items;
+  public CustomerOrder getOrder() {
+    return order;
   }
 
-  public void addItemToBasket(OrderItem item) {
+  public List<CustomerOrderItem> getAllBasketItems() {
+    return order.getItemsAsList();
+  }
+
+  public void addItemToBasket(CustomerOrderItem item) {
     if (item != null) {
-      items.add(item);
+      order.addItem(item);
     }
   }
 
-  public void removeItemFromBasket(OrderItem item) {
+  public void removeItemFromBasket(CustomerOrderItem item) {
     if (item != null) {
-      items.remove(item);
+      order.getItems().remove(item);
     }
-  }
-
-  public int getTotalUniqueBasketItems() {
-    return items.size();
   }
 
   public int getTotalBasketItems() {
-    int num = 0;
-    Iterator<OrderItem> i = items.iterator();
-    while (i.hasNext()) {
-      OrderItem item = i.next();
-      num += item.getQuantity();
-    }
-    return num;
+    return order.getNumTotalItems();
   }
 
   public String getTotalBasketPrice() {
-    int price = 0;
-    Iterator<OrderItem> i = items.iterator();
-    while (i.hasNext()) {
-      OrderItem item = i.next();
-      price += item.getPrice() * item.getQuantity();
-    }
-    return BeanUtils.formatPrice(price);
+    return BeanUtils.formatPrice(order.getTotalOrderPrice());
   }
 
-  public String getItemPrice(OrderItem item) {
+  public String getBasketItemPrice(CustomerOrderItem item) {
     return BeanUtils.formatPrice(item.getPrice());
   }
 }

@@ -13,13 +13,15 @@
     </h:form>
     <h:form id="paypointForm" prependId="false" acceptcharset="UTF-8">
       <h:inputHidden id="merchant" value="#{checkoutBean.paypointMerchant}" />
-      <h:inputHidden id="trans_id" value="102" />
-      <h:inputHidden id="amount" value="5" />
+      <h:inputHidden id="trans_id" value="#{checkoutBean.paypointTransaction}" />
+      <h:inputHidden id="amount" value="#{checkoutBean.paypointAmount}" />
       <h:inputHidden id="usage_type" value="E" />
       <h:inputHidden id="callback" value="#{checkoutBean.paypointCallback}" />
       <h:inputHidden id="backcallback" value="#{checkoutBean.paypointBackCallback}" />
       <h:inputHidden id="show_back" value="submit" />
-      <h:inputHidden id="digest" value="e795225a1d9876b110a9bd1ee6e309ef" />
+      <h:inputHidden id="test_status" value="true" />
+      <h:inputHidden id="digest" value="#{checkoutBean.paypointDigest}" />
+      <h:inputHidden id="options" value="merchant_logo=&lt;img src='https://www.secpay.com/users/guinea01/logo.png' height='100px' width='750px' class='floatright' /&gt;"/>
       <h:inputHidden id="bill_name" value="#{checkoutBean.billingAddress.name}"/>
       <h:inputHidden id="bill_company" value="#{checkoutBean.billingAddress.company}"/>
       <h:inputHidden id="bill_addr_1" value="#{checkoutBean.billingAddress.address1}"/>
