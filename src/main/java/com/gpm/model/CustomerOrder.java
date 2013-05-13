@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import com.gpm.model.enums.OrderStatus;
 import com.gpm.model.enums.Shipping;
 
 @Entity
@@ -25,12 +26,14 @@ public class CustomerOrder extends Base {
   private static final long serialVersionUID = 1L;
 
   // Order details
+  private String sessionId;
+  private OrderStatus orderStatus;
   private Set<CustomerOrderItem> items = new HashSet<CustomerOrderItem>(0);
   private UserAccount user;
   private Shipping shippingCategory;
   private Integer shippingPrice;
 
-  // Paypoint transaction details
+  // PayPoint transaction details
   private String authCode;
   private String errorCode;
   private String errorMessage;
@@ -39,9 +42,31 @@ public class CustomerOrder extends Base {
     super();
   }
 
+  @Column(length = 32, nullable = false)
+  public String getSessionId() {
+    return sessionId;
+  }
+
+  public void setSessionId(final String sessionId) {
+    this.sessionId = sessionId;
+  }
+
+  @Column(nullable = false)
+  public OrderStatus getOrderStatus() {
+    return orderStatus;
+  }
+
+  public void setOrderStatus(final OrderStatus orderStatus) {
+    this.orderStatus = orderStatus;
+  }
+
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   public Set<CustomerOrderItem> getItems() {
     return items;
+  }
+
+  public void setItems(final Set<CustomerOrderItem> items) {
+    this.items = items;
   }
 
   @Transient
@@ -49,10 +74,6 @@ public class CustomerOrder extends Base {
     List<CustomerOrderItem> items = new ArrayList<CustomerOrderItem>(getItems());
     Collections.sort(items);
     return items;
-  }
-
-  public void setItems(final Set<CustomerOrderItem> items) {
-    this.items = items;
   }
 
   @Transient
@@ -109,7 +130,7 @@ public class CustomerOrder extends Base {
     }
     return weight;
   }
-  
+
   @ManyToOne(fetch = FetchType.EAGER)
   public UserAccount getUser() {
     return user;
@@ -119,7 +140,6 @@ public class CustomerOrder extends Base {
     this.user = user;
   }
 
-  @Column(nullable = false)
   public Shipping getShippingCategory() {
     return shippingCategory;
   }
@@ -128,7 +148,6 @@ public class CustomerOrder extends Base {
     this.shippingCategory = shippingCategory;
   }
 
-  @Column(nullable = false)
   public Integer getShippingPrice() {
     return shippingPrice;
   }

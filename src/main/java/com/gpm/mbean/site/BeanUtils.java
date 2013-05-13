@@ -35,6 +35,7 @@ public class BeanUtils {
    * 
    * @return the login bean
    */
+  @Deprecated
   public static LoginBean fetchLoginBean() {
     HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     LoginBean bean = (LoginBean) req.getSession().getAttribute("loginBean");
@@ -46,6 +47,7 @@ public class BeanUtils {
    * 
    * @return the basket bean
    */
+  @Deprecated
   public static BasketBean fetchBasketBean() {
     HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     BasketBean bean = (BasketBean) req.getSession().getAttribute("basketBean");

@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -26,8 +27,20 @@ import com.gpm.model.enums.Format;
 public class BackIssueBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
+  // Back issue attributes
   private List<Issue> issues = new ArrayList<Issue>();
   private Map<Issue, Format> formats = new HashMap<Issue, Format>();
+
+  @ManagedProperty("#{basketBean}")
+  private BasketBean basket;
+
+  public BasketBean getBasket() {
+    return basket;
+  }
+
+  public void setBasket(final BasketBean basket) {
+    this.basket = basket;
+  }
 
   @PostConstruct
   public void init() {
@@ -94,7 +107,6 @@ public class BackIssueBean implements Serializable {
     order.setFormat(getFormat(issue));
     order.setBackIssue(true);
     // Add to basket
-    BasketBean basket = BeanUtils.fetchBasketBean();
     basket.addItemToBasket(order);
   }
 }

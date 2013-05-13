@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.gpm.manager.CustomerOrderManager;
 import com.gpm.manager.exception.CustomerOrderException;
 import com.gpm.model.CustomerOrder;
+import com.gpm.model.enums.OrderStatus;
 
 @WebServlet(name = "PayPoint Callback Servlet", value = { PayPointCallbackServlet.PAYPOINT_PATH + "*" })
 public class PayPointCallbackServlet extends HttpServlet {
@@ -30,32 +31,42 @@ public class PayPointCallbackServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    // Get parameters
-    String valid = request.getParameter("valid");
+    // Valid will always be passed
+    boolean valid = new Boolean(request.getParameter("valid"));
+
+    // Get other parameters
     String transId = request.getParameter("trans_id");
     String code = request.getParameter("code");
     String authCode = request.getParameter("auth_code");
     String message = request.getParameter("message");
 
-    //
+    // Update customer order
     try {
       CustomerOrder order = CustomerOrderManager.findCustomerOrder(transId);
+      if (order == null) {
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown transaction ID");
+        return;
+      }
       order.setAuthCode(authCode);
       order.setErrorCode(code);
       order.setErrorMessage(message);
+      if (valid) {
+        order.setOrderStatus(OrderStatus.AUTHORISED);
+      } else {
+        order.setOrderStatus(OrderStatus.DECLINED);
+      }
       CustomerOrderManager.storeCustomerOrder(order);
     } catch (CustomerOrderException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
-      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to find or store customer order");
       return;
     }
 
-    response.reset();
-    response.setContentType("text/html");
+    // Send basic response page back to PayPoint
     StringBuilder page = new StringBuilder();
     String returnUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-    if (new Boolean(valid).booleanValue()) {
+    if (valid) {
       page.append("<html>");
       page.append("<head>");
       page.append("<title>");
@@ -86,6 +97,8 @@ public class PayPointCallbackServlet extends HttpServlet {
       page.append("</body>");
       page.append("</html>");
     }
+    response.reset();
+    response.setContentType("text/html");
     response.setContentLength((int) page.length());
     PrintWriter out = response.getWriter();
     out.write(page.toString());

@@ -10,6 +10,7 @@
       <h:outputText styleClass="pageHeading" value="#{msg.checkout3PageHeading}" />
       <h:outputText styleClass="pageParagraph pageCentred" value="#{msg.checkout3PleaseWait}" />
       <span class="pageParagraph pageCentred"><p:graphicImage library="images" name="wait.gif" /></span>
+      <p:remoteCommand name="clearBasket" action="#{basketBean.clearOrder}" immediate="true" process="@this" />
     </h:form>
     <h:form id="paypointForm" prependId="false" acceptcharset="UTF-8">
       <h:inputHidden id="merchant" value="#{checkoutBean.paypointMerchant}" />
@@ -45,6 +46,7 @@
         setTimeout(submitPaypointForm, 5000);
       });
       function submitPaypointForm() {
+        clearBasket();
         jQuery('#paypointForm').attr('action', 'https://www.secpay.com/java-bin/ValCard');
         jQuery('#paypointForm').submit();
       }

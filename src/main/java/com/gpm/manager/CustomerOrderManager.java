@@ -3,12 +3,16 @@
  */
 package com.gpm.manager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.gpm.controller.ControllerException;
 import com.gpm.controller.ControllerFactory;
+import com.gpm.controller.ControllerFilter;
 import com.gpm.manager.exception.CustomerOrderException;
 import com.gpm.model.CustomerOrder;
+import com.gpm.model.enums.OrderStatus;
 
 public class CustomerOrderManager {
   /**
@@ -28,6 +32,28 @@ public class CustomerOrderManager {
     } catch (ControllerException e) {
       throw new CustomerOrderException(e);
     }
+  }
+
+  public static CustomerOrder findOrCreateBySessionId(final String sessionId) throws CustomerOrderException {
+    CustomerOrder order = null;
+    try {
+      List<ControllerFilter> filters = new ArrayList<ControllerFilter>();
+      filters.add(new ControllerFilter("sessionId", "=", sessionId));
+      filters.add(new ControllerFilter("orderStatus", "=", OrderStatus.PENDING));
+      List<CustomerOrder> orders = ControllerFactory.getCustomerOrderController().getAll(filters);
+      // Should only ever be one pending order per session
+      if (!orders.isEmpty()) {
+        order = orders.get(0);
+      } else {
+        order = new CustomerOrder();
+        order.setSessionId(sessionId);
+        order.setOrderStatus(OrderStatus.PENDING);
+        ControllerFactory.getCustomerOrderController().save(order);
+      }
+    } catch (ControllerException e) {
+      throw new CustomerOrderException(e);
+    }
+    return order;
   }
 
   /**

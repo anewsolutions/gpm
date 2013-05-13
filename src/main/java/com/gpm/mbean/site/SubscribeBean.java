@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import com.gpm.i18n.MessageProvider;
@@ -21,11 +22,21 @@ import com.gpm.model.enums.Format;
 public class SubscribeBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  private Issue issue = null;
-
   // Subscription attributes
+  private Issue issue = null;
   private int length = 1;
   private Format format = Format.EZINE;
+
+  @ManagedProperty("#{basketBean}")
+  private BasketBean basket;
+
+  public BasketBean getBasket() {
+    return basket;
+  }
+
+  public void setBasket(final BasketBean basket) {
+    this.basket = basket;
+  }
 
   @PostConstruct
   public void init() {
@@ -101,7 +112,6 @@ public class SubscribeBean implements Serializable {
     order.setFormat(format);
     order.setBackIssue(false);
     // Add to basket
-    BasketBean basket = BeanUtils.fetchBasketBean();
     basket.addItemToBasket(order);
     return "/basket.xhtml?faces-redirect=true";
   }
