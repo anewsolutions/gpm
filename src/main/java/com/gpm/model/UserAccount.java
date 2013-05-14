@@ -101,7 +101,7 @@ public class UserAccount extends Base {
     this.facebookToken = facebookToken;
   }
 
-  @OneToOne(fetch = FetchType.EAGER)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   public UserAddress getBillingAddress() {
     return billingAddress;
   }
@@ -110,7 +110,7 @@ public class UserAccount extends Base {
     this.billingAddress = billingAddress;
   }
 
-  @OneToOne(fetch = FetchType.EAGER)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   public UserAddress getDeliveryAddress() {
     return deliveryAddress;
   }
@@ -126,5 +126,19 @@ public class UserAccount extends Base {
 
   public void setMagazines(final List<UserIssue> magazines) {
     this.magazines = magazines;
+  }
+
+  @Transient
+  public void addMagazine(final UserIssue magazine) {
+    boolean found = false;
+    for (UserIssue mag : getMagazines()) {
+      if (mag.getIssueNumber().equals(magazine.getIssueNumber()) && mag.getFormat().equals(magazine.getFormat())) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      getMagazines().add(magazine);
+    }
   }
 }

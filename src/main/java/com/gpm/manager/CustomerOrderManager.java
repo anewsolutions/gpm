@@ -24,7 +24,7 @@ public class CustomerOrderManager {
    * @throws CustomerOrderException
    *           if there was a problem fetching the customer order
    */
-  public static CustomerOrder findCustomerOrder(final String uuid) throws CustomerOrderException {
+  public static CustomerOrder findByUuid(final String uuid) throws CustomerOrderException {
     try {
       return ControllerFactory.getCustomerOrderController().get(UUID.fromString(uuid));
     } catch (IllegalArgumentException e) {

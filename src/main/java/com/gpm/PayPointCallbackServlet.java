@@ -13,8 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gpm.manager.CustomerOrderManager;
+import com.gpm.manager.UserAccountManager;
 import com.gpm.manager.exception.CustomerOrderException;
+import com.gpm.manager.exception.UserAccountException;
 import com.gpm.model.CustomerOrder;
+import com.gpm.model.CustomerOrderItem;
+import com.gpm.model.UserAccount;
+import com.gpm.model.UserIssue;
 import com.gpm.model.enums.OrderStatus;
 
 @WebServlet(name = "PayPoint Callback Servlet", value = { PayPointCallbackServlet.PAYPOINT_PATH + "*" })
@@ -35,14 +40,15 @@ public class PayPointCallbackServlet extends HttpServlet {
     boolean valid = new Boolean(request.getParameter("valid"));
 
     // Get other parameters
-    String transId = request.getParameter("trans_id");
+    String orderUuid = request.getParameter("trans_id");
     String code = request.getParameter("code");
     String authCode = request.getParameter("auth_code");
     String message = request.getParameter("message");
 
     // Update customer order
+    CustomerOrder order = null;
     try {
-      CustomerOrder order = CustomerOrderManager.findCustomerOrder(transId);
+      order = CustomerOrderManager.findByUuid(orderUuid);
       if (order == null) {
         response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown transaction ID");
         return;
@@ -60,6 +66,27 @@ public class PayPointCallbackServlet extends HttpServlet {
       // TODO Auto-generated catch block
       e.printStackTrace();
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to find or store customer order");
+      return;
+    }
+
+    // Create user issues
+    try {
+      if (valid) {
+        UserAccount account = UserAccountManager.findByUuid(order.getUser().getUuid().toString());
+        for (CustomerOrderItem item : order.getItemsAsList()) {
+          for (int issueNumber = item.getStartIssue(); issueNumber < item.getStartIssue() + item.getNumIssues(); issueNumber++) {
+            UserIssue issue = new UserIssue();
+            issue.setIssueNumber(issueNumber);
+            issue.setFormat(item.getFormat());
+            account.addMagazine(issue);
+          }
+        }
+        UserAccountManager.storeUserAccount(account);
+      }
+    } catch (UserAccountException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to find or update user account");
       return;
     }
 

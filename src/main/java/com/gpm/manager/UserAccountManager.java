@@ -6,6 +6,7 @@ package com.gpm.manager;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
@@ -18,6 +19,25 @@ import com.gpm.manager.exception.UserAccountException;
 import com.gpm.model.UserAccount;
 
 public class UserAccountManager {
+  /**
+   * Get the user account with the given UUID.
+   * 
+   * @param uuid
+   *          the UUID of the user account requested
+   * @return a user account
+   * @throws UserAccountException
+   *           if there was a problem fetching the user account
+   */
+  public static UserAccount findByUuid(final String uuid) throws UserAccountException {
+    try {
+      return ControllerFactory.getUserAccountController().get(UUID.fromString(uuid));
+    } catch (IllegalArgumentException e) {
+      throw new UserAccountException(e);
+    } catch (ControllerException e) {
+      throw new UserAccountException(e);
+    }
+  }
+
   public static UserAccount findByEmail(final String email) throws UserAccountException {
     try {
       List<ControllerFilter> filters = new ArrayList<ControllerFilter>();
@@ -138,8 +158,6 @@ public class UserAccountManager {
    */
   public static void storeUserAccount(final UserAccount account) throws UserAccountException {
     try {
-      ControllerFactory.getUserAddressController().save(account.getBillingAddress());
-      ControllerFactory.getUserAddressController().save(account.getDeliveryAddress());
       ControllerFactory.getUserAccountController().save(account);
     } catch (ControllerException e) {
       throw new UserAccountException(e);

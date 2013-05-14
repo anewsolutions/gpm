@@ -24,7 +24,7 @@ public class IssueManager {
    * @throws IssueException
    *           if there was a problem fetching the issue
    */
-  public static Issue findIssue(final String uuid) throws IssueException {
+  public static Issue findByUuid(final String uuid) throws IssueException {
     try {
       return ControllerFactory.getIssueController().get(UUID.fromString(uuid));
     } catch (IllegalArgumentException e) {
