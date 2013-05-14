@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -16,6 +19,7 @@ import com.gpm.controller.ControllerException;
 import com.gpm.controller.ControllerFactory;
 import com.gpm.controller.ControllerFilter;
 import com.gpm.manager.exception.UserAccountException;
+import com.gpm.mbean.site.LoginBean;
 import com.gpm.model.UserAccount;
 
 public class UserAccountManager {
@@ -24,13 +28,37 @@ public class UserAccountManager {
    * 
    * @param uuid
    *          the UUID of the user account requested
-   * @return a user account
+   * @return a user account or null if no account exists for the given UUID
    * @throws UserAccountException
    *           if there was a problem fetching the user account
    */
   public static UserAccount findByUuid(final String uuid) throws UserAccountException {
     try {
       return ControllerFactory.getUserAccountController().get(UUID.fromString(uuid));
+    } catch (IllegalArgumentException e) {
+      throw new UserAccountException(e);
+    } catch (ControllerException e) {
+      throw new UserAccountException(e);
+    }
+  }
+
+  /**
+   * Get the user account that is currently logged into the session.
+   * 
+   * @return the user account of the user currently logged in, null if no user is logged
+   *         in
+   * @throws UserAccountException
+   *           there was a problem fetching the user account
+   */
+  public static UserAccount findCurrentlyLoggedIn() throws UserAccountException {
+    try {
+      HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+      LoginBean bean = (LoginBean) req.getSession().getAttribute("loginBean");
+      if (bean != null && bean.getUserUuid() != null) {
+        return ControllerFactory.getUserAccountController().get(bean.getUserUuid());
+      } else {
+        return null;
+      }
     } catch (IllegalArgumentException e) {
       throw new UserAccountException(e);
     } catch (ControllerException e) {

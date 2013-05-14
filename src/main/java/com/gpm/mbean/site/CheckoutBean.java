@@ -40,7 +40,12 @@ public class CheckoutBean implements Serializable {
 
   @PostConstruct
   public void init() {
-    user = BeanUtils.fetchLoginBean().getUser();
+    try {
+      user = UserAccountManager.findCurrentlyLoggedIn();
+    } catch (UserAccountException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     order = BeanUtils.fetchBasketBean().getOrder();
   }
 

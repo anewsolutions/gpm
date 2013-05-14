@@ -20,7 +20,7 @@ public class IssueManager {
    * 
    * @param uuid
    *          the UUID of the issue of the magazine requested
-   * @return an issue of the magazine
+   * @return an issue of the magazine or null if no issue was found for the given UUID
    * @throws IssueException
    *           if there was a problem fetching the issue
    */

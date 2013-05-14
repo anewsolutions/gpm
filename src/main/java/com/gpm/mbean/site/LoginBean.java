@@ -5,6 +5,7 @@ package com.gpm.mbean.site;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.util.UUID;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -28,12 +29,15 @@ public class LoginBean implements Serializable {
   // Details for a user logging in with GPM account
   private String email;
 
-  // Currently logged in user
-  private UserAccount user;
+  // UUID of currently logged in user
+  private UUID user;
 
   public String login() {
     try {
-      user = UserAccountManager.findByEmail(email);
+      UserAccount account = UserAccountManager.findByEmail(email);
+      if (account != null) {
+        user = account.getUuid();
+      }
     } catch (UserAccountException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -47,7 +51,10 @@ public class LoginBean implements Serializable {
 
   public void loginFacebook(final String facebookIdent) {
     try {
-      user = UserAccountManager.findByFacebookIdent(facebookIdent);
+      UserAccount account = UserAccountManager.findByFacebookIdent(facebookIdent);
+      if (account != null) {
+        user = account.getUuid();
+      }
     } catch (UserAccountException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -82,7 +89,7 @@ public class LoginBean implements Serializable {
     this.redirect = redirect;
   }
 
-  public UserAccount getUser() {
+  public UUID getUserUuid() {
     return user;
   }
 
