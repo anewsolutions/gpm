@@ -58,12 +58,31 @@ public class CheckoutBean implements Serializable {
   public UserAddress getDeliveryAddress() {
     UserAddress address = user.getDeliveryAddress();
     if (address == null) {
-      address = new UserAddress();
-      address.setName(user.getName());
-      address.setCountry("UNITED KINGDOM");
+      address = getBillingAddress();
       user.setDeliveryAddress(address);
     }
     return address;
+  }
+
+  public boolean isAddressesSame() {
+    return getBillingAddress().equals(getDeliveryAddress());
+  }
+
+  public void setAddressesSame(final boolean addressesSame) {
+    if (addressesSame) {
+      user.setDeliveryAddress(getBillingAddress());
+    } else {
+      UserAddress address = new UserAddress();
+      address.setName(getBillingAddress().getName());
+      address.setCompany(getBillingAddress().getCompany());
+      address.setAddress1(getBillingAddress().getAddress1());
+      address.setAddress2(getBillingAddress().getAddress2());
+      address.setCity(getBillingAddress().getCity());
+      address.setState(getBillingAddress().getState());
+      address.setCountry(getBillingAddress().getCountry());
+      address.setPostcode(getBillingAddress().getPostcode());
+      user.setDeliveryAddress(address);
+    }
   }
 
   public String[] getCountries() {
