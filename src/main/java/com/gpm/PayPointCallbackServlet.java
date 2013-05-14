@@ -99,7 +99,7 @@ public class PayPointCallbackServlet extends HttpServlet {
     }
     response.reset();
     response.setContentType("text/html");
-    response.setContentLength((int) page.length());
+    response.setContentLength(page.length());
     PrintWriter out = response.getWriter();
     out.write(page.toString());
     out.flush();
