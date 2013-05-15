@@ -4,6 +4,7 @@
 package com.gpm.mbean.site;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -25,13 +26,13 @@ public class MagazineBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private UserAccount user;
-  private List<Issue> issues;
+  private List<Issue> issues = new ArrayList<Issue>();
 
   @PostConstruct
   public void init() {
     try {
       user = UserAccountManager.findCurrentlyLoggedIn();
-      issues = IssueManager.findAllIssues();
+      issues.addAll(IssueManager.findAllIssues());
     } catch (UserAccountException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -41,10 +42,18 @@ public class MagazineBean implements Serializable {
     }
   }
 
+  public List<Issue> getIssues() {
+    return issues;
+  }
+
   public String getEdition() {
     FacesContext context = FacesContext.getCurrentInstance();
     Issue issue = context.getApplication().evaluateExpressionGet(context, "#{issue}", Issue.class);
     String published = BeanUtils.formatPublished(issue.getPublishedDate());
     return MessageProvider.getMessage("mymagsIssueEdition", issue.getIssueNumber(), published);
+  }
+
+  public String readOnline(final Issue issue) {
+    return "";
   }
 }

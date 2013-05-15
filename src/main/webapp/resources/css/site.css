@@ -32,6 +32,10 @@ a:hover {
   color: #ff0000;
 }
 
+.ui-widget {
+  font-size: 1em;
+}
+
 .ui-widget-content {
   border: none;
 }
@@ -206,6 +210,10 @@ a:hover {
   margin: 1em 0;
 }
 
+.pageParagraph .ui-datagrid-content-empty {
+  padding: 0;
+}
+
 .pageCentred {
   text-align: center;
 }
@@ -213,4 +221,22 @@ a:hover {
 .pageIndent {
   margin-left: 2em;
   margin-right: 2em;
+}
+
+/* Styles for common layouts */
+.issuesGridTable .ui-datagrid-column {
+  vertical-align: top;
+  width: 25%;
+}
+
+.issuesGridTable .ui-datagrid-column span:FIRST-CHILD {
+  margin-top: 0;
+}
+
+.issuesGridTable .pageSectionHeading {
+  font-size: 1.2em;
+}
+
+.issuesGridCover {
+  width: 200px;
 }

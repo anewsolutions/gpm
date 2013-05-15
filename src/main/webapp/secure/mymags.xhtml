@@ -6,8 +6,13 @@
   <ui:param name="sitePageTitle" value="#{msg.mymagsPageTitle}" />
   <ui:define name="sitePageContent">
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
-      <h:outputStylesheet target="head" library="css" name="mymags.css" />
       <h:outputText styleClass="pageHeading" value="#{msg.mymagsPageHeading}" />
+      <p:dataGrid id="mymagsTable" styleClass="pageParagraph issuesGridTable" var="issue" columns="4"
+        value="#{magazineBean.issues}" paginator="false" emptyMessage="#{msg.mymagsNoIssues}">
+        <h:outputText styleClass="pageSectionHeading" value="#{magazineBean.edition}" />
+        <span class="pageParagraph"><p:graphicImage styleClass="issuesGridCover" value="#{issue.coverImageUri}" /></span>
+        <p:commandButton value="#{msg.mymagsButtonsReadOnline}" action="#{magazineBean.readOnline(issue)}" />
+      </p:dataGrid>
     </h:form>
   </ui:define>
 </ui:composition>
