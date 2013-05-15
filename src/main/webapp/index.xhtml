@@ -23,7 +23,9 @@
         <h:panelGroup>
           <p:panel styleClass="indexIssuePanel">
             <h:outputText styleClass="indexIssuePanelHeading" value="#{msg.indexOutNow}" />
-            <p:graphicImage value="#{homePageBean.currentIssueCover}" />
+            <h:commandLink action="/subscribe.xhtml?faces-redirect=true">
+              <p:graphicImage value="#{homePageBean.currentIssueCover}" />
+            </h:commandLink>
             <h:outputText styleClass="indexIssuePanelName" value="#{homePageBean.currentIssueEdition}" />
             <p:commandButton value="#{msg.indexBuyOnline}" action="/subscribe.xhtml?faces-redirect=true" />
           </p:panel>

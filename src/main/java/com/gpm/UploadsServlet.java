@@ -8,6 +8,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,6 +54,9 @@ public class UploadsServlet extends HttpServlet {
     response.setBufferSize(BUFFER_SIZE);
     response.setContentType(mime);
     response.setContentLength((int) path.length());
+    long expiry = new Date().getTime() + 2592000000l; // 30 days
+    response.setDateHeader("Expires", expiry);
+    response.setDateHeader("Last-Modified", path.lastModified());
 
     // Write file contents to response
     BufferedInputStream in = null;
