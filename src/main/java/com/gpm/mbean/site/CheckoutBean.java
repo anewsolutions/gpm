@@ -26,6 +26,7 @@ import com.gpm.manager.exception.CustomerOrderException;
 import com.gpm.manager.exception.UserAccountException;
 import com.gpm.model.Configuration;
 import com.gpm.model.CustomerOrder;
+import com.gpm.model.CustomerOrderItem;
 import com.gpm.model.UserAccount;
 import com.gpm.model.UserAddress;
 import com.gpm.model.enums.Shipping;
@@ -67,6 +68,10 @@ public class CheckoutBean implements Serializable {
       user.setDeliveryAddress(address);
     }
     return address;
+  }
+
+  public String getEmailAddress() {
+    return user.getEmail();
   }
 
   public boolean isAddressesSame() {
@@ -182,5 +187,25 @@ public class CheckoutBean implements Serializable {
     ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
     String server = ctx.getRequestScheme() + "://" + ctx.getRequestServerName() + ":" + ctx.getRequestServerPort();
     return server + "/basket.xhtml";
+  }
+
+  public String getPaypointOrderDetails() {
+    NumberFormat format = NumberFormat.getInstance(Locale.UK);
+    StringBuilder sb = new StringBuilder();
+    sb.append("delimit=;+=x");
+    for (CustomerOrderItem item : order.getItemsAsList()) {
+      BigDecimal big = BigDecimal.valueOf(item.getPrice()).scaleByPowerOfTen(-2);
+      String name = item.getName().replace('"', '\'').replace('+', '_').replace('=', '_').replace(';', '_');
+      sb.append(";prod=");
+      sb.append(name);
+      sb.append("+item_amount=");
+      sb.append(format.format(big.doubleValue()));
+      sb.append("x");
+      sb.append(item.getQuantity());
+    }
+    BigDecimal big = BigDecimal.valueOf(order.getShippingPrice()).scaleByPowerOfTen(-2);
+    sb.append(";prod=SHIPPING+item_amount=");
+    sb.append(format.format(big.doubleValue()));
+    return sb.toString();
   }
 }
