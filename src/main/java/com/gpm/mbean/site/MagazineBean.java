@@ -19,6 +19,8 @@ import com.gpm.manager.exception.IssueException;
 import com.gpm.manager.exception.UserAccountException;
 import com.gpm.model.Issue;
 import com.gpm.model.UserAccount;
+import com.gpm.model.UserIssue;
+import com.gpm.model.enums.Format;
 
 @ManagedBean
 @ViewScoped
@@ -32,7 +34,17 @@ public class MagazineBean implements Serializable {
   public void init() {
     try {
       user = UserAccountManager.findCurrentlyLoggedIn();
-      issues.addAll(IssueManager.findAllIssues());
+      List<Issue> allIssues = IssueManager.findAllIssues();
+      for (Issue anIssue : allIssues) {
+        for (UserIssue magazine : user.getMagazines()) {
+          if (magazine.getFormat() != Format.EZINE) {
+            continue;
+          }
+          if (anIssue.getIssueNumber() == magazine.getIssueNumber()) {
+            issues.add(anIssue);
+          }
+        }
+      }
     } catch (UserAccountException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
