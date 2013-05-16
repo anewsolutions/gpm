@@ -117,8 +117,16 @@ public class CheckoutBean implements Serializable {
       // Calculate shipping category
       Shipping cat = BeanUtils.calculateShippingCategory(user.getDeliveryAddress().getCountry());
       order.setShippingCategory(cat);
-      // Calculate shipping cost
+      // Calculate shipping cost for the immediate shipment
       int cost = BeanUtils.calculateShippingCost(cat, order.getTotalOrderWeight());
+      for (CustomerOrderItem item : order.getItemsAsList()) {
+        // Subs of more than one issue need extra shipment for the future deliveries
+        if (!item.isBackIssue() && item.getNumIssues() > 1) {
+          for (int i = 1; i < item.getNumIssues(); i++) {
+            cost += BeanUtils.calculateShippingCost(cat, item.getWeight());
+          }
+        }
+      }
       order.setShippingPrice(cost);
     } else {
       order.setShippingCategory(Shipping.NONE);

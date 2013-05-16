@@ -78,6 +78,10 @@ public class CustomerOrder extends Base {
 
   @Transient
   public void addItem(final CustomerOrderItem item) {
+    // Don't add it the item will take the order to 2 kilos or more
+    if (getTotalOrderWeight() + item.getWeight() >= 2000) {
+      return;
+    }
     // If the item is already in the order, increment quantity
     boolean done = false;
     Iterator<CustomerOrderItem> it = getItems().iterator();
