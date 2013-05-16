@@ -67,6 +67,24 @@ public class BasketBean implements Serializable {
     }
   }
 
+  public int getQuantity() {
+    FacesContext context = FacesContext.getCurrentInstance();
+    CustomerOrderItem item = context.getApplication().evaluateExpressionGet(context, "#{basketItem}", CustomerOrderItem.class);
+    return item.getQuantity();
+  }
+
+  public void setQuantity(final int quantity) {
+    FacesContext context = FacesContext.getCurrentInstance();
+    CustomerOrderItem item = context.getApplication().evaluateExpressionGet(context, "#{basketItem}", CustomerOrderItem.class);
+    if (quantity > item.getQuantity()) {
+      addItemToBasket(item);
+    }
+    if (quantity < item.getQuantity()) {
+      item.setQuantity(quantity);
+      storeOrder();
+    }
+  }
+
   public int getTotalBasketItems() {
     return getOrder().getNumTotalItems();
   }
@@ -75,7 +93,7 @@ public class BasketBean implements Serializable {
     return BeanUtils.formatPrice(getOrder().getTotalOrderPrice());
   }
 
-  public String getBasketItemPrice(CustomerOrderItem item) {
+  public String getBasketItemPrice(final CustomerOrderItem item) {
     return BeanUtils.formatPrice(item.getPrice());
   }
 }

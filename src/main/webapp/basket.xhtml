@@ -29,8 +29,9 @@
           <h:outputText styleClass="basketPrice" value="#{basketBean.getBasketItemPrice(basketItem)}" />
         </p:column>
         <p:column styleClass="basketQuantityColumn" headerText="#{msg.basketTableQuantityColumn}">
-          <p:spinner value="#{basketItem.quantity}" size="1" min="0">
-            <p:ajax update=":mainForm:subtotalPanel :mainForm:subtotalButtonPanel :siteHeaderBasketForm" process="@this" />
+          <p:spinner value="#{basketBean.quantity}" size="1" min="0">
+            <p:ajax update=":mainForm:subtotalPanel :mainForm:subtotalButtonPanel :siteHeaderBasketForm basketTable"
+              process="@this" />
           </p:spinner>
         </p:column>
       </p:dataTable>
