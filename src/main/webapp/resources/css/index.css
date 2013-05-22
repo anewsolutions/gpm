@@ -29,7 +29,6 @@
   -ms-border-radius: 6px;
   border-radius: 6px;
   background-color: #666;
-  margin-bottom: 125px;
   display: inline-block;
 }
 
@@ -56,6 +55,10 @@
   font-weight: bold;
   padding: 0 0 0.5em 0;
   width: 100%;
+}
+
+.indexCornerPigMargin {
+  margin-bottom: 125px;
 }
 
 .indexCornerPig {
