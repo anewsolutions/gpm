@@ -32,7 +32,7 @@ public class ShopFrontBean implements Serializable {
   public void init() {
     // Pre-load products
     try {
-      products = ProductManager.findAll();
+      products = ProductManager.findAllProducts();
     } catch (ProductException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

@@ -19,7 +19,7 @@ public class ProductConverter implements Converter {
   @Override
   public Object getAsObject(FacesContext context, UIComponent component, String value) {
     try {
-      return ProductManager.findProduct(value);
+      return ProductManager.findByUuid(value);
     } catch (ProductException e) {
       throw new ConverterException(e);
     }

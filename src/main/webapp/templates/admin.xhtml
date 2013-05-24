@@ -4,6 +4,7 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <f:view>
   <h:head>
+    <!-- Copyright 2013 Mat Booth - mbooth@apache.org -->
     <title>#{msg.adminPageTitle}</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta http-equiv="Cache-Control" content="no-cache" />
@@ -16,7 +17,9 @@
       <h:panelGroup>
         <p:panel header="#{msg.adminMenuHeading}">
           <p:menu>
-            <p:menuitem value="#{msg.adminMenuProducts}" outcome="/admin/products/index" />
+            <!-- <p:menuitem value="#{msg.adminMenuIssues}" outcome="/secure/admin/issue_list" /> -->
+            <!-- <p:menuitem value="#{msg.adminMenuProducts}" outcome="/secure/admin/product_list" /> -->
+            <p:menuitem value="#{msg.adminMenuConfiguration}" outcome="/secure/admin/config_list" />
           </p:menu>
         </p:panel>
       </h:panelGroup>

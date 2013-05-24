@@ -6,10 +6,11 @@
   <ui:define name="mainContent">
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8" enctype="application/x-www-form-urlencoded">
       <p:panel header="#{msg.adminProductDeleteHeading}">
-        <h:panelGrid styleClass="sectionControlsTable" columns="2" columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
+        <h:panelGrid styleClass="sectionControlsTable" columns="2"
+          columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
           <h:panelGroup>
             <p:commandButton value="#{msg.adminButtonsDelete}" action="#{productAdminBean.delete}" ajax="false" />
-            <p:button outcome="index" value="#{msg.adminButtonsCancel}" />
+            <p:button outcome="product_list" value="#{msg.adminButtonsCancel}" />
           </h:panelGroup>
         </h:panelGrid>
         <h:panelGrid columns="1">

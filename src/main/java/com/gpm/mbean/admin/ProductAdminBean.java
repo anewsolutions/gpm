@@ -42,11 +42,11 @@ public class ProductAdminBean implements Serializable {
   @PostConstruct
   public void init() {
     try {
-      // Load the selected product, if an ID is passed as a query parameter
+      // Load the selected item, if an ID is passed as a query parameter
       FacesContext fc = FacesContext.getCurrentInstance();
       String uuid = fc.getExternalContext().getRequestParameterMap().get("uuid");
       if (uuid != null && !uuid.isEmpty()) {
-        selected = ProductManager.findProduct(uuid);
+        selected = ProductManager.findByUuid(uuid);
         editing = true;
       } else {
         selected = new Product();
@@ -87,7 +87,7 @@ public class ProductAdminBean implements Serializable {
   public List<Product> getAll() {
     List<Product> all = null;
     try {
-      all = ProductManager.findAll();
+      all = ProductManager.findAllProducts();
     } catch (ProductException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -95,6 +95,9 @@ public class ProductAdminBean implements Serializable {
     return all;
   }
 
+  /**
+   * JSF method to save the selected product.
+   */
   public String save() {
     try {
       ProductManager.save(selected);
@@ -102,9 +105,12 @@ public class ProductAdminBean implements Serializable {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    return "/admin/products/index?faces-redirect=true";
+    return "/secure/admin/product_list?faces-redirect=true";
   }
 
+  /**
+   * JSF method to delete the selected product.
+   */
   public String delete() {
     try {
       ProductManager.delete(selected);
@@ -112,7 +118,7 @@ public class ProductAdminBean implements Serializable {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    return "/admin/products/index?faces-redirect=true";
+    return "/secure/admin/product_list?faces-redirect=true";
   }
 
   public void addVariant() {

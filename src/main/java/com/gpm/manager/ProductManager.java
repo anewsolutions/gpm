@@ -17,11 +17,11 @@ public class ProductManager {
    * 
    * @param uuid
    *          the UUID of the product requested
-   * @return a product with the given UUID
+   * @return a product or null if no product was found for the given UUID
    * @throws ProductException
    *           if there was a problem fetching the product
    */
-  public static Product findProduct(final String uuid) throws ProductException {
+  public static Product findByUuid(final String uuid) throws ProductException {
     try {
       return ControllerFactory.getProductController().get(UUID.fromString(uuid));
     } catch (IllegalArgumentException e) {
@@ -31,15 +31,22 @@ public class ProductManager {
     }
   }
 
-  public static List<Product> findAll() throws ProductException {
+  /**
+   * Get all products.
+   * 
+   * @return the list of products
+   * @throws ProductException
+   *           if there was a problem fetching the list of products
+   */
+  public static List<Product> findAllProducts() throws ProductException {
     try {
-      return ControllerFactory.getProductController().getAll(null, true);
+      return ControllerFactory.getProductController().getAll();
     } catch (ControllerException e) {
       throw new ProductException(e);
     }
   }
 
-  public static void save(Product product) throws ProductException {
+  public static void save(final Product product) throws ProductException {
     try {
       ControllerFactory.getProductController().save(product);
     } catch (ControllerException e) {
@@ -47,7 +54,7 @@ public class ProductManager {
     }
   }
 
-  public static void delete(Product product) throws ProductException {
+  public static void delete(final Product product) throws ProductException {
     try {
       ControllerFactory.getProductController().delete(product.getUuid());
     } catch (ControllerException e) {
