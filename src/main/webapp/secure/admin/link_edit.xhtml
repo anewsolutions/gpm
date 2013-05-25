@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/admin.xhtml">
+  <ui:define name="mainContent">
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8" enctype="application/x-www-form-urlencoded">
+      <p:panel>
+        <f:facet name="header">
+          <h:outputText value="#{msg.adminLinkEditHeading}" rendered="#{linkAdminBean.editing}" />
+          <h:outputText value="#{msg.adminLinkAddHeading}" rendered="#{!linkAdminBean.editing}" />
+        </f:facet>
+        <h:panelGrid styleClass="sectionControlsTable" columns="2"
+          columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
+          <h:panelGroup>
+            <p:commandButton value="#{msg.adminButtonsSave}" action="#{linkAdminBean.save}" ajax="false" />
+            <p:button outcome="link_list" value="#{msg.adminButtonsCancel}" />
+          </h:panelGroup>
+        </h:panelGrid>
+        <h:panelGrid columns="2">
+          <p:outputLabel for="textField" value="#{msg.adminLinkTextField}" />
+          <h:panelGroup>
+            <p:inputText id="textField" value="#{linkAdminBean.selected.linkText}" required="true"
+              requiredMessage="#{msg.adminLinkTextFieldRequired}" size="24">
+              <p:ajax />
+            </p:inputText>
+            <h:message errorClass="inlineMessage ui-state-error" for="textField" />
+          </h:panelGroup>
+          <p:outputLabel for="urlField" value="#{msg.adminLinkUrlField}" />
+          <h:panelGroup>
+            <p:inputText id="urlField" value="#{linkAdminBean.selected.linkUrl}" required="true"
+              requiredMessage="#{msg.adminLinkUrlFieldRequired}" size="24">
+              <p:ajax />
+            </p:inputText>
+            <h:message errorClass="inlineMessage ui-state-error" for="urlField" />
+          </h:panelGroup>
+          <p:outputLabel for="descriptionField" value="#{msg.adminLinkDescriptionField}" />
+          <h:panelGroup>
+            <p:inputText id="descriptionField" value="#{linkAdminBean.selected.linkDescription}" required="true"
+              requiredMessage="#{msg.adminLinkDescriptionFieldRequired}" size="24">
+              <p:ajax />
+            </p:inputText>
+            <h:message errorClass="inlineMessage ui-state-error" for="descriptionField" />
+          </h:panelGroup>
+        </h:panelGrid>
+      </p:panel>
+    </h:form>
+  </ui:define>
+</ui:composition>
+</html>

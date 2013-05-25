@@ -5,27 +5,30 @@
 <ui:composition template="/templates/admin.xhtml">
   <ui:define name="mainContent">
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8" enctype="application/x-www-form-urlencoded">
-      <p:panel header="#{msg.adminConfigManageHeading}">
+      <p:panel header="#{msg.adminLinkManageHeading}">
         <h:panelGrid styleClass="sectionControlsTable" columns="2"
           columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
           <h:panelGroup>
-            <p:button outcome="config_edit" value="#{msg.adminButtonsAdd}" />
+            <p:button outcome="link_edit" value="#{msg.adminButtonsAdd}" />
           </h:panelGroup>
         </h:panelGrid>
-        <p:dataTable id="configTable" var="config" value="#{configurationAdminBean.all}"
-          emptyMessage="#{msg.adminNoConfigsFound}">
-          <p:column headerText="#{msg.adminConfigTableKeyColumn}">
-            #{config.configKey}
+        <p:dataTable id="linkTable" var="link" value="#{linkAdminBean.all}"
+          emptyMessage="#{msg.adminNoLinksFound}">
+          <p:column headerText="#{msg.adminLinkTableTextColumn}">
+            #{link.linkText}
           </p:column>
-          <p:column headerText="#{msg.adminConfigTableValueColumn}">
-            #{config.configValue}
+          <p:column headerText="#{msg.adminLinkTableUrlColumn}">
+            #{link.linkUrl}
+          </p:column>
+          <p:column headerText="#{msg.adminLinkTableDescriptionColumn}">
+            #{link.linkDescription}
           </p:column>
           <p:column styleClass="actionColumn" headerText="#{msg.adminTableActionsColumn}">
-            <p:button outcome="config_edit" value="#{msg.adminButtonsEdit}">
-              <f:param name="uuid" value="#{config.uuid}" />
+            <p:button outcome="link_edit" value="#{msg.adminButtonsEdit}">
+              <f:param name="uuid" value="#{link.uuid}" />
             </p:button>
-            <p:button outcome="config_delete" value="#{msg.adminButtonsDelete}">
-              <f:param name="uuid" value="#{config.uuid}" />
+            <p:button outcome="link_delete" value="#{msg.adminButtonsDelete}">
+              <f:param name="uuid" value="#{link.uuid}" />
             </p:button>
           </p:column>
         </p:dataTable>
