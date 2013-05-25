@@ -11,17 +11,17 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import com.gpm.manager.ConfigurationManager;
-import com.gpm.manager.exception.ConfigurationException;
-import com.gpm.model.Configuration;
+import com.gpm.manager.LinkManager;
+import com.gpm.manager.exception.LinkException;
+import com.gpm.model.Link;
 
 @ManagedBean
 @ViewScoped
-public class ConfigurationAdminBean implements Serializable {
+public class LinkAdminBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private boolean editing;
-  private Configuration selected;
+  private Link selected;
 
   /**
    * Bean initialisation.
@@ -33,45 +33,45 @@ public class ConfigurationAdminBean implements Serializable {
       FacesContext fc = FacesContext.getCurrentInstance();
       String uuid = fc.getExternalContext().getRequestParameterMap().get("uuid");
       if (uuid != null && !uuid.isEmpty()) {
-        selected = ConfigurationManager.findByUuid(uuid);
+        selected = LinkManager.findByUuid(uuid);
         editing = true;
       } else {
-        selected = new Configuration();
+        selected = new Link();
       }
-    } catch (ConfigurationException e) {
+    } catch (LinkException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
 
   /**
-   * JSF method to determine whether we are editing a config or adding a new config.
+   * JSF method to determine whether we are editing a link or adding a new link.
    * 
-   * @return true if editing an existing config, false if adding a new config
+   * @return true if editing an existing link, false if adding a new link
    */
   public boolean isEditing() {
     return editing;
   }
 
   /**
-   * JSF method to provide access to the currently selected configuration.
+   * JSF method to provide access to the currently selected link.
    * 
-   * @return the selected configuration
+   * @return the selected link
    */
-  public Configuration getSelected() {
+  public Link getSelected() {
     return selected;
   }
 
   /**
-   * JSF method to provide access to all configurations.
+   * JSF method to provide access to all links.
    * 
-   * @return a list of configurations
+   * @return a list of links
    */
-  public List<Configuration> getAll() {
-    List<Configuration> all = null;
+  public List<Link> getAll() {
+    List<Link> all = null;
     try {
-      all = ConfigurationManager.findAllConfigs();
-    } catch (ConfigurationException e) {
+      all = LinkManager.findAllLinks();
+    } catch (LinkException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
@@ -79,28 +79,28 @@ public class ConfigurationAdminBean implements Serializable {
   }
 
   /**
-   * JSF method to save the selected configuration.
+   * JSF method to save the selected link.
    */
   public String save() {
     try {
-      ConfigurationManager.save(selected);
-    } catch (ConfigurationException e) {
+      LinkManager.save(selected);
+    } catch (LinkException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    return "/secure/admin/config_list?faces-redirect=true";
+    return "/secure/admin/link_list?faces-redirect=true";
   }
 
   /**
-   * JSF method to delete the selected configuration.
+   * JSF method to delete the selected link.
    */
   public String delete() {
     try {
-      ConfigurationManager.delete(selected);
-    } catch (ConfigurationException e) {
+      LinkManager.delete(selected);
+    } catch (LinkException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    return "/secure/admin/config_list?faces-redirect=true";
+    return "/secure/admin/link_list?faces-redirect=true";
   }
 }

@@ -10,6 +10,7 @@ import com.gpm.model.Base;
 import com.gpm.model.Configuration;
 import com.gpm.model.CustomerOrder;
 import com.gpm.model.Issue;
+import com.gpm.model.Link;
 import com.gpm.model.Product;
 import com.gpm.model.UserAccount;
 import com.gpm.model.UserAddress;
@@ -48,6 +49,14 @@ public class ControllerFactory {
       controllers.put(Issue.class, new Controller<Issue>(Issue.class));
     }
     return (Controller<Issue>) controllers.get(Issue.class);
+  }
+
+  @SuppressWarnings("unchecked")
+  public static Controller<Link> getLinkController() {
+    if (!controllers.containsKey(Link.class)) {
+      controllers.put(Link.class, new Controller<Link>(Link.class));
+    }
+    return (Controller<Link>) controllers.get(Link.class);
   }
 
   @SuppressWarnings("unchecked")
