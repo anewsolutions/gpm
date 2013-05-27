@@ -29,6 +29,7 @@ public class UserAccount extends Base {
   private String passwordHash;
   private String facebookIdent;
   private String facebookToken;
+  private boolean administrator;
   private UserAddress billingAddress;
   private UserAddress deliveryAddress;
   private List<UserIssue> magazines = new ArrayList<UserIssue>(0);
@@ -99,6 +100,14 @@ public class UserAccount extends Base {
 
   public void setFacebookToken(final String facebookToken) {
     this.facebookToken = facebookToken;
+  }
+
+  public boolean isAdministrator() {
+    return administrator;
+  }
+
+  public void setAdministrator(final boolean administrator) {
+    this.administrator = administrator;
   }
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

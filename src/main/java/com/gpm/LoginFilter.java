@@ -17,7 +17,10 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gpm.manager.UserAccountManager;
+import com.gpm.manager.exception.UserAccountException;
 import com.gpm.mbean.site.LoginBean;
+import com.gpm.model.UserAccount;
 
 /**
  * Filter to determine whether users are authenticated when trying to access secure URIs
@@ -28,7 +31,9 @@ import com.gpm.mbean.site.LoginBean;
 @WebFilter(filterName = "Log in Filter", value = { LoginFilter.SECURE_PATH + "*" })
 public class LoginFilter implements Filter {
 
+  // Paths controlled by authentication/authorisation
   public static final String SECURE_PATH = "/secure/";
+  public static final String ADMIN_PATH = SECURE_PATH + "admin/";
 
   // Special paths to be treated differently
   private static final String HOME = "/index.xhtml";
@@ -51,16 +56,32 @@ public class LoginFilter implements Filter {
     HttpServletResponse res = (HttpServletResponse) response;
     String uri = req.getRequestURI();
     if (uri.startsWith(SECURE_PATH)) {
-      LoginBean logIn = (LoginBean) req.getSession().getAttribute("loginBean");
-      if (logIn == null) {
-        logIn = new LoginBean();
-        req.getSession().setAttribute("loginBean", logIn);
+      LoginBean login = (LoginBean) req.getSession().getAttribute("loginBean");
+      if (login == null) {
+        login = new LoginBean();
+        req.getSession().setAttribute("loginBean", login);
       }
-      if (logIn.isLoggedIn()) {
+      if (login.isLoggedIn()) {
         // We are logged in already
         if (uri.startsWith(LOGIN) || uri.startsWith(REGISTER) || uri.startsWith(RECOVER)) {
           // Do not permit log into, register or recover accounts
           res.sendRedirect(HOME);
+        } else if (uri.startsWith(ADMIN_PATH)) {
+          // If an admin page is requested, check if user is an administrator
+          UserAccount user = null;
+          try {
+            user = UserAccountManager.findByUuid(login.getUserUuid().toString());
+          } catch (UserAccountException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          if (user != null && user.isAdministrator()) {
+            // User is an administrator, permit them to continue
+            chain.doFilter(request, res);
+          } else {
+            // User is not an administrator
+            res.sendError(HttpServletResponse.SC_FORBIDDEN, "You are not authorised to view this page");
+          }
         } else {
           // Everything else is fine
           chain.doFilter(request, res);
@@ -70,14 +91,14 @@ public class LoginFilter implements Filter {
         if (uri.startsWith(LOGIN) || uri.startsWith(REGISTER) || uri.startsWith(RECOVER)) {
           // These pages are fine, so store the referring URI and let users through to the
           // log in, register or recover pages
-          if (logIn.getRedirect() == null) {
+          if (login.getRedirect() == null) {
             String referer = req.getHeader("referer");
             if (referer == null) {
               // If we cannot determine referer then use HOME as the referer
               referer = HOME;
             }
             try {
-              logIn.setRedirect(new URI(referer));
+              login.setRedirect(new URI(referer));
             } catch (URISyntaxException e) {
               // TODO Auto-generated catch block
               e.printStackTrace();
@@ -88,7 +109,7 @@ public class LoginFilter implements Filter {
           // Everything else must go through the log in page, so store the original URI
           // and redirect to the log in page
           try {
-            logIn.setRedirect(new URI(uri));
+            login.setRedirect(new URI(uri));
           } catch (URISyntaxException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

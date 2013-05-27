@@ -73,6 +73,20 @@ public class LoginBean implements Serializable {
     return user != null;
   }
 
+  public boolean isAdministrator() {
+    if (isLoggedIn()) {
+      UserAccount account = null;
+      try {
+        account = UserAccountManager.findByUuid(user.toString());
+      } catch (UserAccountException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      return account != null && account.isAdministrator();
+    }
+    return false;
+  }
+
   public String getEmail() {
     return email;
   }
