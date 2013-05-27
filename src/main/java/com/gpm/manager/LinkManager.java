@@ -46,17 +46,33 @@ public class LinkManager {
     }
   }
 
-  public static void save(final Link config) throws LinkException {
+  /**
+   * Persist the given link to the data store.
+   * 
+   * @param link
+   *          the link to be saved
+   * @throws LinkException
+   *           if there was a problem saving the link
+   */
+  public static void save(final Link link) throws LinkException {
     try {
-      ControllerFactory.getLinkController().save(config);
+      ControllerFactory.getLinkController().save(link);
     } catch (ControllerException e) {
       throw new LinkException(e);
     }
   }
 
-  public static void delete(final Link config) throws LinkException {
+  /**
+   * Delete the given link from the data store.
+   * 
+   * @param link
+   *          the link to be deleted
+   * @throws LinkException
+   *           if there was a problem deleting the link
+   */
+  public static void delete(final Link link) throws LinkException {
     try {
-      ControllerFactory.getLinkController().delete(config.getUuid());
+      ControllerFactory.getLinkController().delete(link.getUuid());
     } catch (ControllerException e) {
       throw new LinkException(e);
     }

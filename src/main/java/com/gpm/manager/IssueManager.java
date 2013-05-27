@@ -105,9 +105,25 @@ public class IssueManager {
    * @throws IssueException
    *           if there was a problem saving the issue
    */
-  public static void storeIssue(final Issue issue) throws IssueException {
+  public static void save(final Issue issue) throws IssueException {
     try {
       ControllerFactory.getIssueController().save(issue);
+    } catch (ControllerException e) {
+      throw new IssueException(e);
+    }
+  }
+
+  /**
+   * Delete the given issue from the data store.
+   * 
+   * @param issue
+   *          the issue to be deleted
+   * @throws IssueException
+   *           if there was a problem deleting the issue
+   */
+  public static void delete(final Issue issue) throws IssueException {
+    try {
+      ControllerFactory.getIssueController().delete(issue.getUuid());
     } catch (ControllerException e) {
       throw new IssueException(e);
     }

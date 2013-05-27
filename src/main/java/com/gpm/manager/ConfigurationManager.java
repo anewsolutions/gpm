@@ -64,17 +64,14 @@ public class ConfigurationManager {
     }
   }
 
-  public static void storeConfig(final String key, final String value) throws ConfigurationException {
-    // Store configuration
-    Configuration config = findByKey(key);
-    if (config == null) {
-      config = new Configuration();
-    }
-    config.setConfigKey(key);
-    config.setConfigValue(value);
-    save(config);
-  }
-
+  /**
+   * Persist the given configuration to the data store.
+   * 
+   * @param config
+   *          the configuration to be saved
+   * @throws ConfigurationException
+   *           if there was a problem saving the configuration
+   */
   public static void save(final Configuration config) throws ConfigurationException {
     try {
       ControllerFactory.getConfigurationController().save(config);
@@ -83,6 +80,14 @@ public class ConfigurationManager {
     }
   }
 
+  /**
+   * Delete the given configuration from the data store.
+   * 
+   * @param config
+   *          the configuration to be deleted
+   * @throws ConfigurationException
+   *           if there was a problem deleting the configuration
+   */
   public static void delete(final Configuration config) throws ConfigurationException {
     try {
       ControllerFactory.getConfigurationController().delete(config.getUuid());
