@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/admin.xhtml">
+  <ui:define name="mainContent">
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8" enctype="application/x-www-form-urlencoded">
+      <p:panel header="#{msg.adminIssueManageHeading}">
+        <h:panelGrid styleClass="sectionControlsTable" columns="2"
+          columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
+          <h:panelGroup>
+            <p:button outcome="issue_edit" value="#{msg.adminButtonsAdd}" />
+          </h:panelGroup>
+        </h:panelGrid>
+        <p:dataTable id="issueTable" var="issue" value="#{issueAdminBean.all}"
+          emptyMessage="#{msg.adminNoIssuesFound}">
+          <p:column styleClass="actionColumn" headerText="#{msg.adminTableActionsColumn}">
+            <p:button outcome="issue_edit" value="#{msg.adminButtonsEdit}">
+              <f:param name="uuid" value="#{issue.uuid}" />
+            </p:button>
+            <p:button outcome="issue_delete" value="#{msg.adminButtonsDelete}">
+              <f:param name="uuid" value="#{issue.uuid}" />
+            </p:button>
+          </p:column>
+        </p:dataTable>
+      </p:panel>
+    </h:form>
+  </ui:define>
+</ui:composition>
+</html>
