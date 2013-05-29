@@ -28,6 +28,7 @@ import com.gpm.manager.UserAccountManager;
 import com.gpm.manager.exception.ConfigurationException;
 import com.gpm.manager.exception.IssueException;
 import com.gpm.manager.exception.UserAccountException;
+import com.gpm.mbean.BeanUtils;
 import com.gpm.model.Configuration;
 import com.gpm.model.Issue;
 import com.gpm.model.UserAccount;

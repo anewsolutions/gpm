@@ -17,6 +17,7 @@ import com.gpm.UploadsServlet;
 import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.ProductManager;
 import com.gpm.manager.exception.ProductException;
+import com.gpm.mbean.BeanUtils;
 import com.gpm.model.Product;
 import com.gpm.model.Variant;
 

@@ -14,6 +14,18 @@
         </h:panelGrid>
         <p:dataTable id="issueTable" var="issue" value="#{issueAdminBean.all}"
           emptyMessage="#{msg.adminNoIssuesFound}">
+          <p:column styleClass="toggleColumn">
+            <p:rowToggler />
+          </p:column>
+          <p:column headerText="#{msg.adminIssueTableEditionColumn}">
+            #{issueAdminBean.edition}
+          </p:column>
+          <p:column headerText="#{msg.adminIssueTableEzineLinkColumn}">
+            #{issue.ezineLink}
+          </p:column>
+          <p:column headerText="#{msg.adminIssueTableStockLevelColumn}">
+            #{issue.stockLevel}
+          </p:column>
           <p:column styleClass="actionColumn" headerText="#{msg.adminTableActionsColumn}">
             <p:button outcome="issue_edit" value="#{msg.adminButtonsEdit}">
               <f:param name="uuid" value="#{issue.uuid}" />
@@ -22,6 +34,20 @@
               <f:param name="uuid" value="#{issue.uuid}" />
             </p:button>
           </p:column>
+          <p:rowExpansion>
+            <div class="ui-dt-c">
+              <h:panelGrid columns="2">
+                <h:panelGroup>
+                  <p:graphicImage value="#{issue.coverImageUri}" />
+                </h:panelGroup>
+                <h:panelGroup>
+                  <ui:repeat var="inThisIssue" value="#{issue.inThisIssueLines}">
+                    <p>#{inThisIssue}</p>
+                  </ui:repeat>
+                </h:panelGroup>
+              </h:panelGrid>
+            </div>
+          </p:rowExpansion>
         </p:dataTable>
       </p:panel>
     </h:form>

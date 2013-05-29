@@ -18,6 +18,7 @@ import javax.faces.context.FacesContext;
 import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.IssueManager;
 import com.gpm.manager.exception.IssueException;
+import com.gpm.mbean.BeanUtils;
 import com.gpm.model.CustomerOrderItem;
 import com.gpm.model.Issue;
 import com.gpm.model.enums.Format;

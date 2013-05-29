@@ -11,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 
 import com.gpm.manager.UserAccountManager;
 import com.gpm.manager.exception.UserAccountException;
+import com.gpm.mbean.BeanUtils;
 
 @ManagedBean
 @ViewScoped

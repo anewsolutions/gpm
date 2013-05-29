@@ -1,7 +1,7 @@
 /**
  * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
-package com.gpm.mbean.site;
+package com.gpm.mbean;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -13,6 +13,8 @@ import java.util.Locale;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import com.gpm.mbean.site.BasketBean;
+import com.gpm.mbean.site.LoginBean;
 import com.gpm.model.enums.Shipping;
 
 public class BeanUtils {

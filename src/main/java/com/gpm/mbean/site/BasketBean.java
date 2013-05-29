@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.gpm.manager.CustomerOrderManager;
 import com.gpm.manager.exception.CustomerOrderException;
+import com.gpm.mbean.BeanUtils;
 import com.gpm.model.CustomerOrder;
 import com.gpm.model.CustomerOrderItem;
 

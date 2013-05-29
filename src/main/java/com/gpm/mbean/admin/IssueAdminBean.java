@@ -11,8 +11,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.IssueManager;
 import com.gpm.manager.exception.IssueException;
+import com.gpm.mbean.BeanUtils;
 import com.gpm.model.Issue;
 
 @ManagedBean
@@ -102,5 +104,18 @@ public class IssueAdminBean implements Serializable {
       e.printStackTrace();
     }
     return "/secure/admin/issue_list?faces-redirect=true";
+  }
+
+  /**
+   * JSF method to format the edition for an issue.
+   * 
+   * @return a string containing the issue number and published date formatted for the
+   *         user's locale
+   */
+  public String getEdition() {
+    FacesContext context = FacesContext.getCurrentInstance();
+    Issue issue = context.getApplication().evaluateExpressionGet(context, "#{issue}", Issue.class);
+    String published = BeanUtils.formatPublished(issue.getPublishedDate());
+    return MessageProvider.getMessage("adminIssueEdition", issue.getIssueNumber(), published);
   }
 }
