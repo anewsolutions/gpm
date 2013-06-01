@@ -36,9 +36,9 @@
           </p:column>
           <p:rowExpansion>
             <div class="ui-dt-c">
-              <h:panelGrid columns="2">
+              <h:panelGrid columns="2" styleClass="expansionTable" columnClasses="issueCoverImageColumn,issueDescriptionColumn">
                 <h:panelGroup>
-                  <p:graphicImage value="#{issue.coverImageUri}" />
+                  <p:graphicImage styleClass="issueCoverImage" value="#{issue.coverImageUri}" />
                 </h:panelGroup>
                 <h:panelGroup>
                   <ui:repeat var="inThisIssue" value="#{issue.inThisIssueLines}">

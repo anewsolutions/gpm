@@ -66,6 +66,18 @@ img {
   width: 250px;
 }
 
+.ui-datatable .ui-datatable-data .expansionTable td {
+  border: 0;
+}
+
+.issueCoverImageColumn, .issueCoverImage {
+  width: 250px;
+}
+
+.issueDescriptionColumn p {
+  margin: 0.75em;
+}
+
 .productCode {
   text-transform: uppercase;
 }
