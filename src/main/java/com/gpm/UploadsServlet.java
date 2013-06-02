@@ -54,9 +54,12 @@ public class UploadsServlet extends HttpServlet {
     response.setBufferSize(BUFFER_SIZE);
     response.setContentType(mime);
     response.setContentLength((int) path.length());
-    long expiry = new Date().getTime() + 2592000000l; // 30 days
-    response.setDateHeader("Expires", expiry);
-    response.setDateHeader("Last-Modified", path.lastModified());
+    String nocache = request.getParameter("no-cache");
+    if (nocache == null) {
+      long expiry = new Date().getTime() + 2592000000l; // 30 days
+      response.setDateHeader("Expires", expiry);
+      response.setDateHeader("Last-Modified", path.lastModified());
+    }
 
     // Write file contents to response
     BufferedInputStream in = null;
