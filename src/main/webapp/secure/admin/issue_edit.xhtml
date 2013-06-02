@@ -52,9 +52,12 @@
           </h:panelGroup>
           <h:outputLabel for="coverImageField" value="#{msg.adminIssueCoverImageField}" />
           <h:panelGroup>
-            <p:commandLink id="coverImageField" oncomplete="uploadDialogWidget.show()" ajax="true" process="@this">
+            <p:commandLink id="coverImageFieldButton" oncomplete="uploadDialogWidget.show()" ajax="true" process="@this">
               <p:graphicImage styleClass="issueCoverImage" value="#{issueAdminBean.selected.coverImageUri}" />
             </p:commandLink>
+            <h:inputHidden id="coverImageField" value="#{issueAdminBean.selected.coverImage}" required="true"
+              requiredMessage="#{msg.adminIssueCoverImageFieldRequired}" />
+            <h:message errorClass="inlineMessage ui-state-error" for="coverImageField" />
           </h:panelGroup>
           <p:outputLabel for="inThisIssueField" value="#{msg.adminIssueInThisField}" />
           <h:panelGroup>
