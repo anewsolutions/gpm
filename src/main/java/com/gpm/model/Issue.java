@@ -108,9 +108,25 @@ public class Issue extends Base {
   public String getCoverImageUri() {
     String ci = getCoverImage();
     if (ci != null && !ci.isEmpty()) {
-      return UploadsServlet.UPLOADS_PATH + getCoverImage();
+      return UploadsServlet.UPLOADS_PATH + ci;
     } else {
-      return "http://placehold.it/300x419&text=No%20Image";
+      return "http://placehold.it/300x419";
+    }
+  }
+
+  /**
+   * Same as {@link #getCoverImageUri()} but requests that there should be no client-side
+   * caching of the image.
+   * 
+   * @return a link to an image
+   */
+  @Transient
+  public String getCoverImageUriNoCache() {
+    String ci = getCoverImage();
+    if (ci != null && !ci.isEmpty()) {
+      return UploadsServlet.UPLOADS_PATH + ci + "?no-cache=1";
+    } else {
+      return "http://placehold.it/300x419";
     }
   }
 
