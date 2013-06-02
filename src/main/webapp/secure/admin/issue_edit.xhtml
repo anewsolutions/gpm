@@ -14,12 +14,71 @@
           columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
           <h:panelGroup>
             <p:commandButton value="#{msg.adminButtonsSave}" action="#{issueAdminBean.save}" ajax="false" />
-            <p:button outcome="issue_list" value="#{msg.adminButtonsCancel}" />
+            <p:commandButton value="#{msg.adminButtonsCancel}" action="#{issueAdminBean.cancel}" ajax="false"
+              immediate="true" />
           </h:panelGroup>
         </h:panelGrid>
         <h:panelGrid columns="2">
+          <p:outputLabel for="issueNumField" value="#{msg.adminIssueNumField}" />
+          <h:panelGroup>
+            <p:inputText id="issueNumField" value="#{issueAdminBean.selected.issueNumber}" required="true"
+              requiredMessage="#{msg.adminIssueNumFieldRequired}" size="6">
+              <p:ajax />
+            </p:inputText>
+            <h:message errorClass="inlineMessage ui-state-error" for="issueNumField" />
+          </h:panelGroup>
+          <p:outputLabel for="pubDateField" value="#{msg.adminIssuePubDateField}" />
+          <h:panelGroup>
+            <p:calendar id="pubDateField" value="#{issueAdminBean.selected.publishedDate}" required="true"
+              requiredMessage="#{msg.adminIssuePubDateFieldRequired}" size="24" mode="popup">
+              <p:ajax />
+            </p:calendar>
+            <h:message errorClass="inlineMessage ui-state-error" for="pubDateField" />
+          </h:panelGroup>
+          <p:outputLabel for="stockLevelField" value="#{msg.adminIssueStockLevelField}" />
+          <h:panelGroup>
+            <p:inputText id="stockLevelField" value="#{issueAdminBean.selected.stockLevel}" required="true"
+              requiredMessage="#{msg.adminIssueStockLevelFieldRequired}" size="6">
+              <p:ajax />
+            </p:inputText>
+            <h:message errorClass="inlineMessage ui-state-error" for="stockLevelField" />
+          </h:panelGroup>
+          <p:outputLabel for="ezineLinkField" value="#{msg.adminIssueEzineLinkField}" />
+          <h:panelGroup>
+            <p:inputText id="ezineLinkField" value="#{issueAdminBean.selected.ezineLink}" size="24">
+              <p:ajax />
+            </p:inputText>
+            <h:message errorClass="inlineMessage ui-state-error" for="ezineLinkField" />
+          </h:panelGroup>
+          <h:outputLabel for="coverImageField" value="#{msg.adminIssueCoverImageField}" />
+          <h:panelGroup>
+            <p:commandLink id="coverImageField" oncomplete="uploadDialogWidget.show()" ajax="true" process="@this">
+              <p:graphicImage styleClass="issueCoverImage" value="#{issueAdminBean.selected.coverImageUri}" />
+            </p:commandLink>
+          </h:panelGroup>
+          <p:outputLabel for="inThisIssueField" value="#{msg.adminIssueInThisField}" />
+          <h:panelGroup>
+            <p:inputTextarea id="inThisIssueField" rows="15" cols="70" value="#{issueAdminBean.selected.inThisIssue}"
+              autoResize="false" />
+          </h:panelGroup>
         </h:panelGrid>
       </p:panel>
+    </h:form>
+    <h:form id="uploadForm" prependId="false" acceptcharset="UTF-8" enctype="multipart/form-data">
+      <p:dialog id="uploadDialog" widgetVar="uploadDialogWidget" header="#{msg.adminUploadDialogHeading}" modal="true"
+        width="300">
+        <h:panelGrid columns="1">
+          <h:panelGroup>
+            <p:fileUpload id="uploadField" value="#{issueAdminBean.uploadedImage}" mode="simple" />
+          </h:panelGroup>
+          <h:panelGroup>
+            <p:commandButton id="uploadSubmitButton" value="#{msg.adminButtonsUpload}" ajax="false"
+              oncomplete="uploadDialogWidget.hide()" />
+            <p:commandButton id="uploadCancelButton" value="#{msg.adminButtonsCancel}" type="button"
+              onclick="uploadDialogWidget.hide()" />
+          </h:panelGroup>
+        </h:panelGrid>
+      </p:dialog>
     </h:form>
   </ui:define>
 </ui:composition>

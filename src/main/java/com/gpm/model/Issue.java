@@ -41,6 +41,11 @@ public class Issue extends Base {
     super();
   }
 
+  /**
+   * The sequential issue number of this issue of the magazine
+   * 
+   * @return an issue number
+   */
   @Column(nullable = false, unique = true)
   public Integer getIssueNumber() {
     return issueNumber;
@@ -50,6 +55,11 @@ public class Issue extends Base {
     this.issueNumber = issueNumber;
   }
 
+  /**
+   * The date on which this issue was published.
+   * 
+   * @return a date, to the nearest day
+   */
   @Column(nullable = false)
   @Temporal(TemporalType.DATE)
   public Date getPublishedDate() {
@@ -60,6 +70,11 @@ public class Issue extends Base {
     this.publishedDate = publishedDate;
   }
 
+  /**
+   * Description of what's in the issue.
+   * 
+   * @return a long piece of text, probably containing multiple line breaks
+   */
   @Column(nullable = false)
   @Lob
   public String getInThisIssue() {
@@ -89,6 +104,11 @@ public class Issue extends Base {
     return lines;
   }
 
+  /**
+   * The name on disk of the issue's cover image.
+   * 
+   * @return a file name
+   */
   @Column(nullable = false)
   public String getCoverImage() {
     return coverImage;
@@ -115,21 +135,10 @@ public class Issue extends Base {
   }
 
   /**
-   * Same as {@link #getCoverImageUri()} but requests that there should be no client-side
-   * caching of the image.
+   * The ID of the online edition, as it appears in Calaméo.
    * 
-   * @return a link to an image
+   * @return a Caleméo book ID
    */
-  @Transient
-  public String getCoverImageUriNoCache() {
-    String ci = getCoverImage();
-    if (ci != null && !ci.isEmpty()) {
-      return UploadsServlet.UPLOADS_PATH + ci + "?no-cache=1";
-    } else {
-      return "http://placehold.it/300x419";
-    }
-  }
-
   @Column(nullable = false)
   public String getEzineLink() {
     return ezineLink;
@@ -154,6 +163,11 @@ public class Issue extends Base {
     }
   }
 
+  /**
+   * Number of physical copies available in stock.
+   * 
+   * @return a number greater than or equal to zero
+   */
   @Column(nullable = false)
   public Integer getStockLevel() {
     return stockLevel;

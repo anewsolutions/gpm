@@ -3,11 +3,16 @@
  */
 package com.gpm.manager;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
+
+import com.gpm.UploadsServlet;
 import com.gpm.controller.ControllerException;
 import com.gpm.controller.ControllerFactory;
 import com.gpm.controller.ControllerFilter;
@@ -107,8 +112,19 @@ public class IssueManager {
    */
   public static void save(final Issue issue) throws IssueException {
     try {
+      String coverImage = issue.getCoverImage();
+      if (coverImage != null && coverImage.startsWith("tmp-")) {
+        // Cover image has temporary name, so we need to move it
+        issue.setCoverImage(coverImage.substring(4));
+        File oldImage = new File(UploadsServlet.getUploadsDirectory(), coverImage);
+        File newImage = new File(UploadsServlet.getUploadsDirectory(), issue.getCoverImage());
+        FileUtils.copyFile(oldImage, newImage, false);
+        FileUtils.forceDelete(oldImage);
+      }
       ControllerFactory.getIssueController().save(issue);
     } catch (ControllerException e) {
+      throw new IssueException(e);
+    } catch (IOException e) {
       throw new IssueException(e);
     }
   }

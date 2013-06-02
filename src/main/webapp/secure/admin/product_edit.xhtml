@@ -177,8 +177,8 @@
       </p:panel>
     </h:form>
     <h:form id="uploadForm" prependId="false" acceptcharset="UTF-8" enctype="multipart/form-data">
-      <p:dialog id="uploadDialog" widgetVar="uploadDialogWidget" header="#{msg.adminProductImageDialogHeading}"
-        modal="true" width="300">
+      <p:dialog id="uploadDialog" widgetVar="uploadDialogWidget" header="#{msg.adminUploadDialogHeading}" modal="true"
+        width="300">
         <h:panelGrid columns="1">
           <h:panelGroup>
             <p:fileUpload id="uploadField" value="#{productAdminBean.uploadedImage}" mode="simple" />
