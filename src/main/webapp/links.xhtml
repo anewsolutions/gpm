@@ -8,7 +8,7 @@
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
       <h:outputText styleClass="pageHeading" value="#{msg.linksPageHeading}" />
       <ui:repeat var="link" value="#{linksBean.links}">
-        <span class="pageParagraph"><h:outputLink value="#{link.linkUrl}">#{link.linkText}</h:outputLink> &mdash; #{link.linkDescription}</span>
+        <span class="pageParagraph"><h:outputLink value="#{link.linkUrl}" target="_blank">#{link.linkText}</h:outputLink> &mdash; #{link.linkDescription}</span>
       </ui:repeat>
     </h:form>
   </ui:define>
