@@ -90,7 +90,12 @@ public class SubscribeBean implements Serializable {
   }
 
   public String getSubscriptionPrice() {
-    String price = BeanUtils.formatPrice(Issue.currentPrice * getLength());
+    String price = "";
+    if (format == Format.EZINE) {
+      price = BeanUtils.formatPrice(Issue.onlinePrice * getLength());
+    } else {
+      price = BeanUtils.formatPrice(Issue.currentPrice * getLength());
+    }
     return MessageProvider.getMessage("subPostageAndPackaging" + getFormat(), price);
   }
 
@@ -100,10 +105,11 @@ public class SubscribeBean implements Serializable {
     String published = BeanUtils.formatPublished(issue.getPublishedDate());
     order.setName(MessageProvider.getMessage("subShortDesc" + getFormat() + getLength(), issue.getIssueNumber(),
         published));
-    order.setPrice(Issue.currentPrice * getLength());
     if (format == Format.EZINE) {
+      order.setPrice(Issue.onlinePrice * getLength());
       order.setWeight(0);
     } else {
+      order.setPrice(Issue.currentPrice * getLength());
       order.setWeight(Issue.weight);
     }
     order.setQuantity(1);
