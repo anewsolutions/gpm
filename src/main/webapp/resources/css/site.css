@@ -40,6 +40,10 @@ a:hover {
   border: none;
 }
 
+.ui-button .ui-button-text {
+ font-size: 1.25em;
+}
+
 .ui-datagrid-column {
   padding: 0;
 }

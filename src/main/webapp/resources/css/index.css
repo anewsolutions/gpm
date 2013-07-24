@@ -8,18 +8,25 @@
 }
 
 .indexGridLeft {
-  width: 80%;
-  text-align: left;
   vertical-align: top;
 }
 
 .indexGridRight {
-  text-align: left;
   vertical-align: top;
 }
 
-.indexGridLeft span:first-child {
-  margin-top: 0;
+.indexGridMiddle {
+  width: 60%;
+  padding: 0 1em;
+  vertical-align: top;
+}
+
+.indexGridLeft .indexIssuePanel:first-child, .indexGridRight .indexIssuePanel:first-child {
+  margin-top: 1em;
+}
+
+.indexNewsHeading {
+  margin-bottom: 0;
 }
 
 .indexIssuePanel {
@@ -48,6 +55,7 @@
   font-size: 1.5em;
   font-weight: bold;
   width: 100%;
+  margin: 0;
 }
 
 .indexIssuePanelName {
@@ -55,14 +63,4 @@
   font-weight: bold;
   padding: 0 0 0.5em 0;
   width: 100%;
-}
-
-.indexCornerPigMargin {
-  margin-bottom: 125px;
-}
-
-.indexCornerPig {
-  position: absolute;
-  right: 0;
-  bottom: 0;
 }
