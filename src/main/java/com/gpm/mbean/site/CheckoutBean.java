@@ -134,7 +134,7 @@ public class CheckoutBean implements Serializable {
       order.setShippingPrice(0);
     }
     try {
-      UserAccountManager.storeUserAccount(user);
+      UserAccountManager.save(user);
     } catch (UserAccountException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

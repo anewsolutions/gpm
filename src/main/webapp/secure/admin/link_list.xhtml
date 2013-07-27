@@ -12,8 +12,7 @@
             <p:button outcome="link_edit" value="#{msg.adminButtonsAdd}" />
           </h:panelGroup>
         </h:panelGrid>
-        <p:dataTable id="linkTable" var="link" value="#{linkAdminBean.all}"
-          emptyMessage="#{msg.adminNoLinksFound}">
+        <p:dataTable id="linkTable" var="link" value="#{linkAdminBean.all}" emptyMessage="#{msg.adminNoLinksFound}">
           <p:column headerText="#{msg.adminLinkTableTextColumn}">
             #{link.linkText}
           </p:column>

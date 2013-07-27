@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/admin.xhtml">
+  <ui:define name="mainContent">
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8" enctype="application/x-www-form-urlencoded">
+      <p:panel header="#{msg.adminUserManageHeading}">
+        <h:panelGrid styleClass="sectionControlsTable" columns="2"
+          columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
+          <h:panelGroup>
+            <p:button outcome="user_edit" value="#{msg.adminButtonsAdd}" />
+          </h:panelGroup>
+        </h:panelGrid>
+        <p:dataTable id="userTable" var="user" value="#{userAdminBean.all}" emptyMessage="#{msg.adminNoUsersFound}">
+          <p:column styleClass="toggleColumn">
+            <p:rowToggler />
+          </p:column>
+          <p:column headerText="#{msg.adminUserTableNameColumn}">
+            #{user.name}
+          </p:column>
+          <p:column headerText="#{msg.adminUserTableEmailColumn}">
+            #{user.email}
+          </p:column>
+          <p:column headerText="#{msg.adminUserTableAdminColumn}">
+            <h:outputText value="#{msg.adminUserAdminYes}" rendered="#{user.administrator}" />
+          </p:column>
+          <p:column styleClass="actionColumn" headerText="#{msg.adminTableActionsColumn}">
+            <p:button outcome="user_edit" value="#{msg.adminButtonsEdit}">
+              <f:param name="uuid" value="#{user.uuid}" />
+            </p:button>
+            <p:button outcome="user_delete" value="#{msg.adminButtonsDelete}">
+              <f:param name="uuid" value="#{user.uuid}" />
+            </p:button>
+          </p:column>
+          <p:rowExpansion>
+            <div class="ui-dt-c">
+              <h:panelGrid columns="2">
+                <h:panelGroup>
+                  <p>
+                    <h:outputText styleClass="userAddressHeading" value="#{msg.adminUserTableBillingColumn}" />
+                  </p>
+                  <p>
+                    <!-- All in same panel group to make it easier to cut and paste -->
+                    <h:outputText styleClass="userAddress" value="#{user.billingAddress.name}" />
+                    <h:outputText styleClass="userAddress" value="#{user.billingAddress.company}" />
+                    <h:outputText styleClass="userAddress" value="#{user.billingAddress.address1}" />
+                    <h:outputText styleClass="userAddress" value="#{user.billingAddress.address2}" />
+                    <h:outputText styleClass="userAddress" value="#{user.billingAddress.city}" />
+                    <h:outputText styleClass="userAddress" value="#{user.billingAddress.state}" />
+                    <h:outputText styleClass="userAddress" value="#{user.billingAddress.country}" />
+                    <h:outputText styleClass="userAddress" value="#{user.billingAddress.postcode}" />
+                  </p>
+                </h:panelGroup>
+                <h:panelGroup>
+                  <p>
+                    <h:outputText styleClass="userAddressHeading" value="#{msg.adminUserTableDeliveryColumn}" />
+                  </p>
+                  <p>
+                    <!-- All in same panel group to make it easier to cut and paste -->
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.name}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.company}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.address1}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.address2}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.city}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.state}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.country}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.postcode}" />
+                  </p>
+                </h:panelGroup>
+              </h:panelGrid>
+            </div>
+          </p:rowExpansion>
+        </p:dataTable>
+      </p:panel>
+    </h:form>
+  </ui:define>
+</ui:composition>
+</html>

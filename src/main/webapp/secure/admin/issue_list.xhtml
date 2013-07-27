@@ -12,8 +12,7 @@
             <p:button outcome="issue_edit" value="#{msg.adminButtonsAdd}" />
           </h:panelGroup>
         </h:panelGrid>
-        <p:dataTable id="issueTable" var="issue" value="#{issueAdminBean.all}"
-          emptyMessage="#{msg.adminNoIssuesFound}">
+        <p:dataTable id="issueTable" var="issue" value="#{issueAdminBean.all}" emptyMessage="#{msg.adminNoIssuesFound}">
           <p:column styleClass="toggleColumn">
             <p:rowToggler />
           </p:column>
@@ -36,7 +35,7 @@
           </p:column>
           <p:rowExpansion>
             <div class="ui-dt-c">
-              <h:panelGrid columns="2" styleClass="expansionTable" columnClasses="issueCoverImageColumn,issueDescriptionColumn">
+              <h:panelGrid columns="2" columnClasses="issueCoverImageColumn,issueDescriptionColumn">
                 <h:panelGroup>
                   <p:graphicImage styleClass="issueCoverImage" value="#{issue.coverImageUri}" />
                 </h:panelGroup>

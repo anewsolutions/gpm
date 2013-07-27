@@ -17,6 +17,7 @@
       <h:panelGroup>
         <p:panel header="#{msg.adminMenuHeading}">
           <p:menu>
+            <p:menuitem value="#{msg.adminMenuUsers}" outcome="/secure/admin/user_list" />
             <p:menuitem value="#{msg.adminMenuIssues}" outcome="/secure/admin/issue_list" />
             <!-- <p:menuitem value="#{msg.adminMenuProducts}" outcome="/secure/admin/product_list" /> -->
             <p:menuitem value="#{msg.adminMenuLinks}" outcome="/secure/admin/link_list" />

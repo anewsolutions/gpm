@@ -81,7 +81,7 @@ public class PayPointCallbackServlet extends HttpServlet {
             account.addMagazine(issue);
           }
         }
-        UserAccountManager.storeUserAccount(account);
+        UserAccountManager.save(account);
       }
     } catch (UserAccountException e) {
       // TODO Auto-generated catch block

@@ -119,6 +119,21 @@ public class UserAccountManager {
     return null;
   }
 
+  /**
+   * Get all user accounts.
+   * 
+   * @return the list of user accounts
+   * @throws UserAccountException
+   *           if there was a problem fetching the list of user accounts
+   */
+  public static List<UserAccount> findAllUserAccounts() throws UserAccountException {
+    try {
+      return ControllerFactory.getUserAccountController().getAll();
+    } catch (ControllerException e) {
+      throw new UserAccountException(e);
+    }
+  }
+
   public static void createNew(final String email, final String name, final String password)
       throws UserAccountException {
     // Generate a random salt
@@ -135,11 +150,7 @@ public class UserAccountManager {
     account.setName(name);
     account.setPasswordSalt(Hex.encodeHexString(salt));
     account.setPasswordHash(Hex.encodeHexString(hash));
-    try {
-      ControllerFactory.getUserAccountController().save(account);
-    } catch (ControllerException e) {
-      throw new UserAccountException(e);
-    }
+    save(account);
   }
 
   public static void createNewFacebook(final String email, final String name, final String facebookIdent,
@@ -153,11 +164,7 @@ public class UserAccountManager {
     account.setName(name);
     account.setFacebookIdent(facebookIdent);
     account.setFacebookToken(facebookToken);
-    try {
-      ControllerFactory.getUserAccountController().save(account);
-    } catch (ControllerException e) {
-      throw new UserAccountException(e);
-    }
+    save(account);
   }
 
   /**
@@ -184,9 +191,25 @@ public class UserAccountManager {
    * @throws UserAccountException
    *           if there was a problem saving the user account
    */
-  public static void storeUserAccount(final UserAccount account) throws UserAccountException {
+  public static void save(final UserAccount account) throws UserAccountException {
     try {
       ControllerFactory.getUserAccountController().save(account);
+    } catch (ControllerException e) {
+      throw new UserAccountException(e);
+    }
+  }
+
+  /**
+   * Delete the given user account from the data store.
+   * 
+   * @param account
+   *          the user account to be deleted
+   * @throws UserAccountException
+   *           if there was a problem deleting the user account
+   */
+  public static void delete(final UserAccount account) throws UserAccountException {
+    try {
+      ControllerFactory.getUserAccountController().delete(account.getUuid());
     } catch (ControllerException e) {
       throw new UserAccountException(e);
     }
