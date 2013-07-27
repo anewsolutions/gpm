@@ -4,6 +4,21 @@
   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/templates/admin.xhtml">
   <ui:define name="mainContent">
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8" enctype="application/x-www-form-urlencoded">
+      <p:panel>
+        <f:facet name="header">
+          <h:outputText value="#{msg.adminUserEditHeading}" rendered="#{userAdminBean.editing}" />
+          <h:outputText value="#{msg.adminUserAddHeading}" rendered="#{!userAdminBean.editing}" />
+        </f:facet>
+        <h:panelGrid styleClass="sectionControlsTable" columns="2"
+          columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
+          <h:panelGroup>
+            <p:commandButton value="#{msg.adminButtonsSave}" action="#{userAdminBean.save}" ajax="false" />
+            <p:button outcome="user_list" value="#{msg.adminButtonsCancel}" />
+          </h:panelGroup>
+        </h:panelGrid>
+      </p:panel>
+    </h:form>
   </ui:define>
 </ui:composition>
 </html>

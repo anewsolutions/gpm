@@ -6,38 +6,6 @@
   <ui:define name="mainContent">
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8" enctype="application/x-www-form-urlencoded">
       <p:panel header="#{msg.adminProductManageHeading}">
-        <h:panelGrid styleClass="sectionControlsTable" columns="2"
-          columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
-          <h:panelGroup>
-            <p:button outcome="product_edit" value="#{msg.adminButtonsAdd}" />
-          </h:panelGroup>
-        </h:panelGrid>
-        <p:dataTable id="prodTable" var="prod" value="#{productAdminBean.all}"
-          emptyMessage="#{msg.adminNoProductsFound}">
-          <p:column styleClass="toggleColumn">
-            <p:rowToggler />
-          </p:column>
-          <p:column headerText="#{msg.adminProductTableNameColumn}">
-            #{prod.name}
-          </p:column>
-          <p:column headerText="#{msg.adminProductTableCodeColumn}">
-            #{prod.code}
-          </p:column>
-          <p:column headerText="#{msg.adminProductTableVariantsColumn}">
-            #{prod.numVariants}
-          </p:column>
-          <p:column styleClass="actionColumn" headerText="#{msg.adminTableActionsColumn}">
-            <p:button outcome="product_edit" value="#{msg.adminButtonsEdit}">
-              <f:param name="uuid" value="#{prod.uuid}" />
-            </p:button>
-            <p:button outcome="product_delete" value="#{msg.adminButtonsDelete}">
-              <f:param name="uuid" value="#{prod.uuid}" />
-            </p:button>
-          </p:column>
-          <p:rowExpansion>
-            <div class="ui-dt-c">#{prod.description}</div>
-          </p:rowExpansion>
-        </p:dataTable>
       </p:panel>
     </h:form>
   </ui:define>
