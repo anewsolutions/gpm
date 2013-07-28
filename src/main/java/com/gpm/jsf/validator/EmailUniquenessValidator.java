@@ -18,6 +18,11 @@ import com.gpm.model.UserAccount;
 /**
  * Simple JSF validator to check that email addresses are unique. Validation fails if a
  * given email address is already known to the database.
+ * <p>
+ * If another existing email address is passed in the "old" parameter, then validation
+ * does not fail when the given email address is the same as the old one, even if it is
+ * known to the database. This is useful when we are modifying a pre-existing email
+ * address.
  * 
  * @author mbooth
  */
@@ -26,17 +31,23 @@ public class EmailUniquenessValidator implements Validator {
 
   @Override
   public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-    UserAccount account = null;
-    try {
-      account = UserAccountManager.findByEmail(value.toString());
-    } catch (UserAccountException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+    String email = (String) value;
+    // Succeed early if the given email address is the same as the old one
+    String old = (String) component.getAttributes().get("old");
+    if (old != null && !old.isEmpty() && old.equals(email)) {
+      return;
     }
-    if (account != null) {
-      // Given email address is already in the database
-      FacesMessage message = new FacesMessage(MessageProvider.getMessage(component.getId() + "Unique"));
-      message.setSeverity(FacesMessage.SEVERITY_ERROR);
+    // Query database for an account with the given email address
+    try {
+      UserAccount account = UserAccountManager.findByEmail(email);
+      if (account != null) {
+        // Given email address is already in the database
+        FacesMessage message = new FacesMessage(MessageProvider.getMessage("validatorEmailUniqueness"));
+        message.setSeverity(FacesMessage.SEVERITY_ERROR);
+        throw new ValidatorException(message);
+      }
+    } catch (UserAccountException e) {
+      FacesMessage message = new FacesMessage(e.getMessage());
       throw new ValidatorException(message);
     }
   }

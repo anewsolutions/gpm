@@ -17,6 +17,33 @@
             <p:button outcome="user_list" value="#{msg.adminButtonsCancel}" />
           </h:panelGroup>
         </h:panelGrid>
+        <h:panelGrid columns="2">
+          <p:outputLabel for="nameField" value="#{msg.adminUserNameField}" />
+          <h:panelGroup>
+            <p:inputText id="nameField" value="#{userAdminBean.selected.name}" required="true"
+              requiredMessage="#{msg.adminUserNameFieldRequired}" size="24">
+              <p:ajax />
+            </p:inputText>
+            <h:message errorClass="inlineMessage ui-state-error" for="nameField" />
+          </h:panelGroup>
+          <p:outputLabel for="emailField" value="#{msg.adminUserEmailField}" />
+          <h:panelGroup>
+            <p:inputText id="emailField" value="#{userAdminBean.selected.email}" required="true"
+              requiredMessage="#{msg.adminUserEmailFieldRequired}" size="24">
+              <f:attribute name="old" value="#{userAdminBean.selected.email}" />
+              <f:validator validatorId="EmailFormatValidator" />
+              <f:validator validatorId="EmailUniquenessValidator" />
+              <p:ajax />
+            </p:inputText>
+            <h:message errorClass="inlineMessage ui-state-error" for="emailField" />
+          </h:panelGroup>
+          <p:outputLabel for="adminField" value="#{msg.adminUserAdminField}" />
+          <h:panelGroup>
+            <p:selectBooleanCheckbox id="adminField" value="#{userAdminBean.selected.administrator}">
+              <p:ajax />
+            </p:selectBooleanCheckbox>
+          </h:panelGroup>
+        </h:panelGrid>
       </p:panel>
     </h:form>
   </ui:define>

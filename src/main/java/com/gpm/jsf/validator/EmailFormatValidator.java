@@ -31,7 +31,7 @@ public class EmailFormatValidator implements Validator {
     Matcher matcher = PATTERN.matcher(value.toString());
     if (!matcher.matches()) {
       // Given email address is not valid
-      FacesMessage message = new FacesMessage(MessageProvider.getMessage(component.getId() + "Required"));
+      FacesMessage message = new FacesMessage(MessageProvider.getMessage("validatorEmailFormat"));
       message.setSeverity(FacesMessage.SEVERITY_ERROR);
       throw new ValidatorException(message);
     }
