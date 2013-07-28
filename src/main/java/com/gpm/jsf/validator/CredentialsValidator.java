@@ -31,16 +31,17 @@ public class CredentialsValidator implements Validator {
     UIInput emailComponent = (UIInput) component.getAttributes().get("emailComponent");
     String email = emailComponent.getValue().toString();
     String password = value.toString();
-    UserAccount account = null;
+    // Query database for an account with the given email address and password
     try {
-      account = UserAccountManager.findByCredentials(email, password);
+      UserAccount account = UserAccountManager.findByCredentials(email, password);
+      if (account == null) {
+        // Given email is not known to the database
+        FacesMessage message = new FacesMessage(MessageProvider.getMessage("validatorInvalidCreds"));
+        message.setSeverity(FacesMessage.SEVERITY_ERROR);
+        throw new ValidatorException(message);
+      }
     } catch (UserAccountException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    if (account == null) {
-      // Given email is not known to the database
-      FacesMessage message = new FacesMessage(MessageProvider.getMessage(component.getId() + "InvalidCreds"));
+      FacesMessage message = new FacesMessage(e.getMessage());
       message.setSeverity(FacesMessage.SEVERITY_ERROR);
       throw new ValidatorException(message);
     }

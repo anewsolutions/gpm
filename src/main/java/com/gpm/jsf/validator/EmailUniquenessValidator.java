@@ -31,7 +31,7 @@ public class EmailUniquenessValidator implements Validator {
 
   @Override
   public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-    String email = (String) value;
+    String email = value.toString();
     // Succeed early if the given email address is the same as the old one
     String old = (String) component.getAttributes().get("old");
     if (old != null && !old.isEmpty() && old.equals(email)) {
@@ -48,6 +48,7 @@ public class EmailUniquenessValidator implements Validator {
       }
     } catch (UserAccountException e) {
       FacesMessage message = new FacesMessage(e.getMessage());
+      message.setSeverity(FacesMessage.SEVERITY_ERROR);
       throw new ValidatorException(message);
     }
   }

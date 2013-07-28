@@ -29,7 +29,7 @@ public class ConfirmPasswordValidator implements Validator {
     String passwordConfirm = value.toString();
     if (!passwordConfirm.equals(password)) {
       // Given passwords do not match
-      FacesMessage message = new FacesMessage(MessageProvider.getMessage(component.getId() + "DoesNotMatch"));
+      FacesMessage message = new FacesMessage(MessageProvider.getMessage("validatorPasswordsDoNotMatch"));
       message.setSeverity(FacesMessage.SEVERITY_ERROR);
       throw new ValidatorException(message);
     }
