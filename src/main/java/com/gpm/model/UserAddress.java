@@ -15,14 +15,14 @@ import javax.persistence.Entity;
 public class UserAddress extends Base {
   private static final long serialVersionUID = 1L;
 
-  private String name;
-  private String company;
-  private String address1;
-  private String address2;
-  private String city;
-  private String state;
-  private String country;
-  private String postcode;
+  private String name = "";
+  private String company = "";
+  private String address1 = "";
+  private String address2 = "";
+  private String city = "";
+  private String state = "";
+  private String country = "UNITED KINGDOM";
+  private String postcode = "";
 
   public UserAddress() {
     super();

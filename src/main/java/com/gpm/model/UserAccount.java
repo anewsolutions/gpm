@@ -29,9 +29,10 @@ public class UserAccount extends Base {
   private String passwordHash;
   private String facebookIdent;
   private String facebookToken;
-  private boolean administrator;
-  private UserAddress billingAddress;
-  private UserAddress deliveryAddress;
+  private boolean administrator = false;
+  private UserAddress billingAddress = new UserAddress();
+  private UserAddress deliveryAddress = new UserAddress();
+  private boolean deliverySameAsBilling = true;
   private List<UserIssue> magazines = new ArrayList<UserIssue>(0);
 
   public UserAccount() {
@@ -112,6 +113,9 @@ public class UserAccount extends Base {
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   public UserAddress getBillingAddress() {
+    if (billingAddress == null) {
+      billingAddress = new UserAddress();
+    }
     return billingAddress;
   }
 
@@ -121,11 +125,31 @@ public class UserAccount extends Base {
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   public UserAddress getDeliveryAddress() {
+    if (deliveryAddress == null) {
+      deliveryAddress = new UserAddress();
+    }
     return deliveryAddress;
   }
 
   public void setDeliveryAddress(final UserAddress deliveryAddress) {
     this.deliveryAddress = deliveryAddress;
+  }
+
+  public boolean isDeliverySameAsBilling() {
+    return deliverySameAsBilling;
+  }
+
+  public void setDeliverySameAsBilling(final boolean deliverySameAsBilling) {
+    this.deliverySameAsBilling = deliverySameAsBilling;
+  }
+
+  @Transient
+  public UserAddress getDeliveryAddressFacade() {
+    if (isDeliverySameAsBilling()) {
+      return getBillingAddress();
+    } else {
+      return getDeliveryAddress();
+    }
   }
 
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -15,38 +15,38 @@
           <h:panelGrid id="billingAddress" styleClass="pageParagraph pageIndent" columns="2">
             <h:outputLabel for="billingName" value="#{msg.shippingName}" />
             <p:inputText id="billingName" value="#{checkoutBean.billingAddress.name}" maxlength="250" required="true">
-              <p:ajax />
+              <p:ajax update="deliveryName" />
             </p:inputText>
             <h:outputLabel for="billingCompany" value="#{msg.shippingCompany}" />
             <p:inputText id="billingCompany" value="#{checkoutBean.billingAddress.company}" maxlength="250">
-              <p:ajax />
+              <p:ajax update="deliveryCompany" />
             </p:inputText>
             <h:outputLabel for="billingAddress1" value="#{msg.shippingAddress1}" />
             <p:inputText id="billingAddress1" value="#{checkoutBean.billingAddress.address1}" maxlength="250"
               required="true">
-              <p:ajax />
+              <p:ajax update="deliveryAddress1" />
             </p:inputText>
             <h:outputLabel for="billingAddress2" value="#{msg.shippingAddress2}" />
             <p:inputText id="billingAddress2" value="#{checkoutBean.billingAddress.address2}" maxlength="250">
-              <p:ajax />
+              <p:ajax update="deliveryAddress2" />
             </p:inputText>
             <h:outputLabel for="billingCity" value="#{msg.shippingCity}" />
             <p:inputText id="billingCity" value="#{checkoutBean.billingAddress.city}" maxlength="250" required="true">
-              <p:ajax />
+              <p:ajax update="deliveryCity" />
             </p:inputText>
             <h:outputLabel for="billingState" value="#{msg.shippingState}" />
             <p:inputText id="billingState" value="#{checkoutBean.billingAddress.state}" maxlength="250" required="true">
-              <p:ajax />
+              <p:ajax update="deliveryState" />
             </p:inputText>
             <h:outputLabel for="billingCountry" value="#{msg.shippingCountry}" />
             <p:selectOneMenu id="billingCountry" value="#{checkoutBean.billingAddress.country}" style="width:200px;">
               <f:selectItems value="#{checkoutBean.countries}" />
-              <p:ajax />
+              <p:ajax update="deliveryCountry" />
             </p:selectOneMenu>
             <h:outputLabel for="billingPostcode" value="#{msg.shippingPostcode}" />
             <p:inputText id="billingPostcode" value="#{checkoutBean.billingAddress.postcode}" maxlength="250"
               required="true">
-              <p:ajax />
+              <p:ajax update="deliveryPostcode" />
             </p:inputText>
           </h:panelGrid>
         </h:panelGroup>
@@ -101,7 +101,7 @@
         <h:panelGroup>
           <p:selectBooleanCheckbox id="checkoutAddressesSame" value="#{checkoutBean.addressesSame}"
             itemLabel="#{msg.checkout1AddressesSame}">
-            <p:ajax process="@this" update="deliveryAddress" />
+            <p:ajax update="deliveryAddress" />
           </p:selectBooleanCheckbox>
         </h:panelGroup>
       </h:panelGrid>

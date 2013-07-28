@@ -21,7 +21,7 @@
           <p:outputLabel for="nameField" value="#{msg.adminUserNameField}" />
           <h:panelGroup>
             <p:inputText id="nameField" value="#{userAdminBean.selected.name}" required="true"
-              requiredMessage="#{msg.adminUserNameFieldRequired}" size="24">
+              requiredMessage="#{msg.adminUserNameFieldRequired}" size="24" maxlength="250">
               <p:ajax />
             </p:inputText>
             <h:message errorClass="inlineMessage ui-state-error" for="nameField" />
@@ -29,7 +29,7 @@
           <p:outputLabel for="emailField" value="#{msg.adminUserEmailField}" />
           <h:panelGroup>
             <p:inputText id="emailField" value="#{userAdminBean.selected.email}" required="true"
-              requiredMessage="#{msg.adminUserEmailFieldRequired}" size="24">
+              requiredMessage="#{msg.adminUserEmailFieldRequired}" size="24" maxlength="250">
               <f:attribute name="old" value="#{userAdminBean.selected.email}" />
               <f:validator validatorId="EmailFormatValidator" />
               <f:validator validatorId="EmailUniquenessValidator" />
@@ -37,12 +37,114 @@
             </p:inputText>
             <h:message errorClass="inlineMessage ui-state-error" for="emailField" />
           </h:panelGroup>
-          <p:outputLabel for="adminField" value="#{msg.adminUserAdminField}" />
           <h:panelGroup>
-            <p:selectBooleanCheckbox id="adminField" value="#{userAdminBean.selected.administrator}">
+          </h:panelGroup>
+          <h:panelGroup>
+            <p:selectBooleanCheckbox id="adminField" value="#{userAdminBean.selected.administrator}"
+              itemLabel="#{msg.adminUserAdminField}">
               <p:ajax />
             </p:selectBooleanCheckbox>
           </h:panelGroup>
+          <h:panelGroup>
+          </h:panelGroup>
+          <h:panelGroup>
+            <p:selectBooleanCheckbox id="sameField" value="#{userAdminBean.selected.deliverySameAsBilling}"
+              itemLabel="#{msg.adminUserAddressesSameField}">
+              <p:ajax update="deliveryAddress" />
+            </p:selectBooleanCheckbox>
+          </h:panelGroup>
+        </h:panelGrid>
+        <h:panelGrid columns="2">
+          <p:panel id="billingAddress" header="#{msg.adminUserTableBillingColumn}">
+            <h:panelGrid columns="2">
+              <p:outputLabel for="billingNameField" value="#{msg.adminUserAddressNameField}" />
+              <p:inputText id="billingNameField" value="#{userAdminBean.selected.billingAddress.name}" size="24"
+                maxlength="250">
+                <p:ajax update="deliveryNameField" />
+              </p:inputText>
+              <p:outputLabel for="billingCompanyField" value="#{msg.adminUserAddressCompanyField}" />
+              <p:inputText id="billingCompanyField" value="#{userAdminBean.selected.billingAddress.company}" size="24"
+                maxlength="250">
+                <p:ajax update="deliveryCompanyField" />
+              </p:inputText>
+              <p:outputLabel for="billingAddress1Field" value="#{msg.shippingAddress1}" />
+              <p:inputText id="billingAddress1Field" value="#{userAdminBean.selected.billingAddress.address1}" size="24"
+                maxlength="250">
+                <p:ajax update="deliveryAddress1Field" />
+              </p:inputText>
+              <p:outputLabel for="billingAddress2Field" value="#{msg.shippingAddress2}" />
+              <p:inputText id="billingAddress2Field" value="#{userAdminBean.selected.billingAddress.address2}" size="24"
+                maxlength="250">
+                <p:ajax update="deliveryAddress2Field" />
+              </p:inputText>
+              <p:outputLabel for="billingCityField" value="#{msg.shippingCity}" />
+              <p:inputText id="billingCityField" value="#{userAdminBean.selected.billingAddress.city}" size="24"
+                maxlength="250">
+                <p:ajax update="deliveryCityField" />
+              </p:inputText>
+              <p:outputLabel for="billingStateField" value="#{msg.shippingState}" />
+              <p:inputText id="billingStateField" value="#{userAdminBean.selected.billingAddress.state}" size="24"
+                maxlength="250">
+                <p:ajax update="deliveryStateField" />
+              </p:inputText>
+              <p:outputLabel for="billingCountryField" value="#{msg.shippingCountry}" />
+              <p:selectOneMenu id="billingCountryField" value="#{userAdminBean.selected.billingAddress.country}"
+                style="width:205px;">
+                <f:selectItems value="#{checkoutBean.countries}" />
+                <p:ajax update="deliveryCountryField" />
+              </p:selectOneMenu>
+              <p:outputLabel for="billingPostcodeField" value="#{msg.shippingPostcode}" />
+              <p:inputText id="billingPostcodeField" value="#{userAdminBean.selected.billingAddress.postcode}" size="24"
+                maxlength="250">
+                <p:ajax update="deliveryPostcodeField" />
+              </p:inputText>
+            </h:panelGrid>
+          </p:panel>
+          <p:panel id="deliveryAddress" header="#{msg.adminUserTableDeliveryColumn}">
+            <h:panelGrid columns="2">
+              <p:outputLabel for="deliveryNameField" value="#{msg.adminUserAddressNameField}" />
+              <p:inputText id="deliveryNameField" value="#{userAdminBean.selected.deliveryAddressFacade.name}" size="24"
+                maxlength="250" disabled="#{userAdminBean.selected.deliverySameAsBilling}">
+                <p:ajax />
+              </p:inputText>
+              <p:outputLabel for="deliveryCompanyField" value="#{msg.adminUserAddressCompanyField}" />
+              <p:inputText id="deliveryCompanyField" value="#{userAdminBean.selected.deliveryAddressFacade.company}"
+                size="24" maxlength="250" disabled="#{userAdminBean.selected.deliverySameAsBilling}">
+                <p:ajax />
+              </p:inputText>
+              <p:outputLabel for="deliveryAddress1Field" value="#{msg.shippingAddress1}" />
+              <p:inputText id="deliveryAddress1Field" value="#{userAdminBean.selected.deliveryAddressFacade.address1}"
+                size="24" maxlength="250" disabled="#{userAdminBean.selected.deliverySameAsBilling}">
+                <p:ajax />
+              </p:inputText>
+              <p:outputLabel for="deliveryAddress2Field" value="#{msg.shippingAddress2}" />
+              <p:inputText id="deliveryAddress2Field" value="#{userAdminBean.selected.deliveryAddressFacade.address2}"
+                size="24" maxlength="250" disabled="#{userAdminBean.selected.deliverySameAsBilling}">
+                <p:ajax />
+              </p:inputText>
+              <p:outputLabel for="deliveryCityField" value="#{msg.shippingCity}" />
+              <p:inputText id="deliveryCityField" value="#{userAdminBean.selected.deliveryAddressFacade.city}" size="24"
+                maxlength="250" disabled="#{userAdminBean.selected.deliverySameAsBilling}">
+                <p:ajax />
+              </p:inputText>
+              <p:outputLabel for="deliveryStateField" value="#{msg.shippingState}" />
+              <p:inputText id="deliveryStateField" value="#{userAdminBean.selected.deliveryAddressFacade.state}"
+                size="24" maxlength="250" disabled="#{userAdminBean.selected.deliverySameAsBilling}">
+                <p:ajax />
+              </p:inputText>
+              <p:outputLabel for="deliveryCountryField" value="#{msg.shippingCountry}" />
+              <p:selectOneMenu id="deliveryCountryField" value="#{userAdminBean.selected.deliveryAddressFacade.country}"
+                style="width:205px;" disabled="#{userAdminBean.selected.deliverySameAsBilling}">
+                <f:selectItems value="#{checkoutBean.countries}" />
+                <p:ajax />
+              </p:selectOneMenu>
+              <p:outputLabel for="deliveryPostcodeField" value="#{msg.shippingPostcode}" />
+              <p:inputText id="deliveryPostcodeField" value="#{userAdminBean.selected.deliveryAddressFacade.postcode}"
+                size="24" maxlength="250" disabled="#{userAdminBean.selected.deliverySameAsBilling}">
+                <p:ajax />
+              </p:inputText>
+            </h:panelGrid>
+          </p:panel>
         </h:panelGrid>
       </p:panel>
     </h:form>

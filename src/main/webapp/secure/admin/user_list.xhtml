@@ -35,7 +35,7 @@
           </p:column>
           <p:rowExpansion>
             <div class="ui-dt-c">
-              <h:panelGrid columns="2">
+              <h:panelGrid columns="2" styleClass="userAddressTable" columnClasses="userAddressColumn,userAddressColumn">
                 <h:panelGroup>
                   <p>
                     <h:outputText styleClass="userAddressHeading" value="#{msg.adminUserTableBillingColumn}" />
@@ -58,14 +58,14 @@
                   </p>
                   <p>
                     <!-- All in same panel group to make it easier to cut and paste -->
-                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.name}" />
-                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.company}" />
-                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.address1}" />
-                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.address2}" />
-                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.city}" />
-                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.state}" />
-                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.country}" />
-                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddress.postcode}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddressFacade.name}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddressFacade.company}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddressFacade.address1}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddressFacade.address2}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddressFacade.city}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddressFacade.state}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddressFacade.country}" />
+                    <h:outputText styleClass="userAddress" value="#{user.deliveryAddressFacade.postcode}" />
                   </p>
                 </h:panelGroup>
               </h:panelGrid>

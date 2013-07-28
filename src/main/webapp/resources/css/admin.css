@@ -70,6 +70,15 @@ img {
   width: 250px;
 }
 
+table.userAddressTable {
+  width: auto;
+}
+
+table.userAddressTable .userAddressColumn {
+  padding-right: 1.5em;
+  vertical-align: top;
+}
+
 .userAddressHeading {
   font-weight: bold;
 }

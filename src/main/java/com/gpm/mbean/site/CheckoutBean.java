@@ -52,23 +52,11 @@ public class CheckoutBean implements Serializable {
   }
 
   public UserAddress getBillingAddress() {
-    UserAddress address = user.getBillingAddress();
-    if (address == null) {
-      address = new UserAddress();
-      address.setName(user.getName());
-      address.setCountry("UNITED KINGDOM");
-      user.setBillingAddress(address);
-    }
-    return address;
+    return user.getBillingAddress();
   }
 
   public UserAddress getDeliveryAddress() {
-    UserAddress address = user.getDeliveryAddress();
-    if (address == null) {
-      address = getBillingAddress();
-      user.setDeliveryAddress(address);
-    }
-    return address;
+    return user.getDeliveryAddressFacade();
   }
 
   public String getEmailAddress() {
@@ -76,24 +64,11 @@ public class CheckoutBean implements Serializable {
   }
 
   public boolean isAddressesSame() {
-    return getBillingAddress().equals(getDeliveryAddress());
+    return user.isDeliverySameAsBilling();
   }
 
   public void setAddressesSame(final boolean addressesSame) {
-    if (addressesSame) {
-      user.setDeliveryAddress(getBillingAddress());
-    } else {
-      UserAddress address = new UserAddress();
-      address.setName(getBillingAddress().getName());
-      address.setCompany(getBillingAddress().getCompany());
-      address.setAddress1(getBillingAddress().getAddress1());
-      address.setAddress2(getBillingAddress().getAddress2());
-      address.setCity(getBillingAddress().getCity());
-      address.setState(getBillingAddress().getState());
-      address.setCountry(getBillingAddress().getCountry());
-      address.setPostcode(getBillingAddress().getPostcode());
-      user.setDeliveryAddress(address);
-    }
+    user.setDeliverySameAsBilling(addressesSame);
   }
 
   public String[] getCountries() {
