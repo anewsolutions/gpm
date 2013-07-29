@@ -91,7 +91,7 @@ public class CheckoutBean implements Serializable {
     order.setUser(user);
     if (order.getTotalOrderWeight() > 0) {
       // Calculate shipping category
-      Shipping cat = BeanUtils.calculateShippingCategory(user.getDeliveryAddress().getCountry());
+      Shipping cat = BeanUtils.calculateShippingCategory(user.getDeliveryAddressFacade().getCountry());
       order.setShippingCategory(cat);
       // Calculate shipping cost for the immediate shipment
       int cost = BeanUtils.calculateShippingCost(cat, order.getTotalOrderWeight());
