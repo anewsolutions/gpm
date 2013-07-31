@@ -59,6 +59,8 @@
         <h:panelGroup>
           <h:message for="registerPasswordConfirm" />
         </h:panelGroup>
+      </h:panelGrid>
+      <h:panelGrid styleClass="pageParagraph pageIndent" columns="1">
         <p:commandButton value="#{msg.registerButton}" action="#{registerBean.register}" update="registerUser" />
       </h:panelGrid>
     </h:form>

@@ -7,6 +7,29 @@
   <ui:define name="sitePageContent">
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
       <h:outputText styleClass="pageHeading" value="#{msg.recoverPageHeading}" />
+      <h:outputText styleClass="pageParagraph" value="#{msg.recoverLostGPMAccount}" rendered="#{!recoveryBean.sent}" />
+      <h:outputFormat styleClass="pageSubSectionHeading" value="#{msg.recoverSentEmail}" rendered="#{recoveryBean.sent}">
+        <f:param value="#{recoveryBean.email}" />
+      </h:outputFormat>
+      <h:outputText styleClass="pageParagraph" value="#{msg.recoverSentEmailJunk}" rendered="#{recoveryBean.sent}" />
+      <h:panelGrid styleClass="pageParagraph pageIndent" columns="3" rendered="#{!recoveryBean.sent}">
+        <h:panelGroup>
+          <h:outputLabel for="recoverEmail" value="#{msg.recoverEmail}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:inputText id="recoverEmail" maxlength="250" size="25" required="true"
+            requiredMessage="#{msg.recoverEmailRequired}" value="#{recoveryBean.email}">
+            <f:validator validatorId="EmailFormatValidator" />
+          </p:inputText>
+          <p:watermark for="recoverEmail" value="#{msg.recoverEmailWatermark}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:message for="recoverEmail" />
+        </h:panelGroup>
+      </h:panelGrid>
+      <h:panelGrid styleClass="pageParagraph pageIndent" columns="1" rendered="#{!recoveryBean.sent}">
+        <p:commandButton value="#{msg.recoverButton}" action="#{recoveryBean.recover}" update="mainForm" />
+      </h:panelGrid>
     </h:form>
   </ui:define>
 </ui:composition>
