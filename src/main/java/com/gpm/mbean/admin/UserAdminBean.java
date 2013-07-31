@@ -129,7 +129,7 @@ public class UserAdminBean implements Serializable {
    */
   public String resetPassword() {
     try {
-      UserAccountManager.save(selected, password);
+      UserAccountManager.save(selected, password, true);
     } catch (UserAccountException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

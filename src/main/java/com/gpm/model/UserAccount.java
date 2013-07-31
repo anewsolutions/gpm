@@ -29,6 +29,7 @@ public class UserAccount extends Base {
   private String passwordHash;
   private String facebookIdent;
   private String facebookToken;
+  private boolean passwordResetNeeded = false;
   private boolean administrator = false;
   private UserAddress billingAddress = new UserAddress();
   private UserAddress deliveryAddress = new UserAddress();
@@ -101,6 +102,14 @@ public class UserAccount extends Base {
 
   public void setFacebookToken(final String facebookToken) {
     this.facebookToken = facebookToken;
+  }
+
+  public boolean isPasswordResetNeeded() {
+    return passwordResetNeeded;
+  }
+
+  public void setPasswordResetNeeded(final boolean passwordResetNeeded) {
+    this.passwordResetNeeded = passwordResetNeeded;
   }
 
   public boolean isAdministrator() {

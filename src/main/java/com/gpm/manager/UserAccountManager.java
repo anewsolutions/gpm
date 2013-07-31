@@ -140,7 +140,7 @@ public class UserAccountManager {
     UserAccount account = new UserAccount();
     account.setEmail(email);
     account.setName(name);
-    resetPassword(account, password);
+    setAccountPassword(account, password, false);
     save(account);
   }
 
@@ -175,15 +175,18 @@ public class UserAccountManager {
   }
 
   /**
-   * Utility to reset the password on an account using the given password and a new random
-   * salt.
+   * Utility to change the password on an account using the given password and a new
+   * random salt.
    * 
    * @param account
    *          the account on which the password will be changed
    * @param password
    *          the plain text to use as the new account password
+   * @param resetNeeded
+   *          whether the user should be prompted to reset their password the next time
+   *          they log in
    */
-  private static void resetPassword(final UserAccount account, final String password) {
+  private static void setAccountPassword(final UserAccount account, final String password, final boolean resetNeeded) {
     // Generate a random salt
     SecureRandom random = new SecureRandom();
     byte[] salt = new byte[32];
@@ -195,6 +198,7 @@ public class UserAccountManager {
     // Store new password and salt in the account
     account.setPasswordSalt(Hex.encodeHexString(salt));
     account.setPasswordHash(Hex.encodeHexString(hash));
+    account.setPasswordResetNeeded(resetNeeded);
   }
 
   /**
@@ -206,7 +210,7 @@ public class UserAccountManager {
    *           if there was a problem saving the user account
    */
   public static void save(final UserAccount account) throws UserAccountException {
-    save(account, null);
+    save(account, null, false);
   }
 
   /**
@@ -218,13 +222,18 @@ public class UserAccountManager {
    *          the user account to be saved
    * @param password
    *          the plain text to use as the new account password
+   * @param resetNeeded
+   *          whether the user should be prompted to reset their password the next time
+   *          they log in, this should be set to true when an administrator resets a
+   *          password on a user's behalf
    * @throws UserAccountException
    *           if there was a problem saving the user account
    */
-  public static void save(final UserAccount account, final String password) throws UserAccountException {
+  public static void save(final UserAccount account, final String password, final boolean resetNeeded)
+      throws UserAccountException {
     try {
       if (password != null && !password.isEmpty()) {
-        resetPassword(account, password);
+        setAccountPassword(account, password, resetNeeded);
       }
       ControllerFactory.getUserAccountController().save(account);
     } catch (ControllerException e) {
