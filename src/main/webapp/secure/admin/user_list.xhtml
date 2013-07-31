@@ -26,6 +26,9 @@
             <h:outputText value="#{msg.adminUserAdminYes}" rendered="#{user.administrator}" />
           </p:column>
           <p:column styleClass="actionColumn" headerText="#{msg.adminTableActionsColumn}">
+            <p:button outcome="user_password" value="#{msg.adminButtonsResetPassword}">
+              <f:param name="uuid" value="#{user.uuid}" />
+            </p:button>
             <p:button outcome="user_edit" value="#{msg.adminButtonsEdit}">
               <f:param name="uuid" value="#{user.uuid}" />
             </p:button>

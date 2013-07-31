@@ -136,20 +136,11 @@ public class UserAccountManager {
 
   public static void createNew(final String email, final String name, final String password)
       throws UserAccountException {
-    // Generate a random salt
-    SecureRandom random = new SecureRandom();
-    byte[] salt = new byte[32];
-    random.nextBytes(salt);
-
-    // Hash password with salt
-    byte[] hash = hashPassword(salt, password.getBytes());
-
     // Store account
     UserAccount account = new UserAccount();
     account.setEmail(email);
     account.setName(name);
-    account.setPasswordSalt(Hex.encodeHexString(salt));
-    account.setPasswordHash(Hex.encodeHexString(hash));
+    resetPassword(account, password);
     save(account);
   }
 
@@ -184,6 +175,29 @@ public class UserAccountManager {
   }
 
   /**
+   * Utility to reset the password on an account using the given password and a new random
+   * salt.
+   * 
+   * @param account
+   *          the account on which the password will be changed
+   * @param password
+   *          the plain text to use as the new account password
+   */
+  private static void resetPassword(final UserAccount account, final String password) {
+    // Generate a random salt
+    SecureRandom random = new SecureRandom();
+    byte[] salt = new byte[32];
+    random.nextBytes(salt);
+
+    // Hash password with salt
+    byte[] hash = hashPassword(salt, password.getBytes());
+
+    // Store new password and salt in the account
+    account.setPasswordSalt(Hex.encodeHexString(salt));
+    account.setPasswordHash(Hex.encodeHexString(hash));
+  }
+
+  /**
    * Persist the given user account to the data store.
    * 
    * @param account
@@ -192,7 +206,26 @@ public class UserAccountManager {
    *           if there was a problem saving the user account
    */
   public static void save(final UserAccount account) throws UserAccountException {
+    save(account, null);
+  }
+
+  /**
+   * Persist the given user account to the data store with a new password. If null or the
+   * empty string is passed in the password parameter then the password will not be
+   * changed.
+   * 
+   * @param account
+   *          the user account to be saved
+   * @param password
+   *          the plain text to use as the new account password
+   * @throws UserAccountException
+   *           if there was a problem saving the user account
+   */
+  public static void save(final UserAccount account, final String password) throws UserAccountException {
     try {
+      if (password != null && !password.isEmpty()) {
+        resetPassword(account, password);
+      }
       ControllerFactory.getUserAccountController().save(account);
     } catch (ControllerException e) {
       throw new UserAccountException(e);

@@ -22,6 +22,7 @@ public class UserAdminBean implements Serializable {
 
   private boolean editing;
   private UserAccount selected;
+  private String password;
 
   /**
    * Bean initialisation.
@@ -63,6 +64,25 @@ public class UserAdminBean implements Serializable {
   }
 
   /**
+   * JSF method for accessing the new account password.
+   * 
+   * @return the new plain text password
+   */
+  public String getPassword() {
+    return password;
+  }
+
+  /**
+   * JSF method for setting a new account password.
+   * 
+   * @param password
+   *          a new plain text password
+   */
+  public void setPassword(final String password) {
+    this.password = password;
+  }
+
+  /**
    * JSF method to provide access to all users.
    * 
    * @return a list of users
@@ -97,6 +117,19 @@ public class UserAdminBean implements Serializable {
   public String delete() {
     try {
       UserAccountManager.delete(selected);
+    } catch (UserAccountException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return "/secure/admin/user_list?faces-redirect=true";
+  }
+
+  /**
+   * JSF method to reset the password of the selected user.
+   */
+  public String resetPassword() {
+    try {
+      UserAccountManager.save(selected, password);
     } catch (UserAccountException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
