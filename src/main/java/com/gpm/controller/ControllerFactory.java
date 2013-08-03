@@ -9,6 +9,7 @@ import java.util.Map;
 import com.gpm.model.Base;
 import com.gpm.model.Configuration;
 import com.gpm.model.CustomerOrder;
+import com.gpm.model.Email;
 import com.gpm.model.Issue;
 import com.gpm.model.Link;
 import com.gpm.model.Product;
@@ -41,6 +42,14 @@ public class ControllerFactory {
       controllers.put(CustomerOrder.class, new Controller<CustomerOrder>(CustomerOrder.class));
     }
     return (Controller<CustomerOrder>) controllers.get(CustomerOrder.class);
+  }
+
+  @SuppressWarnings("unchecked")
+  public static Controller<Email> getEmailController() {
+    if (!controllers.containsKey(Email.class)) {
+      controllers.put(Email.class, new Controller<Email>(Email.class));
+    }
+    return (Controller<Email>) controllers.get(Email.class);
   }
 
   @SuppressWarnings("unchecked")

@@ -140,7 +140,7 @@ public class UserAccountManager {
     UserAccount account = new UserAccount();
     account.setEmail(email);
     account.setName(name);
-    setAccountPassword(account, password, false);
+    setAccountPassword(account, password);
     save(account);
   }
 
@@ -182,11 +182,8 @@ public class UserAccountManager {
    *          the account on which the password will be changed
    * @param password
    *          the plain text to use as the new account password
-   * @param resetNeeded
-   *          whether the user should be prompted to reset their password the next time
-   *          they log in
    */
-  private static void setAccountPassword(final UserAccount account, final String password, final boolean resetNeeded) {
+  private static void setAccountPassword(final UserAccount account, final String password) {
     // Generate a random salt
     SecureRandom random = new SecureRandom();
     byte[] salt = new byte[32];
@@ -198,7 +195,6 @@ public class UserAccountManager {
     // Store new password and salt in the account
     account.setPasswordSalt(Hex.encodeHexString(salt));
     account.setPasswordHash(Hex.encodeHexString(hash));
-    account.setPasswordResetNeeded(resetNeeded);
   }
 
   /**
@@ -210,7 +206,7 @@ public class UserAccountManager {
    *           if there was a problem saving the user account
    */
   public static void save(final UserAccount account) throws UserAccountException {
-    save(account, null, false);
+    save(account, null);
   }
 
   /**
@@ -222,18 +218,14 @@ public class UserAccountManager {
    *          the user account to be saved
    * @param password
    *          the plain text to use as the new account password
-   * @param resetNeeded
-   *          whether the user should be prompted to reset their password the next time
-   *          they log in, this should be set to true when an administrator resets a
-   *          password on a user's behalf
    * @throws UserAccountException
    *           if there was a problem saving the user account
    */
-  public static void save(final UserAccount account, final String password, final boolean resetNeeded)
+  public static void save(final UserAccount account, final String password)
       throws UserAccountException {
     try {
       if (password != null && !password.isEmpty()) {
-        setAccountPassword(account, password, resetNeeded);
+        setAccountPassword(account, password);
       }
       ControllerFactory.getUserAccountController().save(account);
     } catch (ControllerException e) {

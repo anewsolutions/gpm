@@ -9,7 +9,7 @@
       <h:outputText styleClass="pageHeading" value="#{msg.recoverPageHeading}" />
       <h:outputText styleClass="pageParagraph" value="#{msg.recoverLostGPMAccount}" rendered="#{!recoveryBean.sent}" />
       <h:outputFormat styleClass="pageSubSectionHeading" value="#{msg.recoverSentEmail}" rendered="#{recoveryBean.sent}">
-        <f:param value="#{recoveryBean.email}" />
+        <f:param value="#{recoveryBean.recipient}" />
       </h:outputFormat>
       <h:outputText styleClass="pageParagraph" value="#{msg.recoverSentEmailJunk}" rendered="#{recoveryBean.sent}" />
       <h:panelGrid styleClass="pageParagraph pageIndent" columns="3" rendered="#{!recoveryBean.sent}">
@@ -18,7 +18,7 @@
         </h:panelGroup>
         <h:panelGroup>
           <p:inputText id="recoverEmail" maxlength="250" size="25" required="true"
-            requiredMessage="#{msg.recoverEmailRequired}" value="#{recoveryBean.email}">
+            requiredMessage="#{msg.recoverEmailRequired}" value="#{recoveryBean.recipient}">
             <f:validator validatorId="EmailFormatValidator" />
           </p:inputText>
           <p:watermark for="recoverEmail" value="#{msg.recoverEmailWatermark}" />

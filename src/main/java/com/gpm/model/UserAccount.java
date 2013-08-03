@@ -4,6 +4,7 @@
 package com.gpm.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -29,7 +30,8 @@ public class UserAccount extends Base {
   private String passwordHash;
   private String facebookIdent;
   private String facebookToken;
-  private boolean passwordResetNeeded = false;
+  private String resetToken;
+  private Date resetTokenExpiry;
   private boolean administrator = false;
   private UserAddress billingAddress = new UserAddress();
   private UserAddress deliveryAddress = new UserAddress();
@@ -104,12 +106,22 @@ public class UserAccount extends Base {
     this.facebookToken = facebookToken;
   }
 
-  public boolean isPasswordResetNeeded() {
-    return passwordResetNeeded;
+  @Column(length = 64, nullable = true)
+  public String getResetToken() {
+    return resetToken;
   }
 
-  public void setPasswordResetNeeded(final boolean passwordResetNeeded) {
-    this.passwordResetNeeded = passwordResetNeeded;
+  public void setResetToken(final String resetToken) {
+    this.resetToken = resetToken;
+  }
+
+  @Column(nullable = true)
+  public Date getResetTokenExpiry() {
+    return resetTokenExpiry;
+  }
+
+  public void setResetTokenExpiry(final Date resetTokenExpiry) {
+    this.resetTokenExpiry = resetTokenExpiry;
   }
 
   public boolean isAdministrator() {
