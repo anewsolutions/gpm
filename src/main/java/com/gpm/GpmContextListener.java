@@ -9,6 +9,9 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.gpm.manager.UserAccountManager;
 import com.gpm.manager.exception.UserAccountException;
 import com.gpm.model.UserAccount;
@@ -16,8 +19,12 @@ import com.gpm.model.UserAccount;
 @WebListener
 public class GpmContextListener implements ServletContextListener {
 
+  private Log log = LogFactory.getLog(GpmContextListener.class);
+
+  private EmailThread emailDelivery = new EmailThread();
+
   @Override
-  public void contextInitialized(ServletContextEvent event) {
+  public void contextInitialized(final ServletContextEvent event) {
     // User address migration
     // TODO: Remove this after first production deployment
     try {
@@ -35,9 +42,18 @@ public class GpmContextListener implements ServletContextListener {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+
+    // Start threads
+    emailDelivery.start();
   }
 
   @Override
-  public void contextDestroyed(ServletContextEvent event) {
+  public void contextDestroyed(final ServletContextEvent event) {
+    // Stop threads
+    try {
+      emailDelivery.stop();
+    } catch (InterruptedException e) {
+      log.warn("Thread interrupted whilst waiting for email delivery thread to stop");
+    }
   }
 }
