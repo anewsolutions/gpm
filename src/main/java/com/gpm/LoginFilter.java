@@ -40,6 +40,7 @@ public class LoginFilter implements Filter {
   private static final String LOGIN = SECURE_PATH + "login.xhtml";
   private static final String REGISTER = SECURE_PATH + "register.xhtml";
   private static final String RECOVER = SECURE_PATH + "recover.xhtml";
+  private static final String RESET = SECURE_PATH + "reset.xhtml";
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
@@ -63,8 +64,8 @@ public class LoginFilter implements Filter {
       }
       if (login.isLoggedIn()) {
         // We are logged in already
-        if (uri.startsWith(LOGIN) || uri.startsWith(REGISTER) || uri.startsWith(RECOVER)) {
-          // Do not permit log into, register or recover accounts
+        if (uri.startsWith(LOGIN) || uri.startsWith(REGISTER) || uri.startsWith(RECOVER) || uri.startsWith(RESET)) {
+          // Do not permit log into, register, recover or reset
           res.sendRedirect(HOME);
         } else if (uri.startsWith(ADMIN_PATH)) {
           // If an admin page is requested, check if user is an administrator
@@ -88,7 +89,7 @@ public class LoginFilter implements Filter {
         }
       } else {
         // We are not logged in
-        if (uri.startsWith(LOGIN) || uri.startsWith(REGISTER) || uri.startsWith(RECOVER)) {
+        if (uri.startsWith(LOGIN) || uri.startsWith(REGISTER) || uri.startsWith(RECOVER) || uri.startsWith(RESET)) {
           // These pages are fine, so store the referring URI and let users through to the
           // log in, register or recover pages
           if (login.getRedirect() == null) {
