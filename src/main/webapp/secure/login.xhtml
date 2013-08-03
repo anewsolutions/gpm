@@ -10,7 +10,8 @@
       <h:outputText styleClass="pageParagraph" value="#{msg.loginLogInWithThirdPartyCreds}" />
       <h:panelGrid styleClass="pageParagraph pageIndent" columns="1">
         <h:panelGroup>
-          <h:outputLink value="#{loginBean.facebookLoginUrl}">
+          <!-- TODO: remove target=_blank when domains are sorted out -->
+          <h:outputLink value="#{loginBean.facebookLoginUrl}" target="_blank">
             <p:graphicImage library="images" name="login-facebook.png" alt="#{msg.loginFacebookAltText}"
               title="#{msg.loginFacebook}" />
           </h:outputLink>
