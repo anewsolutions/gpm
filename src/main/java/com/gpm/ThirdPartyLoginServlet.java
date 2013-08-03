@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -38,6 +40,8 @@ import com.gpm.model.Configuration;
 public class ThirdPartyLoginServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
+  private Log log = LogFactory.getLog(ThirdPartyLoginServlet.class);
+
   public static final String THIRDPARTY_PATH = "/thirdparty/";
   public static final String FACEBOOK_LOGIN = "facebook.login";
 
@@ -53,6 +57,7 @@ public class ThirdPartyLoginServlet extends HttpServlet {
     if (request.getPathInfo().endsWith(FACEBOOK_LOGIN)) {
       facebookLogin(request, response);
     } else {
+      log.error("Third party log in service not found");
       response.sendError(HttpServletResponse.SC_NOT_FOUND);
     }
   }
@@ -79,14 +84,17 @@ public class ThirdPartyLoginServlet extends HttpServlet {
           response.sendRedirect(logIn.getRedirect().toString());
         } catch (UserAccountException e) {
           // Unable to talk to database
+          log.error("Unable to retrieve or create facebook user account: " + e.getMessage());
           response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
       } else {
         // Login failed or user declined authorisation
+        log.error("Login failed or user declined authorisation, cannot log in");
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
       }
     } else {
       // Session ID mis-match
+      log.error("Session ID mis-match, cannot log in");
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
   }
