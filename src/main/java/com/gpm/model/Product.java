@@ -13,6 +13,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
@@ -26,7 +27,6 @@ public class Product extends Base {
   private static final long serialVersionUID = 1L;
 
   private String name;
-  private String code;
   private Set<Variant> variants = new HashSet<Variant>(0);
   private String description;
 
@@ -41,15 +41,6 @@ public class Product extends Base {
 
   public void setName(final String name) {
     this.name = name;
-  }
-
-  @Column(nullable = false)
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(final String code) {
-    this.code = code.toUpperCase();
   }
 
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -84,7 +75,8 @@ public class Product extends Base {
     this.variants = variants;
   }
 
-  @Column(nullable = false, length = 1000)
+  @Column(nullable = false)
+  @Lob
   public String getDescription() {
     return description;
   }

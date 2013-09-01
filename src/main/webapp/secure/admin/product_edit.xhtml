@@ -17,7 +17,8 @@
               update="variantsFieldLabelPanel,variantsFieldPanel,imageFieldLabelPanel,imageFieldPanel,priceFieldLabelPanel,priceFieldPanel,weightFieldLabelPanel,weightFieldPanel,stockFieldLabelPanel,stockFieldPanel"
               ajax="true" process="@this" />
             <p:commandButton value="#{msg.adminButtonsSave}" action="#{productAdminBean.save}" ajax="false" />
-            <p:button outcome="product_list" value="#{msg.adminButtonsCancel}" />
+            <p:commandButton value="#{msg.adminButtonsCancel}" action="#{productAdminBean.cancel}" ajax="false"
+              immediate="true" />
           </h:panelGroup>
         </h:panelGrid>
         <h:panelGrid columns="2">
@@ -28,14 +29,6 @@
               <p:ajax />
             </p:inputText>
             <h:message errorClass="inlineMessage ui-state-error" for="nameField" />
-          </h:panelGroup>
-          <p:outputLabel for="codeField" value="#{msg.adminProductCodeField}" />
-          <h:panelGroup>
-            <p:inputText id="codeField" value="#{productAdminBean.selected.code}" required="true"
-              requiredMessage="#{msg.adminProductCodeFieldRequired}" size="10" styleClass="productCode">
-              <p:ajax update="variantsFieldPanel" />
-            </p:inputText>
-            <h:message errorClass="inlineMessage ui-state-error" for="codeField" />
           </h:panelGroup>
           <h:panelGroup id="variantsFieldLabelPanel">
             <h:outputText value="#{msg.adminProductVariantsField}"
@@ -58,26 +51,14 @@
                     </p:inputText>
                     <h:message errorClass="inlineMessage ui-state-error" for="variantNameField" />
                   </h:panelGroup>
-                  <p:outputLabel for="variantCodeField" value="#{msg.adminProductCodeField}" />
-                  <h:panelGroup>
-                    <h:outputText value="#{productAdminBean.selected.code} - "
-                      rendered="#{not empty productAdminBean.selected.code}" />
-                    <p:inputText id="variantCodeField" value="#{variant.code}" required="true"
-                      requiredMessage="#{msg.adminProductVariantCodeFieldRequired}" size="10" styleClass="productCode">
-                      <p:ajax />
-                    </p:inputText>
-                    <h:message errorClass="inlineMessage ui-state-error" for="variantCodeField" />
-                  </h:panelGroup>
                   <h:outputLabel for="variantImageField" value="#{msg.adminProductImageField}" />
                   <h:panelGroup>
-                    <p:commandLink id="variantImageField" oncomplete="uploadDialogWidget.show()" ajax="true"
-                      process="@this" action="#{productAdminBean.setVariantForImage(variant)}">
-                      <p:graphicImage styleClass="previewImage" value="/uploads/#{variant.imageFilename}"
-                        rendered="#{variant.hasImage}" />
-                      <p:graphicImage styleClass="previewImage"
-                        value="http://placehold.it/98&amp;text=#{msg.adminProductImageFieldNoImage}"
-                        rendered="#{!variant.hasImage}" />
+                    <p:commandLink id="variantImageFieldButton" oncomplete="uploadDialogWidget.show()" ajax="true"
+                      process="@this" action="#{productAdminBean.setCurrentVariant(variant)}">
+                      <p:graphicImage styleClass="previewImage" value="#{variant.itemImageUri}" />
                     </p:commandLink>
+                    <h:inputHidden id="variantImageField" value="#{variant.itemImage}" />
+                    <h:message errorClass="inlineMessage ui-state-error" for="variantImageField" />
                   </h:panelGroup>
                   <p:outputLabel for="variantPriceField" value="#{msg.adminProductPriceField}" />
                   <h:panelGroup>
@@ -118,16 +99,14 @@
               rendered="#{productAdminBean.selected.numVariants == 1}" />
           </h:panelGroup>
           <h:panelGroup id="imageFieldPanel">
-            <p:commandLink id="imageField" oncomplete="uploadDialogWidget.show()" ajax="true" process="@this"
-              action="#{productAdminBean.setVariantForImage(productAdminBean.selected.variantsAsList[0])}"
+            <p:commandLink id="imageFieldButton" oncomplete="uploadDialogWidget.show()" ajax="true" process="@this"
+              action="#{productAdminBean.setCurrentVariant(productAdminBean.selected.variantsAsList[0])}"
               rendered="#{productAdminBean.selected.numVariants == 1}">
               <p:graphicImage styleClass="previewImage"
-                value="/uploads/#{productAdminBean.selected.variantsAsList[0].imageFilename}"
-                rendered="#{productAdminBean.selected.variantsAsList[0].hasImage}" />
-              <p:graphicImage styleClass="previewImage"
-                value="http://placehold.it/98&amp;text=#{msg.adminProductImageFieldNoImage}"
-                rendered="#{!productAdminBean.selected.variantsAsList[0].hasImage}" />
+                value="#{productAdminBean.selected.variantsAsList[0].itemImageUri}" />
             </p:commandLink>
+            <h:inputHidden id="imageField" value="#{productAdminBean.selected.variantsAsList[0].itemImage}" />
+            <h:message errorClass="inlineMessage ui-state-error" for="imageField" />
           </h:panelGroup>
           <h:panelGroup id="priceFieldLabelPanel">
             <p:outputLabel for="priceField" value="#{msg.adminProductPriceField}"
@@ -167,11 +146,8 @@
           </h:panelGroup>
           <p:outputLabel for="descriptionField" value="#{msg.adminProductDescriptionField}" />
           <h:panelGroup>
-            <p:inputTextarea id="descriptionField" rows="5" cols="45" counter="descriptionFieldHint" maxlength="1000"
-              counterTemplate="#{msg.adminProductDescriptionFieldHint}" value="#{productAdminBean.selected.description}"
+            <p:inputTextarea id="descriptionField" rows="15" cols="70" value="#{productAdminBean.selected.description}"
               autoResize="false" />
-            <br />
-            <h:outputText id="descriptionFieldHint" />
           </h:panelGroup>
         </h:panelGrid>
       </p:panel>

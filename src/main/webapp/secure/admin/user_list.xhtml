@@ -8,9 +8,9 @@
       <p:panel header="#{msg.adminUserManageHeading}">
         <h:panelGrid styleClass="sectionControlsTable" columns="2"
           columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
-          <h:panelGroup>
+          <!-- h:panelGroup>
             <p:button outcome="user_edit" value="#{msg.adminButtonsAdd}" />
-          </h:panelGroup>
+          </h:panelGroup -->
         </h:panelGrid>
         <p:dataTable id="userTable" var="user" value="#{userAdminBean.all}" emptyMessage="#{msg.adminNoUsersFound}">
           <p:column styleClass="toggleColumn">

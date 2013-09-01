@@ -12,6 +12,7 @@ import com.gpm.model.CustomerOrder;
 import com.gpm.model.Email;
 import com.gpm.model.Issue;
 import com.gpm.model.Link;
+import com.gpm.model.Postage;
 import com.gpm.model.Product;
 import com.gpm.model.UserAccount;
 import com.gpm.model.UserAddress;
@@ -68,6 +69,14 @@ public class ControllerFactory {
     return (Controller<Link>) controllers.get(Link.class);
   }
 
+  @SuppressWarnings("unchecked")
+  public static Controller<Postage> getPostageController() {
+    if (!controllers.containsKey(Postage.class)) {
+      controllers.put(Postage.class, new Controller<Postage>(Postage.class));
+    }
+    return (Controller<Postage>) controllers.get(Postage.class);
+  }
+  
   @SuppressWarnings("unchecked")
   public static Controller<UserAccount> getUserAccountController() {
     if (!controllers.containsKey(UserAccount.class)) {

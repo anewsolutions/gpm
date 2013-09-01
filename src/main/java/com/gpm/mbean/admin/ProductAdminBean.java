@@ -9,13 +9,20 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.primefaces.model.UploadedFile;
 
 import com.gpm.UploadsServlet;
@@ -30,11 +37,11 @@ public class ProductAdminBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private static final int BUFFER_SIZE = 1024;
+  private Map<Variant, UploadedFile> uploadedImages = new HashMap<Variant, UploadedFile>(0);
 
   private boolean editing;
   private Product selected;
-
-  private Variant variantForImage;
+  private Variant currentVariant;
 
   /**
    * Bean initialisation.
@@ -80,6 +87,16 @@ public class ProductAdminBean implements Serializable {
   }
 
   /**
+   * JSF method to set the currently selected variant.
+   * 
+   * @param currentVariant
+   *          the variant for selection
+   */
+  public void setCurrentVariant(final Variant currentVariant) {
+    this.currentVariant = currentVariant;
+  }
+
+  /**
    * JSF method to provide access to all products.
    * 
    * @return a list of products
@@ -105,6 +122,12 @@ public class ProductAdminBean implements Serializable {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+    try {
+      deleteTempUploads();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     return "/secure/admin/product_list?faces-redirect=true";
   }
 
@@ -115,6 +138,19 @@ public class ProductAdminBean implements Serializable {
     try {
       ProductManager.delete(selected);
     } catch (ProductException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return "/secure/admin/product_list?faces-redirect=true";
+  }
+
+  /**
+   * JSF method to cancel editing the selected product.
+   */
+  public String cancel() {
+    try {
+      deleteTempUploads();
+    } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
@@ -132,7 +168,6 @@ public class ProductAdminBean implements Serializable {
       v.setDefaultChoice(false);
     } else {
       v.setName("");
-      v.setCode("");
       v.setDefaultChoice(true);
     }
     selected.getVariants().add(v);
@@ -145,34 +180,39 @@ public class ProductAdminBean implements Serializable {
       if (selected.getVariants().size() == 1) {
         Variant v = selected.getDefaultVariant();
         v.setName("");
-        v.setCode("");
         v.setDefaultChoice(true);
       }
     }
   }
 
-  public void setVariantForImage(Variant variantForImage) {
-    this.variantForImage = variantForImage;
-  }
-
+  /**
+   * JSF method to provide access to the last uploaded image file.
+   * 
+   * @return a PrimeFaces upload
+   */
   public UploadedFile getUploadedImage() {
-    // TODO Can this method be removed?
-    return null;
+    return uploadedImages.get(currentVariant);
   }
 
-  public void setUploadedImage(UploadedFile uploadedImage) {
+  /**
+   * JSF method to upload a new image file.
+   * 
+   * @param uploadedImage
+   *          a PrimeFaces upload
+   */
+  public void setUploadedImage(final UploadedFile uploadedImage) {
     BufferedInputStream in = null;
     BufferedOutputStream out = null;
     try {
+      // Determine if upload has a valid MIME type
       if (!uploadedImage.getContentType().startsWith("image")) {
         throw new IOException("Not a valid image type");
       }
-      variantForImage.setHasImage(true);
-      variantForImage.setImageName(uploadedImage.getFileName());
-      variantForImage.setImageType(uploadedImage.getContentType());
-
+      // Determine temporary image name
+      String ext = FilenameUtils.getExtension(uploadedImage.getFileName());
+      currentVariant.setItemImage("tmp-" + currentVariant.getUuid() + "-" + new Date().getTime() + "." + ext);
+      File path = new File(UploadsServlet.getUploadsDirectory(), currentVariant.getItemImage());
       // Write file contents to disk
-      File path = new File(UploadsServlet.getUploadsDirectory(), variantForImage.getImageFilename());
       in = new BufferedInputStream(uploadedImage.getInputstream(), BUFFER_SIZE);
       out = new BufferedOutputStream(new FileOutputStream(path), BUFFER_SIZE);
       byte[] buffer = new byte[BUFFER_SIZE];
@@ -180,10 +220,8 @@ public class ProductAdminBean implements Serializable {
       while ((length = in.read(buffer)) >= 0) {
         out.write(buffer, 0, length);
       }
+      uploadedImages.put(currentVariant, uploadedImage);
     } catch (IOException e) {
-      variantForImage.setHasImage(false);
-      variantForImage.setImageName(null);
-      variantForImage.setImageType(null);
       // TODO Auto-generated catch block
       e.printStackTrace();
     } finally {
@@ -198,6 +236,26 @@ public class ProductAdminBean implements Serializable {
         }
       } catch (IOException e) {
         // Ignore, only closing streams
+      }
+    }
+  }
+
+  /**
+   * Utility that deletes any temporary uploads that were performed during editing, but
+   * were not saved.
+   * 
+   * @throws IOException
+   *           if there was a problem reading the uploads directory or deleting any
+   *           temporary uploads
+   */
+  private void deleteTempUploads() throws IOException {
+    if (selected != null) {
+      for (Variant variant : selected.getVariants()) {
+        Collection<File> tmpFiles = FileUtils.listFiles(UploadsServlet.getUploadsDirectory(),
+            FileFilterUtils.prefixFileFilter("tmp-" + variant.getUuid()), null);
+        for (File tmpFile : tmpFiles) {
+          FileUtils.forceDelete(tmpFile);
+        }
       }
     }
   }

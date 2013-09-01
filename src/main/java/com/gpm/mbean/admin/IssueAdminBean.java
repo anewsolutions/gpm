@@ -210,8 +210,8 @@ public class IssueAdminBean implements Serializable {
   }
 
   /**
-   * Utility that deletes any temporary uploads that were performed during editing of an
-   * issue, but were not saved.
+   * Utility that deletes any temporary uploads that were performed during editing, but
+   * were not saved.
    * 
    * @throws IOException
    *           if there was a problem reading the uploads directory or deleting any

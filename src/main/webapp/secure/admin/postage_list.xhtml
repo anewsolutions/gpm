@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/admin.xhtml">
+  <ui:define name="mainContent">
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8" enctype="application/x-www-form-urlencoded">
+      <p:panel header="#{msg.adminPostageManageHeading}">
+        <h:panelGrid styleClass="sectionControlsTable" columns="2"
+          columnClasses="sectionControlsLeftColumn, sectionControlsRightColumn">
+          <!-- h:panelGroup>
+            <p:button outcome="postage_edit" value="#{msg.adminButtonsAdd}" />
+          </h:panelGroup -->
+        </h:panelGrid>
+        <p:dataGrid id="postageMagsTable" var="postage" value="#{postageAdminBean.allMagazinesOnly}"
+          emptyMessage="#{msg.adminNoPostagesFound}" columns="5">
+          <f:facet name="header">
+            #{msg.adminPostageTableOrderTypeColumnMAGAZINES_ONLY}
+          </f:facet>
+          <h:panelGroup>
+            <p:dataTable id="postageWeightCostTable" var="bandCost" value="#{postage.bandCosts}"
+              style="text-align: center;">
+              <p:column headerText="#{msg.adminPostageTableWeightColumn}">
+                &lt; #{bandCost.weightBand}g
+              </p:column>
+              <p:column headerText="#{postageAdminBean.shippingCategory}">
+                #{postageAdminBean.shippingCost}
+              </p:column>
+            </p:dataTable>
+            <div style="text-align: center; padding-top: 0.3em;">
+              <p:button outcome="postage_edit" value="#{msg.adminButtonsEdit}">
+                <f:param name="uuid" value="#{postage.uuid}" />
+              </p:button>
+            </div>
+          </h:panelGroup>
+        </p:dataGrid>
+        <p:spacer style="height: 0.5em" />
+        <p:dataGrid id="postageMerchTable" var="postage" value="#{postageAdminBean.allWithMerchandise}"
+          emptyMessage="#{msg.adminNoPostagesFound}" columns="5">
+          <f:facet name="header">
+            #{msg.adminPostageTableOrderTypeColumnWITH_PRODUCTS}
+          </f:facet>
+          <h:panelGroup>
+            <p:dataTable id="postageWeightCostTable" var="bandCost" value="#{postage.bandCosts}"
+              style="text-align: center;">
+              <p:column headerText="#{msg.adminPostageTableWeightColumn}">
+                &lt; #{bandCost.weightBand}g
+              </p:column>
+              <p:column headerText="#{postageAdminBean.shippingCategory}">
+                #{postageAdminBean.shippingCost}
+              </p:column>
+            </p:dataTable>
+            <div style="text-align: center; padding-top: 0.3em;">
+              <p:button outcome="postage_edit" value="#{msg.adminButtonsEdit}">
+                <f:param name="uuid" value="#{postage.uuid}" />
+              </p:button>
+            </div>
+          </h:panelGroup>
+        </p:dataGrid>
+      </p:panel>
+    </h:form>
+  </ui:define>
+</ui:composition>
+</html>

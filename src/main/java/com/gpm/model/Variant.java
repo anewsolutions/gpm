@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
-import org.apache.commons.io.FilenameUtils;
+import com.gpm.UploadsServlet;
 
 /**
  * A JPA entity for a product variant.
@@ -19,10 +19,7 @@ public class Variant extends Base {
   private static final long serialVersionUID = 1L;
 
   private String name;
-  private String code;
-  private boolean hasImage;
-  private String imageName;
-  private String imageType;
+  private String itemImage;
   private Integer price;
   private Integer weight;
   private Integer stock;
@@ -32,6 +29,11 @@ public class Variant extends Base {
     super();
   }
 
+  /**
+   * The name of the product variant.
+   * 
+   * @return a human friendly name
+   */
   @Column(nullable = false)
   public String getName() {
     return name;
@@ -41,42 +43,33 @@ public class Variant extends Base {
     this.name = name;
   }
 
-  @Column(nullable = false)
-  public String getCode() {
-    return code;
+  /**
+   * The name on disk of an image of the product variant.
+   * 
+   * @return a file name
+   */
+  public String getItemImage() {
+    return itemImage;
   }
 
-  public void setCode(final String code) {
-    this.code = code.toUpperCase();
+  public void setItemImage(final String itemImage) {
+    this.itemImage = itemImage;
   }
 
-  public boolean isHasImage() {
-    return hasImage;
-  }
-
-  public void setHasImage(final boolean hasImage) {
-    this.hasImage = hasImage;
-  }
-
-  public String getImageName() {
-    return imageName;
-  }
-
-  public void setImageName(final String imageName) {
-    this.imageName = imageName;
-  }
-
-  public String getImageType() {
-    return imageType;
-  }
-
-  public void setImageType(final String imageType) {
-    this.imageType = imageType;
-  }
-
+  /**
+   * Utility to get the URI of the image or a place holder image if no image of the
+   * product variant is set.
+   * 
+   * @return a link to an image
+   */
   @Transient
-  public String getImageFilename() {
-    return getUuid() + "." + FilenameUtils.getExtension(getImageName());
+  public String getItemImageUri() {
+    String ci = getItemImage();
+    if (ci != null && !ci.isEmpty()) {
+      return UploadsServlet.UPLOADS_PATH + ci;
+    } else {
+      return "http://placehold.it/100x100";
+    }
   }
 
   @Column(nullable = false)
