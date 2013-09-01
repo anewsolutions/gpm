@@ -12,7 +12,9 @@ import com.gpm.controller.ControllerFactory;
 import com.gpm.controller.ControllerFilter;
 import com.gpm.manager.exception.PostageException;
 import com.gpm.model.Postage;
+import com.gpm.model.PostageBandCost;
 import com.gpm.model.enums.OrderType;
+import com.gpm.model.enums.Shipping;
 
 public class PostageManager {
   /**
@@ -63,6 +65,32 @@ public class PostageManager {
       List<ControllerFilter> filters = new ArrayList<ControllerFilter>();
       filters.add(new ControllerFilter("orderTypeCategory", "=", orderType));
       return ControllerFactory.getPostageController().getAll(filters);
+    } catch (ControllerException e) {
+      throw new PostageException(e);
+    }
+  }
+
+  public static int calculatePostage(final Shipping shipping, final OrderType orderType, final int weight) throws PostageException {
+    try {
+      List<ControllerFilter> filters = new ArrayList<ControllerFilter>();
+      filters.add(new ControllerFilter("orderTypeCategory", "=", orderType));
+      filters.add(new ControllerFilter("shippingCategory", "=", shipping));
+      List<Postage> postages = ControllerFactory.getPostageController().getAll(filters);
+      // Unique constraints should mean we only get one back
+      Postage postage = null;
+      if (postages != null && !postages.isEmpty()) {
+        postage = postages.get(0);
+      } else {
+        throw new PostageException("Unable to calculate postage for shipping " + shipping + " and order type " + orderType);
+      }
+      // Calculate postage weight band return that cost
+      int cost = 0;
+      for (PostageBandCost bandCost : postage.getBandCosts()) {
+        if (weight <= bandCost.getWeightBand() && cost <= bandCost.getWeightCost()) {
+          cost = bandCost.getWeightCost();
+        }
+      }
+      return cost;
     } catch (ControllerException e) {
       throw new PostageException(e);
     }

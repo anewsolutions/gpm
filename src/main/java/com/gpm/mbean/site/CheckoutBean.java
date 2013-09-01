@@ -20,9 +20,11 @@ import com.gpm.PayPointCallbackServlet;
 import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.ConfigurationManager;
 import com.gpm.manager.CustomerOrderManager;
+import com.gpm.manager.PostageManager;
 import com.gpm.manager.UserAccountManager;
 import com.gpm.manager.exception.ConfigurationException;
 import com.gpm.manager.exception.CustomerOrderException;
+import com.gpm.manager.exception.PostageException;
 import com.gpm.manager.exception.UserAccountException;
 import com.gpm.mbean.BeanUtils;
 import com.gpm.model.Configuration;
@@ -30,6 +32,7 @@ import com.gpm.model.CustomerOrder;
 import com.gpm.model.CustomerOrderItem;
 import com.gpm.model.UserAccount;
 import com.gpm.model.UserAddress;
+import com.gpm.model.enums.OrderType;
 import com.gpm.model.enums.Shipping;
 
 @ManagedBean
@@ -89,24 +92,29 @@ public class CheckoutBean implements Serializable {
 
   public String finishCheckout1() {
     order.setUser(user);
-    if (order.getTotalOrderWeight() > 0) {
-      // Calculate shipping category
-      Shipping cat = BeanUtils.calculateShippingCategory(user.getDeliveryAddressFacade().getCountry());
-      order.setShippingCategory(cat);
-      // Calculate shipping cost for the immediate shipment
-      int cost = BeanUtils.calculateShippingCost(cat, order.getTotalOrderWeight());
-      for (CustomerOrderItem item : order.getItemsAsList()) {
-        // Subs of more than one issue need extra shipment for the future deliveries
-        if (!item.isBackIssue() && item.getNumIssues() > 1) {
-          for (int i = 1; i < item.getNumIssues(); i++) {
-            cost += BeanUtils.calculateShippingCost(cat, item.getWeight());
+    try {
+      if (order.getTotalOrderWeight() > 0) {
+        // Calculate shipping category
+        Shipping cat = BeanUtils.calculateShippingCategory(user.getDeliveryAddressFacade().getCountry());
+        order.setShippingCategory(cat);
+        // Calculate shipping cost for the immediate shipment
+        int cost = PostageManager.calculatePostage(cat, OrderType.MAGAZINES_ONLY, order.getTotalOrderWeight());
+        for (CustomerOrderItem item : order.getItemsAsList()) {
+          // Subs of more than one issue need extra shipment for the future deliveries
+          if (!item.isBackIssue() && item.getNumIssues() > 1) {
+            for (int i = 1; i < item.getNumIssues(); i++) {
+              cost += PostageManager.calculatePostage(cat, OrderType.MAGAZINES_ONLY, item.getWeight());
+            }
           }
         }
+        order.setShippingPrice(cost);
+      } else {
+        order.setShippingCategory(Shipping.NONE);
+        order.setShippingPrice(0);
       }
-      order.setShippingPrice(cost);
-    } else {
-      order.setShippingCategory(Shipping.NONE);
-      order.setShippingPrice(0);
+    } catch (PostageException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
     try {
       UserAccountManager.save(user);

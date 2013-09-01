@@ -13,10 +13,13 @@ import javax.servlet.annotation.WebListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.gpm.manager.ConfigurationManager;
 import com.gpm.manager.PostageManager;
 import com.gpm.manager.UserAccountManager;
+import com.gpm.manager.exception.ConfigurationException;
 import com.gpm.manager.exception.PostageException;
 import com.gpm.manager.exception.UserAccountException;
+import com.gpm.model.Configuration;
 import com.gpm.model.Postage;
 import com.gpm.model.PostageBandCost;
 import com.gpm.model.UserAccount;
@@ -35,17 +38,27 @@ public class GpmContextListener implements ServletContextListener {
     // User address migration
     // TODO: Remove this after first production deployment
     try {
-      List<UserAccount> accounts = UserAccountManager.findAllUserAccounts();
-      for (UserAccount account : accounts) {
-        if (account.getBillingAddress().getUuid().equals(account.getDeliveryAddress().getUuid())) {
-          account.setDeliverySameAsBilling(true);
-          account.setDeliveryAddress(null);
-        } else {
-          account.setDeliverySameAsBilling(false);
+      Configuration config = ConfigurationManager.findByKey("user.migrate");
+      if (config == null) {
+        List<UserAccount> accounts = UserAccountManager.findAllUserAccounts();
+        for (UserAccount account : accounts) {
+          if (account.getBillingAddress().getUuid().equals(account.getDeliveryAddress().getUuid())) {
+            account.setDeliverySameAsBilling(true);
+            account.setDeliveryAddress(null);
+          } else {
+            account.setDeliverySameAsBilling(false);
+          }
+          UserAccountManager.save(account);
         }
-        UserAccountManager.save(account);
+        config = new Configuration();
+        config.setConfigKey("user.migrate");
+        config.setConfigValue("done");
+        ConfigurationManager.save(config);
       }
     } catch (UserAccountException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (ConfigurationException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
