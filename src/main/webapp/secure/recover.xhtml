@@ -8,7 +8,8 @@
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
       <h:outputText styleClass="pageHeading" value="#{msg.recoverPageHeading}" />
       <h:outputText styleClass="pageParagraph" value="#{msg.recoverLostGPMAccount}" rendered="#{!recoveryBean.sent}" />
-      <h:outputFormat styleClass="pageSubSectionHeading" value="#{msg.recoverSentEmail}" rendered="#{recoveryBean.sent}">
+      <h:outputFormat styleClass="pageParagraph" value="#{msg.recoverSentEmail}" rendered="#{recoveryBean.sent}"
+        escape="false">
         <f:param value="#{recoveryBean.recipient}" />
       </h:outputFormat>
       <h:outputText styleClass="pageParagraph" value="#{msg.recoverSentEmailJunk}" rendered="#{recoveryBean.sent}" />

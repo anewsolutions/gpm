@@ -7,6 +7,47 @@
   <ui:define name="sitePageContent">
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
       <h:outputText styleClass="pageHeading" value="#{msg.resetPageHeading}" />
+      <h:outputFormat styleClass="pageParagraph" value="#{msg.resetResettingAccount}"
+        rendered="#{resetPasswordBean.tokenValid}" escape="false">
+        <f:param value="#{resetPasswordBean.accountEmail}" />
+      </h:outputFormat>
+      <h:panelGrid id="resetAccountPassword" styleClass="pageParagraph pageIndent" columns="3"
+        rendered="#{resetPasswordBean.tokenValid}">
+        <h:panelGroup>
+          <h:outputLabel for="resetPassword" value="#{msg.registerPassword}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:password id="resetPassword" size="25" required="true" binding="#{passwordComponent}"
+            requiredMessage="#{msg.registerPasswordRequired}" />
+          <p:watermark for="resetPassword" value="#{msg.registerPasswordWatermark}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:message for="resetPassword" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:outputLabel for="resetPasswordConfirm" value="#{msg.registerPasswordConfirm}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:password id="resetPasswordConfirm" size="25" required="true"
+            requiredMessage="#{msg.registerPasswordConfirmRequired}" value="#{resetPasswordBean.password}">
+            <f:validator validatorId="ConfirmPasswordValidator" />
+            <f:attribute name="passwordComponent" value="#{passwordComponent}" />
+          </p:password>
+          <p:watermark for="resetPasswordConfirm" value="#{msg.registerPasswordConfirmWatermark}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:message for="resetPasswordConfirm" />
+        </h:panelGroup>
+      </h:panelGrid>
+      <h:panelGrid styleClass="pageParagraph pageIndent" columns="1" rendered="#{resetPasswordBean.tokenValid}">
+        <p:commandButton value="#{msg.resetResetPasswordButton}" action="#{resetPasswordBean.resetPassword}"
+          update="resetAccountPassword" />
+      </h:panelGrid>
+      <h:outputText styleClass="pageParagraph" value="#{msg.resetTokenInvalid}"
+        rendered="#{!resetPasswordBean.tokenValid}" />
+      <h:panelGrid styleClass="pageParagraph pageIndent" columns="1" rendered="#{!resetPasswordBean.tokenValid}">
+        <p:commandButton value="#{msg.resetReRequestButton}" action="/secure/recover.xhtml?faces-redirect=true" />
+      </h:panelGrid>
     </h:form>
   </ui:define>
 </ui:composition>

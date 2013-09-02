@@ -5,6 +5,7 @@ package com.gpm.manager;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -88,6 +89,23 @@ public class UserAccountManager {
       filters.add(new ControllerFilter("facebookIdent", "=", facebookIdent));
       List<UserAccount> accounts = ControllerFactory.getUserAccountController().getAll(filters);
       // Facebook identities are unique, so should be safe to return first result only
+      if (!accounts.isEmpty()) {
+        return accounts.get(0);
+      } else {
+        return null;
+      }
+    } catch (ControllerException e) {
+      throw new UserAccountException(e);
+    }
+  }
+
+  public static UserAccount findByResetToken(final String resetToken) throws UserAccountException {
+    try {
+      List<ControllerFilter> filters = new ArrayList<ControllerFilter>();
+      filters.add(new ControllerFilter("resetToken", "=", resetToken));
+      filters.add(new ControllerFilter("resetTokenExpiry", ">", new Date()));
+      List<UserAccount> accounts = ControllerFactory.getUserAccountController().getAll(filters);
+      // Reset tokens should be uniquely random, so should be safe to return first result only
       if (!accounts.isEmpty()) {
         return accounts.get(0);
       } else {
