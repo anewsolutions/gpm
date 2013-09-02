@@ -4,6 +4,8 @@
 package com.gpm.mbean.admin;
 
 import java.io.Serializable;
+import java.security.SecureRandom;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +13,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.codec.binary.Hex;
+
+import com.gpm.manager.EmailManager;
 import com.gpm.manager.UserAccountManager;
+import com.gpm.manager.exception.EmailException;
 import com.gpm.manager.exception.UserAccountException;
 import com.gpm.model.UserAccount;
 
@@ -22,7 +28,6 @@ public class UserAdminBean implements Serializable {
 
   private boolean editing;
   private UserAccount selected;
-  private String password;
 
   /**
    * Bean initialisation.
@@ -61,25 +66,6 @@ public class UserAdminBean implements Serializable {
    */
   public UserAccount getSelected() {
     return selected;
-  }
-
-  /**
-   * JSF method for accessing the new account password.
-   * 
-   * @return the new plain text password
-   */
-  public String getPassword() {
-    return password;
-  }
-
-  /**
-   * JSF method for setting a new account password.
-   * 
-   * @param password
-   *          a new plain text password
-   */
-  public void setPassword(final String password) {
-    this.password = password;
   }
 
   /**
@@ -125,11 +111,22 @@ public class UserAdminBean implements Serializable {
   }
 
   /**
-   * JSF method to reset the password of the selected user.
+   * JSF method to trigger account recovery process for a user.
    */
-  public String resetPassword() {
+  public String recoverAccount() {
     try {
-      UserAccountManager.save(selected, password);
+      // Generate a random key
+      SecureRandom random = new SecureRandom();
+      byte[] key = new byte[32];
+      random.nextBytes(key);
+      String resetToken = Hex.encodeHexString(key);
+      EmailManager.createResetAccountEmail(selected.getEmail(), resetToken);
+      selected.setResetToken(resetToken);
+      selected.setResetTokenExpiry(new Date (System.currentTimeMillis() + 86400000l));
+      UserAccountManager.save(selected);
+    } catch (EmailException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     } catch (UserAccountException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
