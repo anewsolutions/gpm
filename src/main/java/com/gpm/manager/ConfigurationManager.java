@@ -5,6 +5,7 @@ package com.gpm.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.UUID;
 
 import com.gpm.controller.ControllerException;
@@ -43,6 +44,21 @@ public class ConfigurationManager {
   public static List<Configuration> findAllConfigs() throws ConfigurationException {
     try {
       return ControllerFactory.getConfigurationController().getAll();
+    } catch (ControllerException e) {
+      throw new ConfigurationException(e);
+    }
+  }
+
+  public static Properties findPropsByKey(final String key) throws ConfigurationException {
+    try {
+      Properties props = new Properties();
+      List<ControllerFilter> filters = new ArrayList<ControllerFilter>();
+      filters.add(new ControllerFilter("configKey", "like", key + "%"));
+      List<Configuration> configs = ControllerFactory.getConfigurationController().getAll(filters);
+      for (Configuration config : configs) {
+        props.put(config.getConfigKey(), config.getConfigValue());
+      }
+      return props;
     } catch (ControllerException e) {
       throw new ConfigurationException(e);
     }

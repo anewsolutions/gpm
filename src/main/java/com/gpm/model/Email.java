@@ -16,21 +16,22 @@ import javax.persistence.Lob;
 public class Email extends Base {
   private static final long serialVersionUID = 1L;
 
-  private String recipient;
+  private String recipientAddress;
   private String subject;
   private String body;
+  private Integer failures = 0;
 
   public Email() {
     super();
   }
 
   @Column(nullable = false)
-  public String getRecipient() {
-    return recipient;
+  public String getRecipientAddress() {
+    return recipientAddress;
   }
 
-  public void setRecipient(final String recipient) {
-    this.recipient = recipient;
+  public void setRecipientAddress(final String recipientAddress) {
+    this.recipientAddress = recipientAddress;
   }
 
   @Column(nullable = false)
@@ -50,5 +51,14 @@ public class Email extends Base {
 
   public void setBody(final String body) {
     this.body = body;
+  }
+
+  @Column(nullable = false)
+  public Integer getFailures() {
+    return failures;
+  }
+
+  public void setFailures(final Integer failures) {
+    this.failures = failures;
   }
 }

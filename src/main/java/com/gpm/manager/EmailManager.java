@@ -51,14 +51,14 @@ public class EmailManager {
     }
   }
 
-  public static void createResetAccountNotFoundEmail(final String recipient) throws EmailException {
+  public static void createResetAccountNotFoundEmail(final String recipientAddress) throws EmailException {
     ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
     HttpServletRequest request = (HttpServletRequest) context.getRequest();
     String server = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
     String loginLink = server + "/secure/login.xhtml";
 
     StringBuilder s = new StringBuilder("<html><head></head><body>");
-    s.append("<p>" + MessageProvider.getMessage("emailTextRecoveryNotFound1", recipient) + "</p>");
+    s.append("<p>" + MessageProvider.getMessage("emailTextRecoveryNotFound1", recipientAddress) + "</p>");
     s.append("<p>" + MessageProvider.getMessage("emailTextRecoveryNotFound2", loginLink) + "</p>");
     s.append("<p>" + MessageProvider.getMessage("emailTextRecoveryNotFound3") + "</p>");
     s.append("<p>");
@@ -67,20 +67,20 @@ public class EmailManager {
     s.append("</body></html>");
 
     Email email = new Email();
-    email.setRecipient(recipient);
+    email.setRecipientAddress(recipientAddress);
     email.setSubject(MessageProvider.getMessage("emailTextRecoverySubject"));
     email.setBody(s.toString());
     save(email);
   }
 
-  public static void createResetAccountEmail(final String recipient, final String resetToken) throws EmailException {
+  public static void createResetAccountEmail(final String recipientAddress, final String resetToken) throws EmailException {
     ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
     HttpServletRequest request = (HttpServletRequest) context.getRequest();
     String server = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
     String resetLink = server + "/secure/reset.xhtml?resetToken=" + resetToken;
 
     StringBuilder s = new StringBuilder("<html><head></head><body>");
-    s.append("<p>" + MessageProvider.getMessage("emailTextRecoveryReset1", recipient) + "</p>");
+    s.append("<p>" + MessageProvider.getMessage("emailTextRecoveryReset1", recipientAddress) + "</p>");
     s.append("<p>" + MessageProvider.getMessage("emailTextRecoveryReset2", resetLink) + "</p>");
     s.append("<p>");
     s.append(MessageProvider.getMessage("emailTextBestRegards"));
@@ -88,7 +88,7 @@ public class EmailManager {
     s.append("</body></html>");
 
     Email email = new Email();
-    email.setRecipient(recipient);
+    email.setRecipientAddress(recipientAddress);
     email.setSubject(MessageProvider.getMessage("emailTextRecoverySubject"));
     email.setBody(s.toString());
     save(email);
