@@ -42,4 +42,13 @@
     <exception-type>javax.faces.application.ViewExpiredException</exception-type>
     <location>/index.xhtml</location>
   </error-page>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Secure Area</web-resource-name>
+      <url-pattern>/secure/*</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
 </web-app>

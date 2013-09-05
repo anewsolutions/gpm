@@ -12,7 +12,6 @@ import com.gpm.controller.ControllerFactory;
 import com.gpm.controller.ControllerFilter;
 import com.gpm.manager.exception.PostageException;
 import com.gpm.model.Postage;
-import com.gpm.model.PostageBandCost;
 import com.gpm.model.enums.OrderType;
 import com.gpm.model.enums.Shipping;
 
@@ -84,11 +83,9 @@ public class PostageManager {
         throw new PostageException("Unable to calculate postage for shipping " + shipping + " and order type " + orderType);
       }
       // Calculate postage weight band return that cost
-      int cost = 0;
-      for (PostageBandCost bandCost : postage.getBandCosts()) {
-        if (weight <= bandCost.getWeightBand() && cost <= bandCost.getWeightCost()) {
-          cost = bandCost.getWeightCost();
-        }
+      int cost = postage.getCostForBand(weight);
+      if (cost < 0) {
+        throw new PostageException("Unable to calculate postage for shipping " + shipping + " and order type " + orderType);
       }
       return cost;
     } catch (ControllerException e) {

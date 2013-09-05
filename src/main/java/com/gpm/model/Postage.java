@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import com.gpm.model.enums.OrderType;
@@ -60,5 +61,22 @@ public class Postage extends Base {
 
   public void setBandCosts(final List<PostageBandCost> bandCosts) {
     this.bandCosts = bandCosts;
+  }
+
+  @Transient
+  public int getCostForBand(int weight) {
+    // Special case for zero weight (free postage)
+    if (weight == 0) {
+      return 0;
+    }
+    int cost = -1;
+    int foundWeightBand = 0;
+    for (PostageBandCost bandCost : getBandCosts()) {
+      if (weight <= bandCost.getWeightBand() && (foundWeightBand > bandCost.getWeightBand() || foundWeightBand == 0)) {
+        foundWeightBand = bandCost.getWeightBand();
+        cost = bandCost.getWeightCost();
+      }
+    }
+    return cost;
   }
 }

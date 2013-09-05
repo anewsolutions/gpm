@@ -2,7 +2,7 @@
 <suite name="Suite" parallel="false">
   <test name="Test">
     <classes>
-      <class name="com.gpm.NewTest"/>
+      <class name="com.gpm.model.ModelTests"/>
     </classes>
   </test>
 </suite>
