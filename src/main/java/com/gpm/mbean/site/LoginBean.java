@@ -111,4 +111,9 @@ public class LoginBean implements Serializable {
     ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
     return ThirdPartyLoginServlet.getFacebookLoginUrl((HttpServletRequest) context.getRequest());
   }
+
+  public String getGoogleLoginUrl() {
+    ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+    return ThirdPartyLoginServlet.getGoogleLoginUrl((HttpServletRequest) context.getRequest());
+  }
 }

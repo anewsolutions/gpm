@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,6 +45,7 @@ public class ThirdPartyLoginServlet extends HttpServlet {
 
   public static final String THIRDPARTY_PATH = "/thirdparty/";
   public static final String FACEBOOK_LOGIN = "facebook.login";
+  public static final String GOOGLE_LOGIN = "google.login";
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,6 +58,8 @@ public class ThirdPartyLoginServlet extends HttpServlet {
     // Dispatch to third-party service specific handlers
     if (request.getPathInfo().endsWith(FACEBOOK_LOGIN)) {
       facebookLogin(request, response);
+    } else if (request.getPathInfo().endsWith(GOOGLE_LOGIN)) {
+      googleLogin(request, response);
     } else {
       log.error("Third party log in service not found");
       response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -99,20 +103,53 @@ public class ThirdPartyLoginServlet extends HttpServlet {
     }
   }
 
+  /**
+   * Handle Google's federated log in service requests.
+   */
+  private void googleLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+      IOException {
+
+  }
+
   public static String getFacebookLoginUrl(HttpServletRequest request) {
     String redirect = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
         + THIRDPARTY_PATH + FACEBOOK_LOGIN;
     String state = request.getSession(false).getId();
-    String key = "";
+    String key = null;
     try {
-      Configuration config = ConfigurationManager.findByKey("facebook.key");
-      key = config.getConfigValue();
+      Properties props = ConfigurationManager.findPropsByKey(FACEBOOK_LOGIN);
+      key = props.getProperty(FACEBOOK_LOGIN + ".key");
+      if (key == null || key.isEmpty()) {
+        return null;
+      }
     } catch (ConfigurationException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
+      return null;
     }
     String url = "https://www.facebook.com/dialog/oauth?client_id=" + key + "&redirect_uri=" + redirect
         + "&scope=email&state=" + state;
+    return url;
+  }
+
+  public static String getGoogleLoginUrl(HttpServletRequest request) {
+    String redirect = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+        + THIRDPARTY_PATH + GOOGLE_LOGIN;
+    String state = request.getSession(false).getId();
+    String key = null;
+    try {
+      Properties props = ConfigurationManager.findPropsByKey(GOOGLE_LOGIN);
+      key = props.getProperty(GOOGLE_LOGIN + ".key");
+      if (key == null || key.isEmpty()) {
+        return null;
+      }
+    } catch (ConfigurationException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      return null;
+    }
+    String url = "https://accounts.google.com/o/oauth2/auth?client_id=" + key + "&redirect_uri=" + redirect
+        + "&response_type=code&scope=openid%20email&state=" + state;
     return url;
   }
 

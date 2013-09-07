@@ -8,11 +8,17 @@
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
       <h:outputText styleClass="pageHeading" value="#{msg.loginPageHeading}" />
       <h:outputText styleClass="pageParagraph" value="#{msg.loginLogInWithThirdPartyCreds}" />
-      <h:panelGrid styleClass="pageParagraph pageIndent" columns="1">
-        <h:panelGroup>
+      <h:panelGrid styleClass="pageParagraph pageIndent" columns="2">
+        <h:panelGroup rendered="#{not empty loginBean.facebookLoginUrl}">
           <h:outputLink value="#{loginBean.facebookLoginUrl}">
             <p:graphicImage library="images" name="login-facebook.png" alt="#{msg.loginFacebookAltText}"
               title="#{msg.loginFacebook}" />
+          </h:outputLink>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{not empty loginBean.googleLoginUrl}">
+          <h:outputLink value="#{loginBean.googleLoginUrl}">
+            <p:graphicImage library="images" name="login-google.png" alt="#{msg.loginGoogleAltText}"
+              title="#{msg.loginGoogle}" />
           </h:outputLink>
         </h:panelGroup>
       </h:panelGrid>
@@ -53,8 +59,8 @@
       </h:panelGrid>
       <h:outputText styleClass="pageParagraph" value="#{msg.loginForgotGPMCreds}" />
       <h:panelGrid styleClass="pageParagraph pageIndent" columns="1">
-        <p:commandButton value="#{msg.loginRecoverButton}" action="/secure/recover.xhtml?faces-redirect=true" ajax="false"
-          immediate="true" />
+        <p:commandButton value="#{msg.loginRecoverButton}" action="/secure/recover.xhtml?faces-redirect=true"
+          ajax="false" immediate="true" />
       </h:panelGrid>
     </h:form>
   </ui:define>
