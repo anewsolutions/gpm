@@ -1,7 +1,7 @@
 /**
  * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
-package com.gpm;
+package com.gpm.login;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

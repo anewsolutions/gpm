@@ -13,7 +13,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-import com.gpm.ThirdPartyLoginServlet;
+import com.gpm.login.ThirdPartyLoginServlet;
 import com.gpm.manager.UserAccountManager;
 import com.gpm.manager.exception.UserAccountException;
 import com.gpm.model.UserAccount;
