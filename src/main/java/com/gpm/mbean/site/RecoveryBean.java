@@ -52,6 +52,7 @@ public class RecoveryBean implements Serializable {
         account.setResetTokenExpiry(new Date (System.currentTimeMillis() + 86400000l));
         UserAccountManager.save(account);
       }
+      setSent(true);
     } catch (EmailException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -59,7 +60,6 @@ public class RecoveryBean implements Serializable {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    setSent(true);
   }
 
   public String getRecipient() {
