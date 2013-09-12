@@ -101,8 +101,13 @@ public class EmailThread implements Runnable {
             try {
               MimeMessage msg = new MimeMessage(session);
               InternetAddress from = new InternetAddress(props.getProperty("mail.smtp.from"));
-              InternetAddress[] replyTo = InternetAddress.parse(props.getProperty("mail.smtp.reply"));
               InternetAddress[] recipients = InternetAddress.parse(email.getRecipientAddress());
+              InternetAddress[] replyTo;
+              if (email.getReplyAddress() == null || email.getReplyAddress().isEmpty()){
+                replyTo = InternetAddress.parse(props.getProperty("mail.smtp.reply"));
+              } else {
+                replyTo = InternetAddress.parse(email.getReplyAddress());
+              }
               msg.setFrom(from);
               msg.setReplyTo(replyTo);
               msg.setRecipients(MimeMessage.RecipientType.TO, recipients);

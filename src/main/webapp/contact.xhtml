@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/site.xhtml">
+  <ui:param name="sitePageTitle" value="#{msg.contactPageTitle}" />
+  <ui:define name="sitePageContent">
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+      <h:outputText styleClass="pageHeading" value="#{msg.contactPageHeading}" />
+      <h:outputFormat styleClass="pageParagraph" value="#{msg.contactUsText}" escape="false"
+        rendered="#{!contactBean.sent}">
+        <f:param value="#{msg.siteLinksFacebook}" />
+      </h:outputFormat>
+      <h:outputText styleClass="pageParagraph" value="#{msg.contactUsThanksText}" rendered="#{contactBean.sent}" />
+      <h:panelGrid id="contactUs" styleClass="pageParagraph pageIndent" columns="2" rendered="#{!contactBean.sent}">
+        <h:panelGroup>
+          <h:outputLabel for="contactEmail" value="#{msg.contactEmail}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:inputText id="contactEmail" maxlength="250" size="25" required="true"
+            requiredMessage="#{msg.contactEmailRequired}" value="#{contactBean.email}">
+            <f:validator validatorId="EmailFormatValidator" />
+          </p:inputText>
+          <p:watermark for="contactEmail" value="#{msg.contactEmailWatermark}" />
+          <h:message for="contactEmail" style="margin: 0px 4px;" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:outputLabel for="contactName" value="#{msg.contactName}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:inputText id="contactName" maxlength="250" size="25" required="true"
+            requiredMessage="#{msg.contactNameRequired}" value="#{contactBean.name}" />
+          <p:watermark for="contactName" value="#{msg.contactNameWatermark}" />
+          <h:message for="contactName" style="margin: 0px 4px;" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:outputLabel for="contactReason" value="#{msg.contactReason}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:selectOneMenu id="contactReason" value="#{contactBean.reason}">
+            <f:selectItem itemValue="QUERY" itemLabel="#{msg.contactReasonQuery}" />
+            <f:selectItem itemValue="CONTRIB" itemLabel="#{msg.contactReasonContrib}" />
+            <f:selectItem itemValue="PROBLEM" itemLabel="#{msg.contactReasonProblem}" />
+          </p:selectOneMenu>
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:outputLabel for="contactMessage" value="#{msg.contactMessage}" />
+        </h:panelGroup>
+        <h:panelGroup>
+          <p:inputTextarea id="contactMessage" cols="65" rows="10" autoResize="true" value="#{contactBean.message}" />
+          <p:watermark for="contactMessage" value="#{msg.contactMessageWatermark}" />
+        </h:panelGroup>
+      </h:panelGrid>
+      <h:panelGrid styleClass="pageParagraph pageIndent" columns="1" rendered="#{!contactBean.sent}">
+        <p:commandButton value="#{msg.contactButton}" action="#{contactBean.contact}" update="mainForm" />
+      </h:panelGrid>
+      <h:panelGrid styleClass="pageParagraph pageIndent" columns="1" rendered="#{contactBean.sent}">
+        <p:commandButton value="#{msg.contactReturnButton}" action="/index.xhtml?faces-redirect=true" update="mainForm" />
+      </h:panelGrid>
+      <h:outputText styleClass="pageParagraph" value="#{msg.contactUsDirectText}" rendered="#{!contactBean.sent}" />
+      <h:panelGrid styleClass="pageParagraph pageIndent" columns="3" rendered="#{!contactBean.sent}"
+        columnClasses="pageTableColumn,pageTableColumn,pageTableColumn">
+        <h:panelGroup>
+          <h:outputText value="#{msg.contactPostalText}" />
+          <ui:repeat var="contactAddress" value="#{contactBean.address}">
+            <br />
+            <span>#{contactAddress}</span>
+          </ui:repeat>
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:outputText value="#{msg.contactEditorialText}" />
+          <ui:repeat var="addr" value="#{contactBean.editorialStaff}">
+            <br />
+            <span><a href="mailto:#{addr}">#{addr}</a></span>
+          </ui:repeat>
+        </h:panelGroup>
+        <h:panelGroup>
+          <h:outputText value="#{msg.contactTechnicalText}" />
+          <ui:repeat var="addr" value="#{contactBean.technicalStaff}">
+            <br />
+            <span><a href="mailto:#{addr}">#{addr}</a></span>
+          </ui:repeat>
+        </h:panelGroup>
+      </h:panelGrid>
+    </h:form>
+  </ui:define>
+</ui:composition>
+</html>

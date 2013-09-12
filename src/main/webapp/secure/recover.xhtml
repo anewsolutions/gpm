@@ -31,6 +31,9 @@
       <h:panelGrid styleClass="pageParagraph pageIndent" columns="1" rendered="#{!recoveryBean.sent}">
         <p:commandButton value="#{msg.recoverButton}" action="#{recoveryBean.recover}" update="mainForm" />
       </h:panelGrid>
+      <h:panelGrid styleClass="pageParagraph pageIndent" columns="1" rendered="#{recoveryBean.sent}">
+        <p:commandButton value="#{msg.recoverReturnButton}" action="/index.xhtml?faces-redirect=true" update="mainForm" />
+      </h:panelGrid>
     </h:form>
   </ui:define>
 </ui:composition>

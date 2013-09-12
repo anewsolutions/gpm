@@ -17,6 +17,7 @@ public class Email extends Base {
   private static final long serialVersionUID = 1L;
 
   private String recipientAddress;
+  private String replyAddress;
   private String subject;
   private String body;
   private Integer failures = 0;
@@ -25,13 +26,22 @@ public class Email extends Base {
     super();
   }
 
-  @Column(nullable = false)
+  @Column(length = 500, nullable = false)
   public String getRecipientAddress() {
     return recipientAddress;
   }
 
   public void setRecipientAddress(final String recipientAddress) {
     this.recipientAddress = recipientAddress;
+  }
+
+  @Column(length = 500, nullable = false)
+  public String getReplyAddress() {
+    return replyAddress;
+  }
+
+  public void setReplyAddress(final String replyAddress) {
+    this.replyAddress = replyAddress;
   }
 
   @Column(nullable = false)

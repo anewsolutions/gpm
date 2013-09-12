@@ -10,6 +10,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import com.gpm.controller.ControllerException;
 import com.gpm.controller.ControllerFactory;
 import com.gpm.i18n.MessageProvider;
@@ -51,6 +53,24 @@ public class EmailManager {
     }
   }
 
+  public static void createContactFormEmail(final String recipientAddress, final String replyAddress,
+      final String name, final String subject, final String body) throws EmailException {
+    String escaped = StringEscapeUtils.escapeHtml4(body);
+    escaped = escaped.replaceAll("(\r\n|\n)", "<br />");
+
+    StringBuilder s = new StringBuilder("<html><head></head><body>");
+    s.append("<p>"+ name + " (" + replyAddress + ") wrote:</p>");
+    s.append("<p>"+ escaped + "</p>");
+    s.append("</body></html>");
+
+    Email email = new Email();
+    email.setRecipientAddress(recipientAddress);
+    email.setReplyAddress(replyAddress);
+    email.setSubject(subject);
+    email.setBody(s.toString());
+    save(email);
+  }
+
   public static void createResetAccountNotFoundEmail(final String recipientAddress) throws EmailException {
     ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
     HttpServletRequest request = (HttpServletRequest) context.getRequest();
@@ -68,12 +88,14 @@ public class EmailManager {
 
     Email email = new Email();
     email.setRecipientAddress(recipientAddress);
+    email.setReplyAddress("");
     email.setSubject(MessageProvider.getMessage("emailTextRecoverySubject"));
     email.setBody(s.toString());
     save(email);
   }
 
-  public static void createResetAccountEmail(final String recipientAddress, final String resetToken) throws EmailException {
+  public static void createResetAccountEmail(final String recipientAddress, final String resetToken)
+      throws EmailException {
     ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
     HttpServletRequest request = (HttpServletRequest) context.getRequest();
     String server = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
@@ -89,6 +111,7 @@ public class EmailManager {
 
     Email email = new Email();
     email.setRecipientAddress(recipientAddress);
+    email.setReplyAddress("");
     email.setSubject(MessageProvider.getMessage("emailTextRecoverySubject"));
     email.setBody(s.toString());
     save(email);
