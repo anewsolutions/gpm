@@ -67,14 +67,14 @@
             <span>#{contactAddress}</span>
           </ui:repeat>
         </h:panelGroup>
-        <h:panelGroup>
+        <h:panelGroup rendered="#{not empty contactBean.editorialStaff}">
           <h:outputText value="#{msg.contactEditorialText}" />
           <ui:repeat var="addr" value="#{contactBean.editorialStaff}">
             <br />
             <span><a href="mailto:#{addr}">#{addr}</a></span>
           </ui:repeat>
         </h:panelGroup>
-        <h:panelGroup>
+        <h:panelGroup rendered="#{not empty contactBean.technicalStaff}">
           <h:outputText value="#{msg.contactTechnicalText}" />
           <ui:repeat var="addr" value="#{contactBean.technicalStaff}">
             <br />
