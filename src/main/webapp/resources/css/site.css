@@ -227,6 +227,10 @@ a:hover {
   margin-right: 2em;
 }
 
+.pageTableColumn {
+  vertical-align: top;
+}
+
 /* Styles for common layouts */
 .issuesGridTable .ui-datagrid-column {
   vertical-align: top;
