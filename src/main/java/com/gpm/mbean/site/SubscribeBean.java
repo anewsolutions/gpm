@@ -113,9 +113,8 @@ public class SubscribeBean implements Serializable {
   public String buy() {
     // Build order item
     CustomerOrderItem order = new CustomerOrderItem();
-    String published = BeanUtils.formatPublished(issue.getPublishedDate());
-    order.setName(MessageProvider.getMessage("subShortDesc" + getFormat() + getLength(), issue.getIssueNumber(),
-        published));
+    order.setName(MessageProvider.getMessage("subShortDesc" + getFormat() + getLength(), issue.getIssueNumber()
+        + getOffset()));
     if (format == Format.EZINE) {
       order.setPrice(Issue.onlinePrice * getLength());
       order.setWeight(0);
