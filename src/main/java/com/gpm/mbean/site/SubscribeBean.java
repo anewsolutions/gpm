@@ -107,7 +107,7 @@ public class SubscribeBean implements Serializable {
     } else {
       price = BeanUtils.formatPrice(Issue.currentPrice * getLength());
     }
-    return MessageProvider.getMessage("subPostageAndPackaging" + getFormat(), price);
+    return MessageProvider.getMessage("subPostageAndPackaging" + getFormat(), getLength(), price);
   }
 
   public String buy() {
@@ -124,7 +124,7 @@ public class SubscribeBean implements Serializable {
     }
     order.setQuantity(1);
     // Issue details
-    order.setStartIssue(issue.getIssueNumber());
+    order.setStartIssue(issue.getIssueNumber() + getOffset());
     order.setNumIssues(length);
     order.setFormat(format);
     order.setBackIssue(false);
