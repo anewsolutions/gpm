@@ -2,32 +2,12 @@
  * Copyright 2013 Mat Booth <mbooth@apache.org>
  */
 
-.subscribeGrid {
-  border-spacing: 0;
-  width: 100%;
-}
-
-.subscribeGridLeft {
-  text-align: left;
-  vertical-align: top;
-}
-
-.subscribeGridRight {
-  text-align: left;
-  vertical-align: top;
-}
-
 .subscribeGridDominant {
   width: 80%;
 }
 
-.subscribeGridLeft img {
-  width: 300px;
-  margin: 0 1em 1em 0;
-}
-
-.subscribeGrid td span:first-child {
-  margin-top: 0;
+.subscribeGridThird {
+  width: 30%;
 }
 
 .subscribePrice {

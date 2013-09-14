@@ -25,6 +25,7 @@ public class SubscribeBean implements Serializable {
 
   // Subscription attributes
   private Issue issue = null;
+  private int offset = 0;
   private int length = 1;
   private Format format = Format.EZINE;
 
@@ -63,6 +64,14 @@ public class SubscribeBean implements Serializable {
       edition = MessageProvider.getMessage("subThisIssueEdition", issue.getIssueNumber(), published);
     }
     return edition;
+  }
+
+  public int getOffset() {
+    return offset;
+  }
+
+  public void setOffset(final int offset) {
+    this.offset = offset;
   }
 
   public int getLength() {

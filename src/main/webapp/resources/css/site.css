@@ -231,6 +231,10 @@ a:hover {
   vertical-align: top;
 }
 
+.pageTableColumn span:first-child {
+  margin-top: 0;
+}
+
 /* Styles for common layouts */
 .issuesGridTable .ui-datagrid-column {
   vertical-align: top;
@@ -243,6 +247,10 @@ a:hover {
 
 .issuesGridTable .pageSectionHeading {
   font-size: 1.2em;
+}
+
+.issuesGridCoverFull {
+  width: 300px;
 }
 
 .issuesGridCover {
