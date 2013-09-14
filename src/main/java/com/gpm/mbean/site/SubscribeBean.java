@@ -92,7 +92,9 @@ public class SubscribeBean implements Serializable {
 
   public String getSubscriptionDescription() {
     if (issue != null) {
-      return MessageProvider.getMessage("subDesc" + getFormat() + getLength(), issue.getIssueNumber());
+      return MessageProvider.getMessage(
+          "subDesc" + getFormat() + Integer.toString(getLength()) + Integer.toString(getOffset()),
+          issue.getIssueNumber() + getOffset());
     } else {
       return "";
     }
