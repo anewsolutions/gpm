@@ -6,7 +6,7 @@ import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ModelTests {
+public class ModelTest {
   @Test
   public void postageForWeight() {
     List<PostageBandCost> pbcs = new ArrayList<PostageBandCost>(3);
