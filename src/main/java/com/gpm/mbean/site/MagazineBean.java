@@ -15,12 +15,13 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import com.gpm.calameo.CalameoClient;
-import com.gpm.calameo.CalameoConfig;
-import com.gpm.calameo.CalameoException;
-import com.gpm.calameo.Session;
-import com.gpm.calameo.impl.CalameoClientImpl;
-import com.gpm.calameo.impl.CalameoConfigImpl;
+import uk.co.matbooth.calameo.CalameoClient;
+import uk.co.matbooth.calameo.CalameoConfig;
+import uk.co.matbooth.calameo.CalameoException;
+import uk.co.matbooth.calameo.Session;
+import uk.co.matbooth.calameo.impl.CalameoClientImpl;
+import uk.co.matbooth.calameo.impl.CalameoConfigImpl;
+
 import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.ConfigurationManager;
 import com.gpm.manager.IssueManager;
