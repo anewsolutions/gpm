@@ -1,5 +1,5 @@
-bin
-target
 .metadata
+/bin
+/target
 /webapps
 /test-output
