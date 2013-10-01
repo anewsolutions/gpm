@@ -148,6 +148,10 @@ public class CheckoutBean implements Serializable {
     return "/secure/checkout3.xhtml?faces-redirect=true";
   }
 
+  public boolean isPaypointPaypalEnabled() {
+    return false;
+  }
+
   public String getPaypointMerchant() {
     String merchant = "";
     try {
