@@ -56,7 +56,7 @@ public class LoginFilter implements Filter {
     HttpServletRequest req = (HttpServletRequest) request;
     HttpServletResponse res = (HttpServletResponse) response;
     String uri = req.getRequestURI();
-    if (uri.startsWith(SECURE_PATH)) {
+    if (uri.startsWith(req.getContextPath() + SECURE_PATH)) {
       LoginBean login = (LoginBean) req.getSession().getAttribute("loginBean");
       if (login == null) {
         login = new LoginBean();
@@ -64,10 +64,11 @@ public class LoginFilter implements Filter {
       }
       if (login.isLoggedIn()) {
         // We are logged in already
-        if (uri.startsWith(LOGIN) || uri.startsWith(REGISTER) || uri.startsWith(RECOVER) || uri.startsWith(RESET)) {
+        if (uri.startsWith(req.getContextPath() + LOGIN) || uri.startsWith(req.getContextPath() + REGISTER)
+            || uri.startsWith(req.getContextPath() + RECOVER) || uri.startsWith(req.getContextPath() + RESET)) {
           // Do not permit log into, register, recover or reset
-          res.sendRedirect(HOME);
-        } else if (uri.startsWith(ADMIN_PATH)) {
+          res.sendRedirect(req.getContextPath() + HOME);
+        } else if (uri.startsWith(req.getContextPath() + ADMIN_PATH)) {
           // If an admin page is requested, check if user is an administrator
           UserAccount user = null;
           try {
@@ -89,14 +90,15 @@ public class LoginFilter implements Filter {
         }
       } else {
         // We are not logged in
-        if (uri.startsWith(LOGIN) || uri.startsWith(REGISTER) || uri.startsWith(RECOVER) || uri.startsWith(RESET)) {
+        if (uri.startsWith(req.getContextPath() + LOGIN) || uri.startsWith(req.getContextPath() + REGISTER)
+            || uri.startsWith(req.getContextPath() + RECOVER) || uri.startsWith(req.getContextPath() + RESET)) {
           // These pages are fine, so store the referring URI and let users through to the
           // log in, register or recover pages
           if (login.getRedirect() == null) {
             String referer = req.getHeader("referer");
             if (referer == null) {
               // If we cannot determine referer then use HOME as the referer
-              referer = HOME;
+              referer = req.getContextPath() + HOME;
             }
             try {
               login.setRedirect(new URI(referer));
@@ -115,7 +117,7 @@ public class LoginFilter implements Filter {
             // TODO Auto-generated catch block
             e.printStackTrace();
           }
-          res.sendRedirect(LOGIN);
+          res.sendRedirect(req.getContextPath() + LOGIN);
         }
       }
     } else {

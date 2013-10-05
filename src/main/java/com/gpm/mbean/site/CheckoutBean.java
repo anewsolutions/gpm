@@ -148,10 +148,6 @@ public class CheckoutBean implements Serializable {
     return "/secure/checkout3.xhtml?faces-redirect=true";
   }
 
-  public boolean isPaypointPaypalEnabled() {
-    return false;
-  }
-
   public String getPaypointMerchant() {
     String merchant = "";
     try {
@@ -188,13 +184,13 @@ public class CheckoutBean implements Serializable {
 
   public String getPaypointCallback() {
     ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
-    String server = ctx.getRequestScheme() + "://" + ctx.getRequestServerName() + ":" + ctx.getRequestServerPort();
+    String server = ctx.getRequestScheme() + "://" + ctx.getRequestServerName() + ":" + ctx.getRequestServerPort() + ctx.getRequestContextPath();
     return server + PayPointCallbackServlet.PAYPOINT_PATH;
   }
 
   public String getPaypointBackCallback() {
     ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
-    String server = ctx.getRequestScheme() + "://" + ctx.getRequestServerName() + ":" + ctx.getRequestServerPort();
+    String server = ctx.getRequestScheme() + "://" + ctx.getRequestServerName() + ":" + ctx.getRequestServerPort() + ctx.getRequestContextPath();
     return server + "/basket.xhtml";
   }
 
