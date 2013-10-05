@@ -8,7 +8,7 @@ html {
 
 body {
   background-color: #68C9E9;
-  background-image: url('/javax.faces.resource/clouds.png.xhtml?ln=images');
+  background-image: url('#{resource["images:clouds.png"]}');
   background-repeat: repeat-x;
   background-position: 0 65px;
   height: 100%;
@@ -81,7 +81,7 @@ a:hover {
 /* Container for animated pigs */
 .sitePiggyPen {
   background-color: #68C9E9;
-  background-image: url('/javax.faces.resource/grass.png.xhtml?ln=images');
+  background-image: url('#{resource["images:grass.png"]}');
   background-repeat: repeat-x;
   overflow: hidden;
   height: 120px;
