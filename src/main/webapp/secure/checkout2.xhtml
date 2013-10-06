@@ -8,6 +8,8 @@
     <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
       <h:outputStylesheet target="head" library="css" name="checkout.css" />
       <h:outputText styleClass="pageHeading" value="#{msg.checkout2PageHeading}" />
+      <h:outputText styleClass="pageSectionHeading" value="#{msg.checkoutReviewOrderHeading}" />
+      <h:outputText styleClass="pageParagraph" value="#{msg.checkoutReviewOrderText}" />
       <p:dataTable id="basketTable" var="basketItem" value="#{basketBean.allBasketItems}" paginator="false">
         <p:column styleClass="basketItemsColumn" headerText="#{msg.basketTableItemsColumn}">
           <h:outputText styleClass="basketItemName" value="#{basketItem.name}" />
@@ -19,7 +21,7 @@
           <h:outputText styleClass="basketQuantity" value="#{basketItem.quantity}" />
         </p:column>
       </p:dataTable>
-      <h:panelGrid id="subtotalPanel" styleClass="subtotalPanel" columns="2"
+      <h:panelGrid id="subtotalPanel" styleClass="pageParagraph pageIndent subtotalPanel" columns="2"
         columnClasses="subtotalItems,subtotalPrices">
         <h:outputFormat value="#{msg.basketSubtotalItem}" rendered="#{basketBean.totalBasketItems == 1}">
           <f:param value="#{basketBean.totalBasketItems}" />
@@ -32,6 +34,28 @@
         <h:outputText value="#{checkoutBean.shippingCost}" />
         <h:outputText value="#{msg.checkout2GrandTotal}" />
         <h:outputText value="#{checkoutBean.grandTotal}" />
+      </h:panelGrid>
+      <h:outputText styleClass="pageSectionHeading" value="#{msg.checkoutPaymentMethodHeading}" />
+      <p:selectOneRadio id="checkoutPaymentMethod" layout="custom">
+        <f:selectItem itemValue="0" />
+        <f:selectItem itemValue="1" />
+      </p:selectOneRadio>
+      <h:panelGrid styleClass="pageParagraph pageIndent" columns="2">
+        <p:radioButton id="checkoutPaymentMethodCC" for="checkoutPaymentMethod" itemIndex="0" />
+        <h:outputLabel for="checkoutPaymentMethodCC" value="#{msg.checkoutPaymentMethodCC}" />
+        <h:panelGroup />
+        <h:outputLabel for="checkoutPaymentMethodCC">
+          <p:graphicImage value="https://www.paypoint.net/assets/images/support/core_incmaestro_horizontal.gif"
+            alt="#{msg.checkoutPaymentMethodCCAcceptAlt}" title="#{msg.checkoutPaymentMethodCCAcceptTitle}" height="65" />
+        </h:outputLabel>
+        <p:radioButton id="checkoutPaymentMethodPP" for="checkoutPaymentMethod" itemIndex="1" />
+        <h:outputLabel for="checkoutPaymentMethodPP" value="#{msg.checkoutPaymentMethodPP}" />
+        <h:panelGroup />
+        <h:outputLabel for="checkoutPaymentMethodPP">
+          <p:graphicImage value="https://www.paypalobjects.com/en_GB/Marketing/i/logo/PayPal_logo_150x65.gif"
+            alt="#{msg.checkoutPaymentMethodPPAcceptAlt}" title="#{msg.checkoutPaymentMethodPPAcceptTitle}" height="60"
+            style="margin-left: 5px;" />
+        </h:outputLabel>
       </h:panelGrid>
       <h:panelGrid styleClass="pageParagraph pageIndent" columns="2">
         <h:panelGroup>

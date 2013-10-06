@@ -68,8 +68,8 @@
 }
 
 .subtotalPanel {
+  display: table;
   margin-left: auto;
-  margin-right: 0;
   border-spacing: 0;
 }
 
