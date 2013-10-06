@@ -36,9 +36,10 @@
         <h:outputText value="#{checkoutBean.grandTotal}" />
       </h:panelGrid>
       <h:outputText styleClass="pageSectionHeading" value="#{msg.checkoutPaymentMethodHeading}" />
-      <p:selectOneRadio id="checkoutPaymentMethod" layout="custom">
-        <f:selectItem itemValue="0" />
-        <f:selectItem itemValue="1" />
+      <p:selectOneRadio id="checkoutPaymentMethod" value="#{checkoutBean.paymentMethod}" layout="custom">
+        <f:selectItem itemValue="PAYPOINT" />
+        <f:selectItem itemValue="PAYPAL" />
+        <p:ajax process="@this" update="checkoutProceedButton" />
       </p:selectOneRadio>
       <h:panelGrid styleClass="pageParagraph pageIndent" columns="2">
         <p:radioButton id="checkoutPaymentMethodCC" for="checkoutPaymentMethod" itemIndex="0" />
@@ -62,11 +63,9 @@
           <p:commandButton value="#{msg.checkoutButtonsBackToBasket}" ajax="false" immediate="true"
             action="/basket.xhtml?faces-redirect=true" />
         </h:panelGroup>
-        <h:panelGroup>
-          <p:commandButton value="#{msg.checkoutButtonsProceed}" disabled="true"
-            rendered="#{basketBean.totalBasketItems == 0}" />
-          <p:commandButton value="#{msg.checkoutButtonsProceed}" rendered="#{basketBean.totalBasketItems > 0}"
-            action="#{checkoutBean.finishCheckout2}" />
+        <h:panelGroup id="checkoutProceedButton">
+          <p:commandButton value="#{msg.checkoutButtonsProceed}" action="#{checkoutBean.finishCheckout2}"
+            disabled="#{empty checkoutBean.paymentMethod or basketBean.totalBasketItems == 0}" />
         </h:panelGroup>
       </h:panelGrid>
     </h:form>

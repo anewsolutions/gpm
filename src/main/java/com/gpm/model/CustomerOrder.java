@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.gpm.model.enums.OrderStatus;
+import com.gpm.model.enums.PaymentMethod;
 import com.gpm.model.enums.Shipping;
 
 @Entity
@@ -33,7 +34,8 @@ public class CustomerOrder extends Base {
   private Shipping shippingCategory;
   private Integer shippingPrice;
 
-  // PayPoint transaction details
+  // Payment transaction details
+  private PaymentMethod paymentMethod;
   private String authCode;
   private String errorCode;
   private String errorMessage;
@@ -163,6 +165,14 @@ public class CustomerOrder extends Base {
   @Transient
   public int getGrandTotal() {
     return getTotalOrderPrice() + getShippingPrice();
+  }
+
+  public PaymentMethod getPaymentMethod() {
+    return paymentMethod;
+  }
+
+  public void setPaymentMethod(final PaymentMethod paymentMethod) {
+    this.paymentMethod = paymentMethod;
   }
 
   public String getAuthCode() {

@@ -36,6 +36,7 @@ import com.gpm.model.Issue;
 import com.gpm.model.UserAccount;
 import com.gpm.model.UserAddress;
 import com.gpm.model.enums.OrderType;
+import com.gpm.model.enums.PaymentMethod;
 import com.gpm.model.enums.Shipping;
 
 @ManagedBean
@@ -136,6 +137,17 @@ public class CheckoutBean implements Serializable {
       e.printStackTrace();
     }
     return "/secure/checkout2.xhtml?faces-redirect=true";
+  }
+
+  public String getPaymentMethod() {
+    if (order.getPaymentMethod() != null) {
+      return order.getPaymentMethod().toString();
+    }
+    return null;
+  }
+
+  public void setPaymentMethod(final String paymentMethod) {
+    order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
   }
 
   public String finishCheckout2() {
