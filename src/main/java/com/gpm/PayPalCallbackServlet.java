@@ -5,6 +5,7 @@ package com.gpm;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gpm.manager.ConfigurationManager;
 import com.gpm.manager.CustomerOrderManager;
 import com.gpm.manager.UserAccountManager;
+import com.gpm.manager.exception.ConfigurationException;
 import com.gpm.manager.exception.CustomerOrderException;
 import com.gpm.manager.exception.UserAccountException;
 import com.gpm.model.CustomerOrder;
@@ -21,12 +24,16 @@ import com.gpm.model.CustomerOrderItem;
 import com.gpm.model.UserAccount;
 import com.gpm.model.UserIssue;
 import com.gpm.model.enums.OrderStatus;
+import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.PaymentExecution;
+import com.paypal.core.rest.OAuthTokenCredential;
+import com.paypal.core.rest.PayPalRESTException;
 
-@WebServlet(name = "PayPoint Callback Servlet", value = { PayPointCallbackServlet.PAYPOINT_PATH + "*" })
-public class PayPointCallbackServlet extends HttpServlet {
+@WebServlet(name = "PayPal Callback Servlet", value = { PayPalCallbackServlet.PAYPAL_PATH + "*" })
+public class PayPalCallbackServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
-  public static final String PAYPOINT_PATH = "/paypoint/";
+  public static final String PAYPAL_PATH = "/paypal/";
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,14 +43,26 @@ public class PayPointCallbackServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    // Valid will always be passed
-    boolean valid = new Boolean(request.getParameter("valid"));
-
-    // Get other parameters
+    // Get parameters
     String orderUuid = request.getParameter("trans_id");
-    String code = request.getParameter("code");
-    String authCode = request.getParameter("auth_code");
-    String message = request.getParameter("message");
+    String payerId = request.getParameter("PayerID");
+
+    // Get oauth token for PayPal API access
+    String token = "";
+    try {
+      Properties props = ConfigurationManager.findPropsByKey("paypal");
+      String key = props.getProperty("paypal.key");
+      String secret = props.getProperty("paypal.secret");
+      token = new OAuthTokenCredential(key, secret).getAccessToken();
+    } catch (ConfigurationException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (PayPalRESTException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    boolean valid = false;
 
     // Update customer order
     CustomerOrder order = null;
@@ -53,9 +72,16 @@ public class PayPointCallbackServlet extends HttpServlet {
         response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown transaction ID");
         return;
       }
-      order.setAuthCode(authCode);
-      order.setErrorCode(code);
-      order.setErrorMessage(message);
+
+      // Execute payment
+      Payment payment = Payment.get(token, order.getPaymentId());
+      PaymentExecution paymentExecution = new PaymentExecution();
+      paymentExecution.setPayerId(payerId);
+      payment = payment.execute(token, paymentExecution);
+
+      valid = "approved".equals(payment.getState()) || "pending".equals(payment.getState());
+
+      // Save the order
       if (valid) {
         order.setOrderStatus(OrderStatus.AUTHORISED);
       } else {
@@ -66,6 +92,11 @@ public class PayPointCallbackServlet extends HttpServlet {
       // TODO Auto-generated catch block
       e.printStackTrace();
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to find or store customer order");
+      return;
+    } catch (PayPalRESTException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to execute payment");
       return;
     }
 
