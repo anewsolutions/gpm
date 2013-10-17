@@ -65,7 +65,7 @@
         </h:panelGroup>
         <h:panelGroup id="checkoutProceedButton">
           <p:commandButton value="#{msg.checkoutButtonsProceed}" action="#{checkoutBean.finishCheckout2}"
-            disabled="#{empty checkoutBean.paymentMethod or basketBean.totalBasketItems == 0}" />
+            disabled="#{basketBean.totalBasketItems == 0}" />
         </h:panelGroup>
       </h:panelGrid>
     </h:form>

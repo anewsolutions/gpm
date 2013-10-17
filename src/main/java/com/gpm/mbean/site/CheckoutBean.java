@@ -3,10 +3,16 @@
  */
 package com.gpm.mbean.site;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -16,6 +22,7 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import com.gpm.PayPalCallbackServlet;
 import com.gpm.PayPointCallbackServlet;
 import com.gpm.i18n.MessageProvider;
 import com.gpm.manager.ConfigurationManager;
@@ -38,6 +45,17 @@ import com.gpm.model.UserAddress;
 import com.gpm.model.enums.OrderType;
 import com.gpm.model.enums.PaymentMethod;
 import com.gpm.model.enums.Shipping;
+import com.paypal.api.payments.Amount;
+import com.paypal.api.payments.Details;
+import com.paypal.api.payments.Item;
+import com.paypal.api.payments.ItemList;
+import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payer;
+import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.RedirectUrls;
+import com.paypal.api.payments.Transaction;
+import com.paypal.core.rest.OAuthTokenCredential;
+import com.paypal.core.rest.PayPalRESTException;
 
 @ManagedBean
 @ViewScoped
@@ -143,7 +161,7 @@ public class CheckoutBean implements Serializable {
     if (order.getPaymentMethod() != null) {
       return order.getPaymentMethod().toString();
     }
-    return null;
+    return PaymentMethod.PAYPOINT.toString();
   }
 
   public void setPaymentMethod(final String paymentMethod) {
@@ -157,7 +175,11 @@ public class CheckoutBean implements Serializable {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    return "/secure/checkout3.xhtml?faces-redirect=true";
+    if (PaymentMethod.PAYPOINT.toString().equals(getPaymentMethod())) {
+      return "/secure/checkout_paypoint.xhtml?faces-redirect=true";
+    } else {
+      return "/secure/checkout_paypal.xhtml?faces-redirect=true";
+    }
   }
 
   public String getPaypointMerchant() {
@@ -196,13 +218,22 @@ public class CheckoutBean implements Serializable {
 
   public String getPaypointCallback() {
     ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
-    String server = ctx.getRequestScheme() + "://" + ctx.getRequestServerName() + ":" + ctx.getRequestServerPort() + ctx.getRequestContextPath();
-    return server + PayPointCallbackServlet.PAYPOINT_PATH;
+    String server = ctx.getRequestScheme() + "://" + ctx.getRequestServerName() + ":" + ctx.getRequestServerPort()
+        + ctx.getRequestContextPath() + PayPointCallbackServlet.PAYPOINT_PATH;
+    return server;
   }
 
-  public String getPaypointBackCallback() {
+  public String getPaypalCallback() {
     ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
-    String server = ctx.getRequestScheme() + "://" + ctx.getRequestServerName() + ":" + ctx.getRequestServerPort() + ctx.getRequestContextPath();
+    String server = ctx.getRequestScheme() + "://" + ctx.getRequestServerName() + ":" + ctx.getRequestServerPort()
+        + ctx.getRequestContextPath() + PayPalCallbackServlet.PAYPAL_PATH + "?trans_id=" + order.getUuid().toString();
+    return server;
+  }
+
+  public String getBackCallback() {
+    ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
+    String server = ctx.getRequestScheme() + "://" + ctx.getRequestServerName() + ":" + ctx.getRequestServerPort()
+        + ctx.getRequestContextPath();
     return server + "/basket.xhtml";
   }
 
@@ -224,5 +255,105 @@ public class CheckoutBean implements Serializable {
     sb.append(";prod=SHIPPING+item_amount=");
     sb.append(format.format(big.doubleValue()));
     return sb.toString();
+  }
+
+  public void processPaypalOrder() {
+    NumberFormat format = NumberFormat.getInstance(Locale.UK);
+    format.setMinimumFractionDigits(2);
+    format.setMaximumFractionDigits(2);
+    BigDecimal big;
+
+    Payment payment = new Payment();
+
+    Details amountDetails = new Details();
+    big = BigDecimal.valueOf(order.getShippingPrice()).scaleByPowerOfTen(-2);
+    amountDetails.setShipping(format.format(big.doubleValue()));
+    big = BigDecimal.valueOf(order.getTotalOrderPrice()).scaleByPowerOfTen(-2);
+    amountDetails.setSubtotal(format.format(big.doubleValue()));
+
+    Amount amount = new Amount();
+    amount.setCurrency("GBP");
+    big = BigDecimal.valueOf(order.getGrandTotal()).scaleByPowerOfTen(-2);
+    amount.setTotal(format.format(big.doubleValue()));
+    amount.setDetails(amountDetails);
+
+    RedirectUrls redirectUrls = new RedirectUrls();
+    redirectUrls.setCancelUrl(getBackCallback());
+    redirectUrls.setReturnUrl(getPaypalCallback());
+
+    ItemList itemList = new ItemList();
+    List<Item> items = new ArrayList<Item>(order.getItemsAsList().size());
+    for (CustomerOrderItem orderItem : order.getItemsAsList()) {
+      big = BigDecimal.valueOf(orderItem.getPrice()).scaleByPowerOfTen(-2);
+      Item item = new Item();
+      item.setPrice(format.format(big.doubleValue()));
+      item.setCurrency("GBP");
+      item.setQuantity(orderItem.getQuantity().toString());
+      String name = orderItem.getName().replace('"', '\'').replace('(', '\'').replace(')', '\'').replace(';', ',');
+      item.setName(name);
+      items.add(item);
+    }
+    itemList.setItems(items);
+
+    Transaction transaction = new Transaction();
+    transaction.setAmount(amount);
+    transaction.setItemList(itemList);
+    transaction.setDescription("Guinea Pig Magazine Order Ref " + order.getUuid().toString());
+    List<Transaction> transactions = new ArrayList<Transaction>();
+    transactions.add(transaction);
+
+    Payer payer = new Payer();
+    payer.setPaymentMethod("paypal");
+
+    payment.setIntent("sale");
+    payment.setPayer(payer);
+    payment.setRedirectUrls(redirectUrls);
+    payment.setTransactions(transactions);
+
+    // Get oauth token for PayPal API access
+    String token = "";
+    try {
+      Properties props = ConfigurationManager.findPropsByKey("paypal");
+      String key = props.getProperty("paypal.key");
+      String secret = props.getProperty("paypal.secret");
+      token = new OAuthTokenCredential(key, secret).getAccessToken();
+    } catch (ConfigurationException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (PayPalRESTException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    String redirectUrl = null;
+    try {
+      payment = payment.create(token);
+      order.setPaymentId(payment.getId());
+      List<Links> links = payment.getLinks();
+      for (Links l : links) {
+        if (l.getRel().equalsIgnoreCase("approval_url")) {
+          redirectUrl = URLDecoder.decode(l.getHref(), "UTF-8");
+          break;
+        }
+      }
+      CustomerOrderManager.storeCustomerOrder(order);
+    } catch (PayPalRESTException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (UnsupportedEncodingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (CustomerOrderException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+    try {
+      externalContext.redirect(redirectUrl);
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 }

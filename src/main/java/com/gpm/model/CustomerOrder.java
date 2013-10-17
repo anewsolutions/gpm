@@ -36,6 +36,7 @@ public class CustomerOrder extends Base {
 
   // Payment transaction details
   private PaymentMethod paymentMethod;
+  private String paymentId;
   private String authCode;
   private String errorCode;
   private String errorMessage;
@@ -173,6 +174,14 @@ public class CustomerOrder extends Base {
 
   public void setPaymentMethod(final PaymentMethod paymentMethod) {
     this.paymentMethod = paymentMethod;
+  }
+
+  public String getPaymentId() {
+    return paymentId;
+  }
+
+  public void setPaymentId(final String paymentId) {
+    this.paymentId = paymentId;
   }
 
   public String getAuthCode() {

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/site.xhtml">
+  <ui:param name="sitePageTitle" value="#{msg.checkout3PageTitle}" />
+  <ui:define name="sitePageContent">
+    <h:form id="mainForm" prependId="false" acceptcharset="UTF-8">
+      <h:outputStylesheet target="head" library="css" name="checkout.css" />
+      <h:outputText styleClass="pageHeading" value="#{msg.checkout3PageHeading}" />
+      <h:outputText styleClass="pageParagraph pageCentred" value="#{msg.checkout3PleaseWait}" />
+      <span class="pageParagraph pageCentred"><p:graphicImage library="images" name="wait.gif" /></span>
+      <p:remoteCommand name="processPayment" action="#{checkoutBean.processPaypalOrder}" immediate="true" process="@this" />
+    </h:form>
+    <script type="text/javascript" charset="utf-8">
+      //<![CDATA[
+      jQuery(document).ready(function() {
+        setTimeout(submitPaymentForm, 5000);
+      });
+      function submitPaymentForm() {
+        processPayment();
+      }
+      //]]>
+    </script>
+  </ui:define>
+</ui:composition>
+</html>

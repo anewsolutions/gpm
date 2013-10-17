@@ -10,7 +10,6 @@
       <h:outputText styleClass="pageHeading" value="#{msg.checkout3PageHeading}" />
       <h:outputText styleClass="pageParagraph pageCentred" value="#{msg.checkout3PleaseWait}" />
       <span class="pageParagraph pageCentred"><p:graphicImage library="images" name="wait.gif" /></span>
-      <p:remoteCommand name="clearBasket" action="#{basketBean.clearOrder}" immediate="true" process="@this" />
     </h:form>
     <h:form id="paypointForm" prependId="false" acceptcharset="UTF-8">
       <h:inputHidden id="merchant" value="#{checkoutBean.paypointMerchant}" />
@@ -18,7 +17,7 @@
       <h:inputHidden id="amount" value="#{checkoutBean.paypointAmount}" />
       <h:inputHidden id="usage_type" value="E" />
       <h:inputHidden id="callback" value="#{checkoutBean.paypointCallback}" />
-      <h:inputHidden id="backcallback" value="#{checkoutBean.paypointBackCallback}" />
+      <h:inputHidden id="backcallback" value="#{checkoutBean.backCallback}" />
       <h:inputHidden id="show_back" value="submit" />
       <h:inputHidden id="order" value="#{checkoutBean.paypointOrderDetails}" />
       <h:inputHidden id="digest" value="#{checkoutBean.paypointDigest}" />
@@ -46,10 +45,9 @@
     <script type="text/javascript" charset="utf-8">
       //<![CDATA[
       jQuery(document).ready(function() {
-        setTimeout(submitPaypointForm, 5000);
+        setTimeout(submitPaymentForm, 5000);
       });
-      function submitPaypointForm() {
-        clearBasket();
+      function submitPaymentForm() {
         jQuery('#paypointForm').attr('action', 'https://www.secpay.com/java-bin/ValCard');
         jQuery('#paypointForm').submit();
       }
