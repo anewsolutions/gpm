@@ -123,7 +123,8 @@ public class PayPalCallbackServlet extends HttpServlet {
 
     // Send basic response page
     StringBuilder page = new StringBuilder();
-    String returnUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+    String returnUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+        + request.getContextPath();
     if (valid) {
       page.append("<html>");
       page.append("<head>");
