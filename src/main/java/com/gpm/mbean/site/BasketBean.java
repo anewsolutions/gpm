@@ -6,8 +6,9 @@ package com.gpm.mbean.site;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -18,26 +19,24 @@ import com.gpm.model.CustomerOrder;
 import com.gpm.model.CustomerOrderItem;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class BasketBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private CustomerOrder order;
 
-  public void clearOrder() {
-    order = null;
+  @PostConstruct
+  public void init() {
+    try {
+      HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+      order = CustomerOrderManager.findOrCreateBySessionId(session.getId());
+    } catch (CustomerOrderException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   public CustomerOrder getOrder() {
-    if (order == null) {
-      HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-      try {
-        order = CustomerOrderManager.findOrCreateBySessionId(session.getId());
-      } catch (CustomerOrderException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
     return order;
   }
 

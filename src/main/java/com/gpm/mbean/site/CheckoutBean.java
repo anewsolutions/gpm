@@ -19,6 +19,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -69,11 +70,15 @@ public class CheckoutBean implements Serializable {
   public void init() {
     try {
       user = UserAccountManager.findCurrentlyLoggedIn();
+      HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+      order = CustomerOrderManager.findOrCreateBySessionId(session.getId());
     } catch (UserAccountException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
+    } catch (CustomerOrderException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
-    order = BeanUtils.fetchBasketBean().getOrder();
   }
 
   public UserAddress getBillingAddress() {
@@ -141,10 +146,14 @@ public class CheckoutBean implements Serializable {
         order.setShippingCategory(Shipping.NONE);
         order.setShippingPrice(0);
       }
+      CustomerOrderManager.storeCustomerOrder(order);
     } catch (PostageException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     } catch (IssueException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (CustomerOrderException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }

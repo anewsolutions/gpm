@@ -18,7 +18,6 @@ import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-import com.gpm.mbean.site.BasketBean;
 import com.gpm.mbean.site.LoginBean;
 import com.gpm.model.enums.Shipping;
 
@@ -46,18 +45,6 @@ public class BeanUtils {
   public static LoginBean fetchLoginBean() {
     HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     LoginBean bean = (LoginBean) req.getSession().getAttribute("loginBean");
-    return bean;
-  }
-
-  /**
-   * Utility to get the basket bean from the session.
-   * 
-   * @return the basket bean
-   */
-  @Deprecated
-  public static BasketBean fetchBasketBean() {
-    HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-    BasketBean bean = (BasketBean) req.getSession().getAttribute("basketBean");
     return bean;
   }
 
@@ -330,7 +317,7 @@ public class BeanUtils {
    * @see http://www.iso.org/iso/country_codes
    */
   public static String[] generateCountriesList() {
-    List<String> countries = new ArrayList<String>();
+    final List<String> countries = new ArrayList<String>(uk.size() + europe.size() + world1.size() + world2.size());
     countries.addAll(uk.keySet());
     countries.addAll(europe.keySet());
     countries.addAll(world1.keySet());
