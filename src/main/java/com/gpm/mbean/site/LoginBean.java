@@ -3,6 +3,8 @@
  */
 package com.gpm.mbean.site;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.UUID;
@@ -13,6 +15,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
+
 import com.gpm.login.ThirdPartyLoginServlet;
 import com.gpm.manager.UserAccountManager;
 import com.gpm.manager.exception.UserAccountException;
@@ -22,6 +26,8 @@ import com.gpm.model.UserAccount;
 @SessionScoped
 public class LoginBean implements Serializable {
   private static final long serialVersionUID = 1L;
+
+  private static String VERSION;
 
   // URI to redirect to after successfully logging in
   private URI redirect;
@@ -115,5 +121,18 @@ public class LoginBean implements Serializable {
   public String getGoogleLoginUrl() {
     ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
     return ThirdPartyLoginServlet.getGoogleLoginUrl((HttpServletRequest) context.getRequest());
+  }
+
+  public String getVersion() {
+    if (VERSION == null) {
+      InputStream in = this.getClass().getClassLoader().getResourceAsStream("VERSION");
+      try {
+        VERSION = IOUtils.toString(in);
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+    return VERSION;
   }
 }
