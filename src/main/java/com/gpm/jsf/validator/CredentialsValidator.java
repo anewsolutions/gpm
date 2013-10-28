@@ -29,9 +29,14 @@ public class CredentialsValidator implements Validator {
   @Override
   public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
     UIInput emailComponent = (UIInput) component.getAttributes().get("emailComponent");
+    if (emailComponent == null) {
+      FacesMessage message = new FacesMessage(MessageProvider.getMessage("validatorInvalidCreds"));
+      message.setSeverity(FacesMessage.SEVERITY_ERROR);
+      throw new ValidatorException(message);
+    }
+    // Query database for an account with the given email address and password
     String email = emailComponent.getValue().toString();
     String password = value.toString();
-    // Query database for an account with the given email address and password
     try {
       UserAccount account = UserAccountManager.findByCredentials(email, password);
       if (account == null) {
