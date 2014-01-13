@@ -34,7 +34,7 @@ public class Issue extends Base {
 
   // TODO have a magazine object to keep this stuff in
   public static final int weight = 185;
-  public static final int currentPrice = 395;
+  public static final int currentPrice = 400;
   public static final int oldIssuePrice = 300;
   public static final int onlinePrice = 350;
 
