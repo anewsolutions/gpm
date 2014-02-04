@@ -22,7 +22,7 @@
           <p:outputLabel for="issueNumField" value="#{msg.adminIssueNumField}" />
           <h:panelGroup>
             <p:inputText id="issueNumField" value="#{issueAdminBean.selected.issueNumber}" required="true"
-              requiredMessage="#{msg.adminIssueNumFieldRequired}" size="6">
+              requiredMessage="#{msg.adminIssueNumFieldRequired}" size="10">
               <p:ajax />
             </p:inputText>
             <h:message errorClass="inlineMessage ui-state-error" for="issueNumField" />
@@ -38,10 +38,34 @@
           <p:outputLabel for="stockLevelField" value="#{msg.adminIssueStockLevelField}" />
           <h:panelGroup>
             <p:inputText id="stockLevelField" value="#{issueAdminBean.selected.stockLevel}" required="true"
-              requiredMessage="#{msg.adminIssueStockLevelFieldRequired}" size="6">
+              requiredMessage="#{msg.adminIssueStockLevelFieldRequired}" size="10">
               <p:ajax />
             </p:inputText>
             <h:message errorClass="inlineMessage ui-state-error" for="stockLevelField" />
+          </h:panelGroup>
+          <p:outputLabel for="hcopyPriceField" value="#{msg.adminIssueHcopyPriceField}" />
+          <h:panelGroup>
+            <p:inputText id="hcopyPriceField" value="#{issueAdminBean.selected.hcopyPrice}" required="true"
+              requiredMessage="#{msg.adminIssueHcopyPriceFieldRequired}" size="10">
+              <p:ajax />
+            </p:inputText>
+            <h:message errorClass="inlineMessage ui-state-error" for="hcopyPriceField" />
+          </h:panelGroup>
+          <p:outputLabel for="ezinePriceField" value="#{msg.adminIssueEzinePriceField}" />
+          <h:panelGroup>
+            <p:inputText id="ezinePriceField" value="#{issueAdminBean.selected.ezinePrice}" required="true"
+              requiredMessage="#{msg.adminIssueEzinePriceFieldRequired}" size="10">
+              <p:ajax />
+            </p:inputText>
+            <h:message errorClass="inlineMessage ui-state-error" for="ezinePriceField" />
+          </h:panelGroup>
+          <p:outputLabel for="weightField" value="#{msg.adminIssueWeightField}" />
+          <h:panelGroup>
+            <p:inputText id="weightField" value="#{issueAdminBean.selected.weight}" required="true"
+              requiredMessage="#{msg.adminIssueWeightFieldRequired}" size="10">
+              <p:ajax />
+            </p:inputText>
+            <h:message errorClass="inlineMessage ui-state-error" for="weightField" />
           </h:panelGroup>
           <p:outputLabel for="ezineLinkField" value="#{msg.adminIssueEzineLinkField}" />
           <h:panelGroup>

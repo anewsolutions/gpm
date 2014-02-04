@@ -103,9 +103,9 @@ public class SubscribeBean implements Serializable {
   public String getSubscriptionPrice() {
     String price = "";
     if (format == Format.EZINE) {
-      price = BeanUtils.formatPrice(Issue.onlinePrice * getLength());
+      price = BeanUtils.formatPrice(issue.getEzinePrice() * getLength());
     } else {
-      price = BeanUtils.formatPrice(Issue.currentPrice * getLength());
+      price = BeanUtils.formatPrice(issue.getHcopyPrice() * getLength());
     }
     return MessageProvider.getMessage("subPostageAndPackaging" + getFormat(), getLength(), price);
   }
@@ -116,11 +116,11 @@ public class SubscribeBean implements Serializable {
     order.setName(MessageProvider.getMessage("subShortDesc" + getFormat() + getLength(), issue.getIssueNumber()
         + getOffset()));
     if (format == Format.EZINE) {
-      order.setPrice(Issue.onlinePrice * getLength());
+      order.setPrice(issue.getEzinePrice() * getLength());
       order.setWeight(0);
     } else {
-      order.setPrice(Issue.currentPrice * getLength());
-      order.setWeight(Issue.weight);
+      order.setPrice(issue.getHcopyPrice() * getLength());
+      order.setWeight(issue.getWeight());
     }
     order.setQuantity(1);
     // Issue details

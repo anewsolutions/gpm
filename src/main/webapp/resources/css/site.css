@@ -241,7 +241,7 @@ a:hover {
   width: 25%;
 }
 
-.issuesGridTable .ui-datagrid-column span:FIRST-CHILD {
+.issuesGridTable .ui-datagrid-row:FIRST-CHILD span:FIRST-CHILD {
   margin-top: 0;
 }
 

@@ -31,12 +31,9 @@ public class Issue extends Base {
   private String coverImage;
   private String ezineLink;
   private Integer stockLevel;
-
-  // TODO have a magazine object to keep this stuff in
-  public static final int weight = 185;
-  public static final int currentPrice = 400;
-  public static final int oldIssuePrice = 300;
-  public static final int onlinePrice = 350;
+  private Integer weight;
+  private Integer ezinePrice;
+  private Integer hcopyPrice;
 
   public Issue() {
     super();
@@ -169,7 +166,7 @@ public class Issue extends Base {
    * 
    * @return a number greater than or equal to zero
    */
-  @Column(nullable = false)
+  @Column(nullable = false, columnDefinition = "int default 100")
   public Integer getStockLevel() {
     return stockLevel;
   }
@@ -191,5 +188,47 @@ public class Issue extends Base {
     } else {
       return false;
     }
+  }
+
+  /**
+   * Weight of this edition of the magazine.
+   * 
+   * @return a weight in grammes
+   */
+  @Column(nullable = false, columnDefinition = "int default 185")
+  public Integer getWeight() {
+    return weight;
+  }
+
+  public void setWeight(Integer weight) {
+    this.weight = weight;
+  }
+
+  /**
+   * Price of the electronic version of the magazine.
+   * 
+   * @return price in pence
+   */
+  @Column(nullable = false, columnDefinition = "int default 350")
+  public Integer getEzinePrice() {
+    return ezinePrice;
+  }
+
+  public void setEzinePrice(Integer ezinePrice) {
+    this.ezinePrice = ezinePrice;
+  }
+
+  /**
+   * Price of the hard copy version of the magazine.
+   * 
+   * @return price in pence
+   */
+  @Column(nullable = false, columnDefinition = "int default 400")
+  public Integer getHcopyPrice() {
+    return hcopyPrice;
+  }
+
+  public void setHcopyPrice(Integer hcopyPrice) {
+    this.hcopyPrice = hcopyPrice;
   }
 }

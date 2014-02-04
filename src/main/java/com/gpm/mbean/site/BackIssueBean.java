@@ -96,16 +96,11 @@ public class BackIssueBean implements Serializable {
     String published = BeanUtils.formatPublished(issue.getPublishedDate());
     order.setName(MessageProvider.getMessage("backShortDesc" + getFormat(issue), issue.getIssueNumber(), published));
     if (getFormat(issue) == Format.EZINE) {
-      order.setPrice(Issue.onlinePrice);
+      order.setPrice(issue.getEzinePrice());
       order.setWeight(0);
     } else {
-      // XXX Temp hack, add price to issue object
-      if (issue.getIssueNumber() > 9) {
-        order.setPrice(Issue.currentPrice);
-      } else {
-        order.setPrice(Issue.oldIssuePrice);
-      }
-      order.setWeight(Issue.weight);
+      order.setPrice(issue.getHcopyPrice());
+      order.setWeight(issue.getWeight());
     }
     order.setQuantity(1);
     // Issue details
