@@ -18,9 +18,17 @@
         </p:selectOneRadio>
         <h:panelGrid styleClass="pageParagraph" columns="2">
           <p:radioButton id="backFormatEzine" for="backFormatRadio" itemIndex="0" rendered="#{issue.ezineAvailable}" />
-          <h:outputLabel for="backFormatEzine" value="#{msg.backOnlineEdition}" rendered="#{issue.ezineAvailable}" />
+          <h:panelGrid columns="1" rendered="#{issue.ezineAvailable}">
+            <h:outputLabel for="backFormatEzine" value="#{msg.backOnlineEdition}" />
+            <h:outputLabel for="backFormatEzine" value="#{backIssueBean.ezinePrice}" styleClass="issuesPrice"
+              style="font-size: 1em;" />
+          </h:panelGrid>
           <p:radioButton id="backFormatHcopy" for="backFormatRadio" itemIndex="1" rendered="#{issue.stockAvailable}" />
-          <h:outputLabel for="backFormatHcopy" value="#{msg.backPhysicalCopy}" rendered="#{issue.stockAvailable}" />
+          <h:panelGrid columns="1" rendered="#{issue.stockAvailable}">
+            <h:outputLabel for="backFormatHcopy" value="#{msg.backPhysicalCopy}" />
+            <h:outputLabel for="backFormatHcopy" value="#{backIssueBean.hcopyPrice}" styleClass="issuesPrice"
+              style="font-size: 1em;" />
+          </h:panelGrid>
         </h:panelGrid>
         <p:commandButton value="#{msg.backButtonsAddToBasket}" action="#{backIssueBean.buy(issue)}"
           update=":siteHeaderBasketForm" />

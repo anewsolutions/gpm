@@ -90,15 +90,16 @@ public class BackIssueBean implements Serializable {
     formats.put(issue, Format.valueOf(format));
   }
 
-  public String getPrice() {
+  public String getEzinePrice() {
     FacesContext context = FacesContext.getCurrentInstance();
     Issue issue = context.getApplication().evaluateExpressionGet(context, "#{issue}", Issue.class);
-    Format format = getFormat(issue);
-    if (format == Format.EZINE) {
-      return MessageProvider.getMessage("backPrice" + format.name(), BeanUtils.formatPrice(issue.getEzinePrice()));
-    } else {
-      return MessageProvider.getMessage("backPrice" + format.name(), BeanUtils.formatPrice(issue.getHcopyPrice()));
-    }
+    return MessageProvider.getMessage("backPrice" + Format.EZINE.name(), BeanUtils.formatPrice(issue.getEzinePrice()));
+  }
+
+  public String getHcopyPrice() {
+    FacesContext context = FacesContext.getCurrentInstance();
+    Issue issue = context.getApplication().evaluateExpressionGet(context, "#{issue}", Issue.class);
+    return MessageProvider.getMessage("backPrice" + Format.HCOPY.name(), BeanUtils.formatPrice(issue.getHcopyPrice()));
   }
 
   public void buy(final Issue issue) {
